@@ -68,7 +68,6 @@
 			height: auto;
 		}
 
-        /* Hero Section */
         .hero {
             padding: 120px 20px;
             background: linear-gradient(to right, var(--color-blue-dark), var(--color-blue-light));
@@ -94,8 +93,8 @@
 			flex-direction: column;
 			align-items: flex-start;
 			gap: 20px;
-			position: relative; /* Adicione esta linha */
-			z-index: 2;         /* E adicione esta linha */
+			position: relative; 
+			z-index: 2;         
 		}
         .hero-title {
             font-size: 2.5rem;
@@ -139,7 +138,6 @@
 			height: auto;
 		}
 
-        /* Cards Section */
         .cards-grid {
             display: flex;
             justify-content: center;
@@ -155,7 +153,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 0 25px rgba(176, 181, 194, 0.5);
-            max-width: 200px;
+            max-width: 100%;
             text-align: center;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             cursor: pointer;
@@ -177,7 +175,6 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Comparison Table */
         .table-section {
             text-align: center;
             padding-top: 120px;
@@ -206,9 +203,8 @@
             font-weight: 600;
         }
 
-        /* Methodology Section */
         .methodology-section {
-            position: relative; /* Define o ponto de referência para os elementos absolutos */
+            position: relative; 
         }
         
         .methodology-section h2 {
@@ -216,7 +212,7 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 50px;
-            position: relative; /* Garante que o H2 fique sobre as formas */
+            position: relative; 
             z-index: 2;
         }
 
@@ -225,7 +221,7 @@
             padding: 0;
             max-width: 600px;
             margin: 0 auto;
-            position: relative; /* Garante que a lista fique sobre as formas */
+            position: relative; 
             z-index: 2;
         }
         
@@ -271,7 +267,7 @@
             margin-bottom: 20px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            background-color: var(--color-white); /* Garante fundo branco para os itens */
+            background-color: var(--color-white); 
         }
         
         .step-number {
@@ -280,7 +276,6 @@
             margin-right: 20px;
         }
 
-        /* FAQ Section */
         .faq-section {
             text-align: center;
             background-color: var(--color-white);
@@ -344,7 +339,6 @@
             transform: rotate(180deg);
         }
         
-        /* Automation Cards Section */
         .automations-section {
             background-color: var(--color-white);
             padding: 60px 20px;
@@ -398,7 +392,6 @@
             text-align: right;
         }
         
-        /* Footer Section */
         .footer {
             padding: 100px 20px 40px 20px;
             position: relative;
@@ -434,7 +427,6 @@
 			margin: 50px;
             flex-shrink: 0;
 			width:500px;
-			high: auto;
         }
 
         .footer-bottom {
@@ -463,39 +455,121 @@
             color: var(--color-white);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text-container {
+                align-items: center;
+            }
+            .borraogg img {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .nav-list {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 1.8rem;
+                color: var(--color-blue-light);
+            }
+            .nav-list.active {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+            }
+              .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .borraogg img {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+            .hero-text {
+                font-size: 1rem;
+            }
+              .automations-grid {
+                grid-template-columns: 1fr; 
+            }
+            .automation-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .automation-card-content {
+                text-align: center !important;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
             .footer-main {
                 flex-direction: column;
                 text-align: center;
             }
             .footer-right {
-                max-width: 400px;
-                margin-top: 40px;
-            }
-            .footer-left {
-                 max-width: 100%;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 20px;
+                width: 100%;
+                margin: 20px 0 0;
             }
         }
-        
-        @media (max-width: 768px) {
-            .automations-grid {
-                grid-template-columns: 1fr;
-            }
-            .automation-card {
+
+
+        @media (max-width: 600px) {
+            .nav-list {
                 flex-direction: column;
-                text-align: center;
-                gap: 25px;
+                gap: 15px;
+                margin: 0;
             }
-            .automations-grid .automation-card:nth-child(even) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .hero-text {
+                font-size: 1rem;
+            }
+            .cta-button {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+            .cards-grid {
                 flex-direction: column;
+                align-items: center;
             }
-            .automations-grid .automation-card:nth-child(even) .automation-card-content {
+            .card {
+                max-width: 90%;
+                width: 100%;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .footer-main {
+                flex-direction: column;
+                gap: 30px;
                 text-align: center;
+            }
+            .footer-right {
+                width: 100%;
+                margin: 0 auto;
             }
         }
 
@@ -527,7 +601,7 @@
 					Implementamos um CRM poderoso e criamos automações com IA para que você venda mais, perca menos tempo com tarefas repetitivas e nunca mais esqueça um cliente.
 				</p>
 				<a href="https://wa.me/5555992056388?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20automa%C3%A7%C3%A3o" class="cta-button">
-					Quero transofrmar minha empresa
+					Quero transformar minha empresa
 				</a>
 			</div>
 			<a href="#hero" class="borraogg">
@@ -734,9 +808,9 @@
             </div>
         </div>
         <div class="container footer-bottom">
-            <a href="mailto:contatoloomie@gmail.com" class="footer-email">contato@loomie.com</a>
+            <a href="mailto:contatoloomie@gmail.com" class="footer-email">contatoloomie@gmail.com</a>
             <div class="footer-socials">
-                <a href="#" target="_blank" title="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                <a href="https://instagram.com/loomiecrm" target="_blank" title="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
                 <a href="#" target="_blank" title="LinkedIn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
             </div>
         </div>
@@ -763,4 +837,3 @@
 </body>
 </html>
 }
-Quero que quando a pessoa clicar em "soluções" vá para a sessão de automação. E em "por que a Loomie?" vá para a tabela. E em "implementação" vá para a sessão de metodologia.
