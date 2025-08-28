@@ -6,8 +6,8 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - n8n-network
+      - loomie-network
 
 networks:
-  n8n-network:
+  loomie-network:
     external: true
