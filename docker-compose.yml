@@ -1,5 +1,6 @@
 services:
   site-loomie:
+    build: .
     image: site-loomie
     restart: unless-stopped
     ports:
