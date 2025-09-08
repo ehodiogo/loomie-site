@@ -138,10 +138,29 @@
         }
 
         .borraogg {
-            flex: 1;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
+            max-width: 600px;
+        }
+
+        .borrao-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 1;
+        }
+
+        .hero-video {
+            position: relative;
+            z-index: 2;
+            max-width: 80%;
+            border-radius: 20px;
+            mix-blend-mode: screen;
+            transform: translateX(40px);
         }
 
 		.borraogg img {
@@ -477,6 +496,9 @@
             .borraogg img {
                 max-width: 90%;
             }
+            .hero-video {
+                transform: translateX(0);
+            }
         }
 
         @media (max-width: 768px) {
@@ -633,7 +655,13 @@
 				</a>
 			</div>
 			<a href="#hero" class="borraogg">
-				<img src="elementos/borraogg.svg" alt="Desfoque grande">
+				<div class="video-wrapper">
+                    <img src="elementos/borraogg.svg" alt="Desfoque grande" class="borrao-bg">
+                    <video autoplay muted loop playsinline class="hero-video">
+                        <source src="elementos/video-loomie.mov" type="video/mp4">
+                        Seu navegador não suporta vídeos HTML5.
+                    </video>
+                </div>
 			</a>
 		</div> 
     </div>
