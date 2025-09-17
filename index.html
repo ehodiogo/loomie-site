@@ -501,6 +501,40 @@
             color: var(--color-white);
         }
 
+        /* antes e dps secc */
+
+        .before-after-section > div {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* novo */
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .before-after-section .card-item {
+            border: 2px solid #007bff;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            background: #fff; /* para dar contraste */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+
+        .before-after-section video {
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
+        .before-after-section video {
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            object-fit: cover;
+        }
+
+
         @media (max-width: 992px) {
             .header-container {
                 flex-direction: column;
@@ -647,6 +681,102 @@
         max-width: 100%;
     }
 
+    .crm-section {
+        background: #007bff;
+        color: #fff;
+        padding: 60px 20px;
+    }
+
+    .crm-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .crm-text {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .crm-text h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .crm-text ul {
+        margin-top: 20px;
+        list-style: disc;
+        padding-left: 20px;
+    }
+
+    .crm-media {
+        flex: 1;
+        min-width: 280px;
+        text-align: center;
+    }
+
+    .crm-media img,
+    .crm-media video {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        object-fit: cover;
+    }
+
+    .intro-section {
+        background: #fff;
+        color: #1a1a1a;
+        padding: 60px 20px;
+        }
+
+    .intro-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 40px;
+        flex-wrap: wrap; /* quebra no mobile */
+    }
+
+    .intro-text {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .intro-text h2 {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .intro-text p {
+        margin-bottom: 15px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .intro-media {
+        flex: 1;
+        min-width: 280px;
+        text-align: center;
+    }
+
+    .intro-media img {
+        width: 100%;
+        max-width: 350px;
+        border-radius: 12px;
+        object-fit: contain;
+    }
+
     </style>
 </head>
 <body>
@@ -712,6 +842,49 @@
             </div>
         </div>
     </div>
+    
+    <div class="before-after-section" style="margin:80px auto; max-width:1100px;">
+
+        <h2 style="color:#007bff; font-size:2.5rem; font-weight:800; margin-bottom:40px; text-align:center;">
+            Sua empresa merece operar no <br> piloto automático.
+        </h2>
+
+        <div style="display:flex; justify-content:center; gap:60px; flex-wrap:wrap;">
+
+            <div style="flex:1; min-width:280px; max-width:350px;">
+                <h3 style="color:#E63946; font-weight:700; margin-bottom:20px; text-align:center;">ANTES ❌</h3>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Horas perdidas atualizando planilhas.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Oportunidades perdidas por falta de follow-up.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Erros manuais que custam dinheiro.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Dificuldade para saber o que está funcionando.</div>
+            </div>
+
+            <div style="flex:1; min-width:280px; max-width:350px;">
+                <h3 style="color:#2E7D32; font-weight:700; margin-bottom:20px; text-align:center;">DEPOIS ✅</h3>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Processos que rodam sozinhos 24/7.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Cada lead é nutrido no momento certo.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Operação padronizada e com mitigação de falhas.</div>
+                <div style="border:2px solid #007bff; border-radius:12px; padding:12px; margin-bottom:15px; text-align:center;">Decisões baseadas em dados reais.</div>
+            </div>
+
+            <div style="width:280px; height:500px; border-radius:30px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;">
+                    <source src="elementos/videocelular.mp4" type="video/mp4">
+                </video>
+            </div>
+
+        </div>
+
+        <div style="text-align:center; margin-top:50px;">
+            <a href="https://wa.me/5599999999999" target="_blank" 
+            style="background:#25D366; color:#fff; padding:18px 40px; border-radius:40px; text-decoration:none; font-weight:700; font-size:1rem; display:inline-flex; align-items:center; gap:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:22px; height:22px;">
+                AUTOMATIZAR MINHA EMPRESA AGORA
+            </a>
+        </div>
+
+    </div>
+
 
     <div class="section automations-section" id="automacao">
         <div class="container">
@@ -764,6 +937,31 @@
         </div>
     </div>
 
+    <section class="crm-section">
+        <div class="crm-container">
+            <div class="crm-text">
+            <h2>Flexibilidade Real: CRM customizável com poder n8n.</h2>
+            <p>
+                Nosso CRM combina o melhor de dois mundos: uma plataforma 
+                <strong>totalmente customizável</strong> para a sua operação 
+                e a robustez da integração via n8n para 
+                <strong>automações ilimitadas</strong>.
+            </p>
+
+            <ul>
+                <li><strong>Personalização Rápida:</strong> Configuramos painéis, funis e campos para espelhar seus processos sem a necessidade de desenvolvimento complexo.</li>
+                <li><strong>Automações Poderosas:</strong> Conectamos o CRM a praticamente qualquer sistema (e-mails, planilhas, ERPs, etc.) usando a versatilidade do n8n.</li>
+                <li><strong>Independência e Escalabilidade:</strong> Sua operação evolui, e a ferramenta evolui junto. Adapte os fluxos e adicione novas automações de forma ágil e sem depender de uma lista restrita de integrações.</li>
+            </ul>
+            </div>
+
+            <div class="crm-media">
+                <video src="elementos/video crm.mp4" autoplay muted loop></video>
+            </div>
+        </div>
+    </section>
+
+
     <div class="section bg-blue table-section" id="tabela">
         <div class="container">
             <h2>Por que ir além do modelo SaaS tradicional?</h2>
@@ -800,6 +998,32 @@
             </table>
         </div>
     </div>
+
+    <section class="intro-section">
+        <div class="intro-container">
+            <div class="intro-text">
+            <h2>Loomie<br>+CRM<br>+automações</h2>
+            <p>
+                No coração de toda empresa, existe um fluxo constante de informações: contatos, negociações e tarefas. 
+                No entanto, na maioria das vezes, esse fluxo se transforma em um caos de planilhas, anotações e mensagens 
+                perdidas, custando tempo e preciosas oportunidades de negócio.
+            </p>
+            <p>
+                A Loomie nasceu exatamente dessa necessidade de criar um verdadeiro centro de controle para o seu negócio. 
+                Percebemos que não bastava apenas centralizar as informações, era preciso devolver o poder ao usuário. 
+                Por isso, desenvolvemos uma solução onde você é o verdadeiro dono da sua tecnologia, livre do peso das mensalidades.
+            </p>
+            <p>
+                Nosso objetivo é libertar sua equipe para que ela possa focar no que realmente importa: o crescimento da sua empresa.
+            </p>
+            </div>
+
+            <div class="intro-media">
+                <img src="elementos/giflogo.gif" alt="Logo Loomie" />
+            </div>
+        </div>
+    </section>
+
 
     <div class="section bg-white methodology-section" id="implementacao">
         <div class="container">
