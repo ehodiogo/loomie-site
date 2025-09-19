@@ -617,6 +617,16 @@
                 width: 100%;
                 margin: 20px 0 0;
             }
+            .intro-container {
+                flex-direction: column; /* empilha os elementos verticalmente */
+                align-items: center;
+                gap: 20px;
+                padding: 0 20px; /* garante espaço nas laterais */
+            }
+
+            .intro-text {
+                text-align: center; /* centraliza o texto no mobile */
+            }
         }
 
 
@@ -737,17 +747,18 @@
 
     .intro-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         max-width: 1200px;
-        margin: 0 auto;
+        margin: 0 auto; /* centraliza horizontalmente */
         gap: 40px;
-        flex-wrap: wrap; /* quebra no mobile */
+        flex-wrap: wrap;
     }
 
     .intro-text {
         flex: 1;
         min-width: 300px;
+        text-align: start; /* centraliza o conteúdo de texto */
     }
 
     .intro-text h2 {
@@ -775,6 +786,12 @@
         max-width: 350px;
         border-radius: 12px;
         object-fit: contain;
+    }
+
+    @media (min-width: 1200px) {
+        .intro-container {
+            margin-left: 500px;
+        }
     }
 
     </style>
