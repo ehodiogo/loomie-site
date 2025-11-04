@@ -22,7 +22,6 @@ const App = () => (
           <Route path="/automacoes" element={<Automations />} />
           <Route path="/loomie-cloud" element={<LoomieCloud />} />
           <Route path="/documentacao" element={<Documentation />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
