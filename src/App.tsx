@@ -3,10 +3,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { CookieBanner } from "@/components/CookieBanner";
 import Home from "./pages/Home";
 import Automations from "./pages/Automations";
 import LoomieCloud from "./pages/LoomieCloud";
 import Documentation from "./pages/Documentation";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -17,13 +21,17 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/automacoes" element={<Automations />} />
           <Route path="/loomie-cloud" element={<LoomieCloud />} />
           <Route path="/documentacao" element={<Documentation />} />
+          <Route path="/termos-de-uso" element={<TermsOfService />} />
+          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieBanner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

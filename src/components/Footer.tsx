@@ -10,7 +10,8 @@ export const Footer = () => {
               loomie
             </div>
             <p className="text-muted-foreground text-sm">
-              Implementamos um CRM poderoso e criamos automações com IA para que você venda mais.
+              Implementamos um CRM poderoso e criamos automações com IA para que
+              você venda mais.
             </p>
           </div>
 
@@ -18,17 +19,26 @@ export const Footer = () => {
             <h3 className="font-semibold mb-4">Produto</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/automacoes" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <Link
+                  to="/automacoes"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                >
                   Automações
                 </Link>
               </li>
               <li>
-                <a href="/#porque" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <a
+                  href="/#porque"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                >
                   Por que a Loomie?
                 </a>
               </li>
               <li>
-                <a href="/#implementacao" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <a
+                  href="/#implementacao"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                >
                   Implementação
                 </a>
               </li>
@@ -39,7 +49,10 @@ export const Footer = () => {
             <h3 className="font-semibold mb-4">Recursos</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/#duvidas" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                <a
+                  href="/#duvidas"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                >
                   Dúvidas Frequentes
                 </a>
               </li>
@@ -63,8 +76,27 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Loomie. Todos os direitos reservados.</p>
+        <div className="border-t border-border mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+            <p>
+              &copy; {new Date().getFullYear()} Loomie. Todos os direitos
+              reservados.
+            </p>
+            <div className="flex gap-6">
+              <Link
+                to="/termos-de-uso"
+                className="hover:text-foreground transition-colors"
+              >
+                Termos de Uso
+              </Link>
+              <Link
+                to="/politica-de-privacidade"
+                className="hover:text-foreground transition-colors"
+              >
+                Política de Privacidade
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
