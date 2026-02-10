@@ -12,6 +12,7 @@ import Documentation from "./pages/Documentation";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/documentacao" element={<Documentation />} />
           <Route path="/termos-de-uso" element={<TermsOfService />} />
           <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+          <Route path="/growth-partner" element={<Index />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />
