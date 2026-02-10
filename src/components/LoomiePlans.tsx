@@ -83,7 +83,7 @@ const LoomiePlans = () => {
                 {plan.description}
               </p>
               <p className="font-display text-3xl sm:text-4xl font-bold cyan-gradient-text mb-1">
-                ${plan.price.toFixed(2)}
+                R${plan.price.toFixed(2)}
               </p>
               <span className="text-muted-foreground text-sm mb-6">/month</span>
 
