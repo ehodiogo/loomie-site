@@ -52,11 +52,11 @@ const LoomiePlans = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Planos <span className="cyan-gradient-text">Loomie</span>
+            Loomie <span className="cyan-gradient-text">Plans</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Conheça os planos que seus clientes irão contratar. Quanto maior o
-            plano, maior o valor e sua comissão.
+            Discover the plans your customers will subscribe to. The higher the
+            plan, the greater the value and your commission.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ const LoomiePlans = () => {
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-xs font-semibold rounded-full bg-primary text-primary-foreground">
-                  Mais Popular
+                  Most Popular
                 </span>
               )}
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
@@ -83,9 +83,9 @@ const LoomiePlans = () => {
                 {plan.description}
               </p>
               <p className="font-display text-3xl sm:text-4xl font-bold cyan-gradient-text mb-1">
-                R$ {plan.price.toFixed(2).replace(".", ",")}
+                ${plan.price.toFixed(2)}
               </p>
-              <span className="text-muted-foreground text-sm mb-6">/mês</span>
+              <span className="text-muted-foreground text-sm mb-6">/month</span>
 
               <div className="border-t border-muted/20 pt-6 mt-auto">
                 <ul className="space-y-3">
