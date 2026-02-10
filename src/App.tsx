@@ -12,7 +12,7 @@ import Documentation from "./pages/Documentation";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
-import Index from "./pages/Index";
+import Index from "./pages/GrowthPartner";
 
 const queryClient = new QueryClient();
 
