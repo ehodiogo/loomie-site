@@ -23,15 +23,14 @@ const PartnersSection = () => {
           transition={{ duration: 0.7 }}
           className="mb-20"
         >
-          <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
-            // Partners Growth
-          </p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
+            Módulo 03
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
             Construa receita recorrente no ecossistema.
           </h2>
         </motion.div>
 
-        {/* Partners grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {partners.map((partner, i) => (
             <motion.div
@@ -56,7 +55,7 @@ const PartnersSection = () => {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-3 h-3 text-accent" />
+                  <TrendingUp className="w-3 h-3 text-primary" />
                   <span className="font-mono text-sm text-foreground">{partner.arr} ARR</span>
                 </div>
                 <span className="flex items-center gap-1 text-xs font-mono text-primary">
@@ -68,7 +67,6 @@ const PartnersSection = () => {
           ))}
         </div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
