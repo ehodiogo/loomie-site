@@ -12,9 +12,8 @@ const nodes = [
 const AutomacoesSection = () => {
   return (
     <section id="automações" className="relative py-32 overflow-hidden">
-      {/* Scan line effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent animate-scan-line" />
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-scan-line" />
       </div>
 
       <div className="relative container mx-auto px-6">
@@ -25,10 +24,10 @@ const AutomacoesSection = () => {
           transition={{ duration: 0.7 }}
           className="mb-20"
         >
-          <p className="font-mono text-sm text-accent tracking-widest uppercase mb-4">
-            // Automações
-          </p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
+            Módulo 02
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
             Raio-X da sua eficiência.
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg">
@@ -36,9 +35,8 @@ const AutomacoesSection = () => {
           </p>
         </motion.div>
 
-        {/* X-ray flow visualization */}
+        {/* Flow visualization */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Connection lines */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet">
             {nodes.slice(0, -1).map((node, i) => {
               const next = nodes[i + 1];
@@ -50,7 +48,7 @@ const AutomacoesSection = () => {
                 <motion.line
                   key={i}
                   x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="hsl(239 84% 67% / 0.3)"
+                  stroke="hsl(199 89% 48% / 0.25)"
                   strokeWidth="1"
                   strokeDasharray="4 4"
                   initial={{ pathLength: 0 }}
@@ -62,7 +60,6 @@ const AutomacoesSection = () => {
             })}
           </svg>
 
-          {/* Nodes */}
           <div className="grid grid-cols-5 gap-4 relative z-10">
             {nodes.map((node, i) => (
               <motion.div
@@ -73,8 +70,8 @@ const AutomacoesSection = () => {
                 transition={{ delay: i * 0.15, duration: 0.5 }}
                 className={`${node.y === 1 ? "mt-16" : ""}`}
               >
-                <div className="glass-panel p-4 glow-border-primary group hover:bg-secondary/50 transition-all duration-300">
-                  <div className="w-2 h-2 bg-accent rounded-full mb-3 animate-pulse-glow" />
+                <div className="glass-panel p-4 glow-border-primary group hover:shadow-lg transition-all duration-300">
+                  <div className="w-2 h-2 bg-primary rounded-full mb-3 animate-pulse-glow" />
                   <p className="font-mono text-xs text-foreground">{node.label}</p>
                   <ArrowRight className="w-3 h-3 text-muted-foreground mt-2 group-hover:text-primary transition-colors" />
                 </div>

@@ -8,21 +8,12 @@ const metrics = [
   { label: "Integrações Ativas", value: "48", icon: Database },
 ];
 
-const gridBlocks = [
-  { col: "col-span-2", h: "h-32", accent: true },
-  { col: "col-span-1", h: "h-32", accent: false },
-  { col: "col-span-1", h: "h-24", accent: false },
-  { col: "col-span-1", h: "h-24", accent: true },
-  { col: "col-span-1", h: "h-24", accent: false },
-];
-
 const CloudSection = () => {
   return (
     <section id="cloud" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-50" />
 
       <div className="relative container mx-auto px-6">
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -30,10 +21,10 @@ const CloudSection = () => {
           transition={{ duration: 0.7 }}
           className="mb-20"
         >
-          <p className="font-mono text-sm text-primary tracking-widest uppercase mb-4">
-            // Loomie Cloud
-          </p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold max-w-2xl leading-tight">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
+            Módulo 01
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
             O núcleo da sua operação comercial.
           </h2>
         </motion.div>
@@ -56,7 +47,7 @@ const CloudSection = () => {
           ))}
         </div>
 
-        {/* Physics-inspired data grid */}
+        {/* Glass block grid */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -64,7 +55,13 @@ const CloudSection = () => {
           transition={{ duration: 0.8 }}
           className="grid grid-cols-3 gap-3 max-w-3xl"
         >
-          {gridBlocks.map((block, i) => (
+          {[
+            { col: "col-span-2", h: "h-32", accent: true },
+            { col: "col-span-1", h: "h-32", accent: false },
+            { col: "col-span-1", h: "h-24", accent: false },
+            { col: "col-span-1", h: "h-24", accent: true },
+            { col: "col-span-1", h: "h-24", accent: false },
+          ].map((block, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -73,7 +70,7 @@ const CloudSection = () => {
               transition={{ delay: i * 0.08 }}
               className={`${block.col} ${block.h} ${
                 block.accent ? "glow-border-primary" : "glass-panel"
-              } flex items-end p-4`}
+              } flex items-end p-4 rounded-xl`}
             >
               <span className="font-mono text-xs text-muted-foreground">
                 block_{String(i).padStart(2, "0")}
