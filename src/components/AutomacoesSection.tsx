@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import useParallax from "@/hooks/use-parallax";
 
 const nodes = [
   { label: "Lead Capturado", x: 0, y: 0 },
@@ -10,6 +11,9 @@ const nodes = [
 ];
 
 const AutomacoesSection = () => {
+  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
+  const { ref: statsRef, y: statsY } = useParallax({ speed: -0.05 });
+
   return (
     <section id="automações" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -18,11 +22,13 @@ const AutomacoesSection = () => {
 
       <div className="relative container mx-auto px-6">
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="mb-20"
+          style={{ transform: `translateY(${headerY}px)` }}
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
             Módulo 02
@@ -80,8 +86,12 @@ const AutomacoesSection = () => {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="flex flex-wrap gap-12 mt-20 justify-center">
+        {/* Stats with parallax */}
+        <div
+          ref={statsRef}
+          className="flex flex-wrap gap-12 mt-20 justify-center"
+          style={{ transform: `translateY(${statsY}px)` }}
+        >
           {[
             { stat: "97%", desc: "Processos automatizados" },
             { stat: "3.2x", desc: "Aumento em produtividade" },

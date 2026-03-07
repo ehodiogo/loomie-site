@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MessageCircle, Instagram, Mail } from "lucide-react";
+import useParallax from "@/hooks/use-parallax";
 
 const orbitIcons = [
   { Icon: MessageCircle, delay: 0, speed: "animate-orbit" },
@@ -27,6 +28,8 @@ const wordReveal = {
 const HeroSection = () => {
   const headline = "A Nova Estratégia.";
   const words = headline.split(" ");
+  const { ref: parallaxRef, y: parallaxY } = useParallax({ speed: 0.15 });
+  const { ref: blocksRef, y: blocksY } = useParallax({ speed: -0.1 });
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -52,8 +55,12 @@ const HeroSection = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center gap-16 pt-24">
-        {/* Left: Text content */}
-        <div className="flex-1 flex flex-col items-start text-left gap-8">
+        {/* Left: Text content with parallax */}
+        <div
+          ref={parallaxRef}
+          className="flex-1 flex flex-col items-start text-left gap-8"
+          style={{ transform: `translateY(${parallaxY}px)` }}
+        >
           <motion.h1
             variants={wordStagger}
             initial="hidden"
@@ -91,25 +98,23 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Right: Isometric glass blocks visualization */}
+        {/* Right: Isometric glass blocks with parallax */}
         <motion.div
+          ref={blocksRef}
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="flex-1 relative w-full max-w-lg aspect-square"
+          style={{ transform: `translateY(${blocksY}px)` }}
         >
-          {/* Layered isometric glass blocks */}
           <div className="absolute inset-0 flex items-center justify-center">
-            {/* Base platform */}
             <div className="absolute w-[85%] h-[20%] bottom-[15%] glass-panel glow-border-primary transform rotate-[-5deg] skew-x-[-5deg]" />
-            {/* Mid blocks */}
             <div className="absolute w-[55%] h-[35%] bottom-[28%] right-[15%] glass-panel border border-primary/20 transform rotate-[-3deg]">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
             </div>
             <div className="absolute w-[30%] h-[25%] bottom-[30%] left-[12%] glass-panel transform rotate-[2deg]">
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary/30 rounded-b-xl" />
             </div>
-            {/* Top blocks */}
             <div className="absolute w-[40%] h-[30%] top-[18%] right-[20%] glass-panel glow-border-primary transform rotate-[-2deg]">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/8 to-transparent" />
             </div>
@@ -117,7 +122,6 @@ const HeroSection = () => {
             <div className="absolute w-[20%] h-[15%] top-[25%] right-[12%] glass-panel transform rotate-[-4deg]">
               <div className="absolute inset-0 bg-primary/5" />
             </div>
-            {/* Accent glow orbs */}
             <div className="absolute w-3 h-3 rounded-full bg-primary/60 top-[30%] right-[30%] animate-pulse-glow blur-[2px]" />
             <div className="absolute w-2 h-2 rounded-full bg-primary/40 bottom-[35%] left-[25%] animate-pulse-glow blur-[1px]" style={{ animationDelay: '1.5s' }} />
           </div>
