@@ -1,11 +1,26 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Instagram, Mail } from "lucide-react";
+import { MessageCircle, Instagram, Mail, Phone, Globe, Send, AtSign, Radio, Wifi, Share2, Rss, Bell } from "lucide-react";
 import useParallax from "@/hooks/use-parallax";
 
 const orbitIcons = [
   { Icon: MessageCircle, delay: 0, speed: "animate-orbit" },
   { Icon: Instagram, delay: 4, speed: "animate-orbit-slow" },
   { Icon: Mail, delay: 8, speed: "animate-orbit-fast" },
+];
+
+const floatingIcons = [
+  { Icon: Phone, x: "85%", y: "18%", size: 18, delay: 0, duration: 6 },
+  { Icon: Globe, x: "90%", y: "35%", size: 22, delay: 1.2, duration: 7 },
+  { Icon: Send, x: "78%", y: "55%", size: 16, delay: 0.5, duration: 5.5 },
+  { Icon: AtSign, x: "92%", y: "65%", size: 20, delay: 2, duration: 6.5 },
+  { Icon: Radio, x: "82%", y: "78%", size: 14, delay: 0.8, duration: 7.5 },
+  { Icon: Wifi, x: "88%", y: "45%", size: 16, delay: 1.5, duration: 5 },
+  { Icon: Share2, x: "75%", y: "30%", size: 18, delay: 3, duration: 6 },
+  { Icon: Rss, x: "95%", y: "50%", size: 14, delay: 2.5, duration: 8 },
+  { Icon: Bell, x: "80%", y: "85%", size: 16, delay: 1, duration: 5.5 },
+  { Icon: MessageCircle, x: "70%", y: "68%", size: 12, delay: 3.5, duration: 7 },
+  { Icon: Instagram, x: "93%", y: "22%", size: 14, delay: 0.3, duration: 6.5 },
+  { Icon: Mail, x: "72%", y: "42%", size: 15, delay: 2.2, duration: 5.8 },
 ];
 
 const wordStagger = {
@@ -37,8 +52,34 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-20" />
       <div className="absolute inset-0 radial-fade" />
 
+      {/* Floating convergence icons — behind the blocks */}
+      <div className="absolute inset-0 pointer-events-none z-[1]">
+        {floatingIcons.map(({ Icon, x, y, size, delay, duration }, i) => (
+          <motion.div
+            key={i}
+            className="absolute glass-panel p-2.5 opacity-40"
+            style={{ left: x, top: y }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{
+              opacity: [0.15, 0.45, 0.15],
+              y: [0, -12, 0],
+              x: [0, i % 2 === 0 ? -6 : 6, 0],
+              scale: [0.9, 1, 0.9],
+            }}
+            transition={{
+              duration,
+              delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Icon className="text-primary" size={size} />
+          </motion.div>
+        ))}
+      </div>
+
       {/* Orbiting icons */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[2]">
         <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
           {orbitIcons.map(({ Icon, delay, speed }, i) => (
             <div
@@ -104,7 +145,7 @@ const HeroSection = () => {
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1 relative w-full max-w-lg aspect-square"
+          className="flex-1 relative w-full max-w-lg aspect-square z-[3]"
           style={{ transform: `translateY(${blocksY}px)` }}
         >
           <div className="absolute inset-0 flex items-center justify-center">
