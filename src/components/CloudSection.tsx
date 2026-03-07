@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Database, Users, Zap, BarChart3 } from "lucide-react";
+import useParallax from "@/hooks/use-parallax";
 
 const metrics = [
   { label: "Leads Unificados", value: "12.4K", icon: Users },
@@ -9,17 +10,22 @@ const metrics = [
 ];
 
 const CloudSection = () => {
+  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
+  const { ref: gridRef, y: gridY } = useParallax({ speed: -0.06 });
+
   return (
     <section id="cloud" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-50" />
 
       <div className="relative container mx-auto px-6">
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="mb-20"
+          style={{ transform: `translateY(${headerY}px)` }}
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
             Módulo 01
@@ -47,13 +53,15 @@ const CloudSection = () => {
           ))}
         </div>
 
-        {/* Glass block grid */}
+        {/* Glass block grid with parallax */}
         <motion.div
+          ref={gridRef}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="grid grid-cols-3 gap-3 max-w-3xl"
+          style={{ transform: `translateY(${gridY}px)` }}
         >
           {[
             { col: "col-span-2", h: "h-32", accent: true },

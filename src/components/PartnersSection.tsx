@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Blocks, BadgeCheck, ArrowUpRight } from "lucide-react";
+import useParallax from "@/hooks/use-parallax";
 
 const partners = [
   { name: "IntegraPay", category: "Pagamentos", arr: "R$ 2.4M", badge: "Active" },
@@ -11,17 +12,21 @@ const partners = [
 ];
 
 const PartnersSection = () => {
+  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
+
   return (
     <section id="partners" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-30" />
 
       <div className="relative container mx-auto px-6">
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="mb-20"
+          style={{ transform: `translateY(${headerY}px)` }}
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
             Módulo 03
