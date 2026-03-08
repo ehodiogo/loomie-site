@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { slideFromRight, staggerContainer, fadeUpItem, lineDraw, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
 const nodes = [
@@ -11,37 +12,34 @@ const nodes = [
 ];
 
 const AutomacoesSection = () => {
-  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
-  const { ref: statsRef, y: statsY } = useParallax({ speed: -0.05 });
+  const { ref: statsRef, y: statsY } = useParallax({ speed: -0.04 });
 
   return (
     <section id="automações" className="relative py-32 overflow-hidden">
+      {/* Scan line effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-scan-line" />
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent animate-scan-line" />
       </div>
 
       <div className="relative container mx-auto px-6">
+        {/* Header — slides from right (opposite to Cloud) */}
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="mb-20"
-          style={{ transform: `translateY(${headerY}px)` }}
+          variants={slideFromRight}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mb-20 md:text-right md:ml-auto md:max-w-2xl"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
-            Módulo 02
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
+          <span className="section-badge mb-4">Módulo 02</span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
             Raio-X da sua eficiência.
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-lg">
+          <p className="text-muted-foreground mt-4 max-w-lg md:ml-auto">
             Cada processo mapeado, cada gargalo eliminado. Visualize o fluxo completo da sua operação.
           </p>
         </motion.div>
 
-        {/* Flow visualization */}
+        {/* Flow visualization with stagger */}
         <div className="relative max-w-4xl mx-auto">
           <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet">
             {nodes.slice(0, -1).map((node, i) => {
@@ -54,41 +52,49 @@ const AutomacoesSection = () => {
                 <motion.line
                   key={i}
                   x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="hsl(199 89% 48% / 0.25)"
+                  stroke="hsl(199 89% 48% / 0.2)"
                   strokeWidth="1"
-                  strokeDasharray="4 4"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2, duration: 0.6 }}
+                  strokeDasharray="6 4"
+                  variants={lineDraw}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewport}
+                  transition={{ delay: i * 0.15, duration: 0.8, ease: ease.inOut }}
                 />
               );
             })}
           </svg>
 
-          <div className="grid grid-cols-5 gap-4 relative z-10">
+          <motion.div
+            variants={staggerContainer(0.12, 0.3)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="grid grid-cols-5 gap-4 relative z-10"
+          >
             {nodes.map((node, i) => (
               <motion.div
                 key={node.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
+                variants={fadeUpItem}
                 className={`${node.y === 1 ? "mt-16" : ""}`}
               >
-                <div className="glass-panel p-4 glow-border-primary group hover:shadow-lg transition-all duration-300">
+                <div className="card-elevated !p-4 glow-border-primary group">
                   <div className="w-2 h-2 bg-primary rounded-full mb-3 animate-pulse-glow" />
                   <p className="font-mono text-xs text-foreground">{node.label}</p>
                   <ArrowRight className="w-3 h-3 text-muted-foreground mt-2 group-hover:text-primary transition-colors" />
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
-        {/* Stats with parallax */}
-        <div
+        {/* Stats */}
+        <motion.div
           ref={statsRef}
+          variants={staggerContainer(0.15, 0.5)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
           className="flex flex-wrap gap-12 mt-20 justify-center"
           style={{ transform: `translateY(${statsY}px)` }}
         >
@@ -96,21 +102,16 @@ const AutomacoesSection = () => {
             { stat: "97%", desc: "Processos automatizados" },
             { stat: "3.2x", desc: "Aumento em produtividade" },
             { stat: "< 30s", desc: "Tempo de execução médio" },
-          ].map(({ stat, desc }, i) => (
-            <motion.div
-              key={desc}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 + 0.5 }}
-              className="text-center"
-            >
+          ].map(({ stat, desc }) => (
+            <motion.div key={desc} variants={fadeUpItem} className="text-center">
               <p className="font-mono text-3xl md:text-4xl font-bold text-gradient-primary">{stat}</p>
               <p className="text-sm text-muted-foreground mt-1">{desc}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
+
+      <div className="section-divider mt-32" />
     </section>
   );
 };

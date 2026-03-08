@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Blocks, BadgeCheck, ArrowUpRight } from "lucide-react";
-import useParallax from "@/hooks/use-parallax";
+import { blurUp, staggerContainer, fadeUpItem, cardHover, viewport } from "@/lib/animations";
 
 const partners = [
   { name: "IntegraPay", category: "Pagamentos", arr: "R$ 2.4M", badge: "Active" },
@@ -12,46 +12,46 @@ const partners = [
 ];
 
 const PartnersSection = () => {
-  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
-
   return (
     <section id="partners" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 radial-fade opacity-30" />
+      <div className="absolute inset-0 radial-fade opacity-25" />
 
       <div className="relative container mx-auto px-6">
+        {/* Header — center-aligned blur-up */}
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="mb-20"
-          style={{ transform: `translateY(${headerY}px)` }}
+          variants={blurUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mb-20 text-center"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
-            Módulo 03
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
+          <span className="section-badge mb-4">Módulo 03</span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl mx-auto leading-tight text-foreground mt-4">
             Construa receita recorrente no ecossistema.
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {partners.map((partner, i) => (
+        {/* Partner grid */}
+        <motion.div
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {partners.map((partner) => (
             <motion.div
               key={partner.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className="glass-panel p-6 group hover:glow-border-primary transition-all duration-500 cursor-pointer"
+              variants={fadeUpItem}
+              whileHover={cardHover}
+              className="card-elevated cursor-pointer group"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Blocks className="w-4 h-4 text-primary" />
                   <span className="font-display font-semibold text-foreground">{partner.name}</span>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
               </div>
 
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4">
@@ -70,18 +70,18 @@ const PartnersSection = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+          variants={blurUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
           className="mt-16 text-center"
         >
-          <button className="btn-sharp bg-primary text-primary-foreground glow-primary">
+          <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary">
             Tornar-se Partner
-          </button>
+          </a>
         </motion.div>
       </div>
     </section>
