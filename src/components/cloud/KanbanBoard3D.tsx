@@ -321,10 +321,10 @@ function KanbanScene() {
 /* ── Exported Component ── */
 const KanbanBoard3D = () => {
   return (
-    <div className="w-full h-full min-h-[400px] lg:min-h-[500px] rounded-3xl overflow-hidden">
+    <div className="w-full h-full min-h-[500px] lg:min-h-[600px] rounded-3xl overflow-hidden">
       <Canvas
-        camera={{ position: [0, 0.5, 7], fov: 42 }}
-        dpr={[1, 1.5]}
+        camera={{ position: [0, 0.5, 6.5], fov: 45 }}
+        dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
