@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Text, RoundedBox, MeshTransmissionMaterial } from "@react-three/drei";
-import { useRef, useMemo, useState, useCallback, Suspense } from "react";
+import { Text, RoundedBox } from "@react-three/drei";
+import { useRef, useMemo, useState, useCallback, Suspense, forwardRef } from "react";
 import * as THREE from "three";
 
 const COLUMNS = [
@@ -15,29 +15,23 @@ const COLUMN_HEIGHT = 4.5;
 const CARD_HEIGHT = 0.35;
 const CARD_WIDTH = 1.5;
 const CARD_DEPTH = 0.08;
-const MAX_CARDS_PER_COL = 6;
 
 /* ── Glowing lead card ── */
-function LeadCard({
-  startPos,
-  targetCol,
-  delay,
-  onLanded,
-  cardIndex,
-}: {
+const LeadCard = forwardRef<THREE.Group, {
   startPos: [number, number, number];
   targetCol: number;
   delay: number;
   onLanded: (col: number) => void;
   cardIndex: number;
-}) {
-  const ref = useRef<THREE.Mesh>(null);
+}>(({ startPos, targetCol, delay, onLanded, cardIndex }, _fRef) => {
+  const ref = useRef<THREE.Group>(null);
   const matRef = useRef<THREE.MeshStandardMaterial>(null);
-  const [phase, setPhase] = useState<"wait" | "fall" | "settle" | "move" | "done">("wait");
+  const phaseRef = useRef<"wait" | "fall" | "settle" | "move" | "done">("wait");
   const elapsed = useRef(0);
   const moveTarget = useRef<number | null>(null);
   const currentCol = useRef(targetCol);
   const stackY = useRef(0);
+  const hasLanded = useRef(false);
 
   const colX = COLUMNS[targetCol].x;
   const colColor = COLUMNS[targetCol].color;
@@ -45,10 +39,11 @@ function LeadCard({
   useFrame((_, delta) => {
     if (!ref.current) return;
     elapsed.current += delta;
+    const phase = phaseRef.current;
 
     if (phase === "wait") {
       if (elapsed.current > delay) {
-        setPhase("fall");
+        phaseRef.current = "fall";
         elapsed.current = 0;
       }
       ref.current.position.set(startPos[0], startPos[1], startPos[2]);
@@ -73,27 +68,26 @@ function LeadCard({
         matRef.current.emissiveIntensity = THREE.MathUtils.lerp(2, 0.3, ease);
       }
 
-      if (t >= 1) {
-        setPhase("settle");
+      if (t >= 1 && !hasLanded.current) {
+        hasLanded.current = true;
+        phaseRef.current = "settle";
         elapsed.current = 0;
         onLanded(targetCol);
       }
     }
 
     if (phase === "settle") {
-      // Bounce micro
       const bounce = Math.sin(elapsed.current * 12) * 0.03 * Math.max(0, 1 - elapsed.current * 3);
       ref.current.position.y = stackY.current + bounce;
 
-      if (elapsed.current > 1.5 + Math.random() * 2) {
-        // Move to next column
+      if (elapsed.current > 2) {
         const nextCol = Math.min(currentCol.current + 1, COLUMNS.length - 1);
         if (nextCol !== currentCol.current) {
           moveTarget.current = nextCol;
-          setPhase("move");
+          phaseRef.current = "move";
           elapsed.current = 0;
         } else {
-          setPhase("done");
+          phaseRef.current = "done";
         }
       }
     }
@@ -106,7 +100,6 @@ function LeadCard({
       const toX = COLUMNS[moveTarget.current].x;
 
       ref.current.position.x = THREE.MathUtils.lerp(fromX, toX, ease);
-      // Arc up during move
       ref.current.position.y = stackY.current + Math.sin(t * Math.PI) * 0.8;
 
       if (matRef.current) {
@@ -116,14 +109,14 @@ function LeadCard({
       if (t >= 1) {
         currentCol.current = moveTarget.current;
         moveTarget.current = null;
-        setPhase("settle");
+        phaseRef.current = "settle";
         elapsed.current = 0;
       }
     }
   });
 
   return (
-    <mesh ref={ref} visible={false}>
+    <group ref={ref} visible={false}>
       <RoundedBox args={[CARD_WIDTH, CARD_HEIGHT, CARD_DEPTH]} radius={0.06} smoothness={4}>
         <meshStandardMaterial
           ref={matRef}
@@ -136,7 +129,6 @@ function LeadCard({
           metalness={0.1}
         />
       </RoundedBox>
-      {/* Small inner detail line */}
       <mesh position={[0, 0, CARD_DEPTH / 2 + 0.001]}>
         <planeGeometry args={[CARD_WIDTH * 0.7, 0.04]} />
         <meshBasicMaterial color="white" transparent opacity={0.4} />
@@ -145,55 +137,55 @@ function LeadCard({
         <planeGeometry args={[CARD_WIDTH * 0.4, 0.03]} />
         <meshBasicMaterial color="white" transparent opacity={0.2} />
       </mesh>
-    </mesh>
-  );
-}
-
-/* ── Glass column ── */
-function GlassColumn({ x, label, color }: { x: number; label: string; color: string }) {
-  return (
-    <group position={[x, 0, 0]}>
-      {/* Column body — transparent glass */}
-      <RoundedBox args={[COLUMN_WIDTH, COLUMN_HEIGHT, 0.3]} radius={0.15} smoothness={4} position={[0, 0, 0]}>
-        <meshPhysicalMaterial
-          color="#ffffff"
-          transparent
-          opacity={0.06}
-          roughness={0.1}
-          metalness={0}
-          transmission={0.9}
-          thickness={0.5}
-          side={THREE.DoubleSide}
-        />
-      </RoundedBox>
-
-      {/* Column border glow */}
-      <RoundedBox args={[COLUMN_WIDTH + 0.02, COLUMN_HEIGHT + 0.02, 0.28]} radius={0.16} smoothness={4} position={[0, 0, -0.01]}>
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={0.15}
-          transparent
-          opacity={0.12}
-          side={THREE.DoubleSide}
-        />
-      </RoundedBox>
-
-      {/* Label */}
-      <Text
-        position={[0, COLUMN_HEIGHT / 2 + 0.35, 0]}
-        fontSize={0.2}
-        color={color}
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/dm-mono.woff"
-        letterSpacing={0.08}
-      >
-        {label}
-      </Text>
     </group>
   );
-}
+});
+LeadCard.displayName = "LeadCard";
+
+/* ── Glass column ── */
+const GlassColumn = forwardRef<THREE.Group, { x: number; label: string; color: string }>(
+  ({ x, label, color }, _ref) => {
+    return (
+      <group position={[x, 0, 0]}>
+        <RoundedBox args={[COLUMN_WIDTH, COLUMN_HEIGHT, 0.3]} radius={0.15} smoothness={4}>
+          <meshPhysicalMaterial
+            color="#ffffff"
+            transparent
+            opacity={0.06}
+            roughness={0.1}
+            metalness={0}
+            transmission={0.9}
+            thickness={0.5}
+            side={THREE.DoubleSide}
+          />
+        </RoundedBox>
+
+        <RoundedBox args={[COLUMN_WIDTH + 0.02, COLUMN_HEIGHT + 0.02, 0.28]} radius={0.16} smoothness={4} position={[0, 0, -0.01]}>
+          <meshStandardMaterial
+            color={color}
+            emissive={color}
+            emissiveIntensity={0.15}
+            transparent
+            opacity={0.12}
+            side={THREE.DoubleSide}
+          />
+        </RoundedBox>
+
+        <Text
+          position={[0, COLUMN_HEIGHT / 2 + 0.35, 0]}
+          fontSize={0.2}
+          color={color}
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.08}
+        >
+          {label}
+        </Text>
+      </group>
+    );
+  }
+);
+GlassColumn.displayName = "GlassColumn";
 
 /* ── Glowing portal at top ── */
 function Portal() {
@@ -214,7 +206,6 @@ function Portal() {
         <torusGeometry args={[1.4, 0.04, 16, 64]} />
         <meshStandardMaterial color="#F59E0B" emissive="#F59E0B" emissiveIntensity={1.2} transparent opacity={0.4} />
       </mesh>
-      {/* Central glow */}
       <pointLight color="#0EA5E9" intensity={8} distance={6} decay={2} />
       <pointLight color="#F59E0B" intensity={3} distance={4} decay={2} />
     </group>
@@ -222,20 +213,20 @@ function Portal() {
 }
 
 /* ── Light beams from portal to columns ── */
-function LightBeams() {
-  const ref = useRef<THREE.Group>(null);
+const LightBeams = forwardRef<THREE.Group>((_, _fRef) => {
+  const groupRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
-    if (!ref.current) return;
-    ref.current.children.forEach((child, i) => {
+    if (!groupRef.current) return;
+    groupRef.current.children.forEach((child, i) => {
       const mesh = child as THREE.Mesh;
       const mat = mesh.material as THREE.MeshStandardMaterial;
-      mat.opacity = 0.08 + Math.sin(clock.getElapsedTime() * 2 + i) * 0.04;
+      if (mat) mat.opacity = 0.08 + Math.sin(clock.getElapsedTime() * 2 + i) * 0.04;
     });
   });
 
   return (
-    <group ref={ref}>
+    <group ref={groupRef}>
       {COLUMNS.map((col, i) => {
         const startY = 3.5;
         const endY = COLUMN_HEIGHT / 2;
@@ -257,12 +248,13 @@ function LightBeams() {
       })}
     </group>
   );
-}
+});
+LightBeams.displayName = "LightBeams";
 
 /* ── Particle field ── */
-function Particles() {
+const Particles = forwardRef<THREE.Points>((_, _fRef) => {
   const count = 60;
-  const ref = useRef<THREE.Points>(null);
+  const pointsRef = useRef<THREE.Points>(null);
 
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
@@ -275,8 +267,8 @@ function Particles() {
   }, []);
 
   useFrame(({ clock }) => {
-    if (!ref.current) return;
-    const pos = ref.current.geometry.attributes.position;
+    if (!pointsRef.current) return;
+    const pos = pointsRef.current.geometry.attributes.position;
     for (let i = 0; i < count; i++) {
       const y = pos.getY(i) - 0.01;
       pos.setY(i, y < -2 ? 6 : y);
@@ -286,20 +278,20 @@ function Particles() {
   });
 
   return (
-    <points ref={ref}>
+    <points ref={pointsRef}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial color="#0EA5E9" size={0.03} transparent opacity={0.5} sizeAttenuation />
     </points>
   );
-}
+});
+Particles.displayName = "Particles";
 
 /* ── Main Scene ── */
 function KanbanScene() {
   const [cycle, setCycle] = useState(0);
 
-  // Generate a batch of leads each cycle
   const leads = useMemo(() => {
     const batch = [];
     const cardsPerBatch = 8;
@@ -321,7 +313,6 @@ function KanbanScene() {
 
   const handleLanded = useCallback(() => {
     landedCount.current++;
-    // Reset cycle after all leads have moved through
     if (landedCount.current >= 8) {
       setTimeout(() => {
         landedCount.current = 0;
