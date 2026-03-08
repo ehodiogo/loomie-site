@@ -1,228 +1,160 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Edges, Environment } from "@react-three/drei";
+import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing";
 import { useRef, useMemo, useState, useCallback, Suspense } from "react";
 import * as THREE from "three";
 
-/* ── Config ── */
-const COL_X = [-4.8, -1.6, 1.6, 4.8];
-const COL_SIZE = { w: 2.4, h: 4.8, d: 0.35 };
-const CUBE = 0.52;
-const N_LEADS = 12;
-const CHAOS_X = -8.5;
-const OUT_X = 8.5;
+/* ═══════════════════════════════════════════════
+   CONFIG — tweak these to adjust the scene
+   ═══════════════════════════════════════════════ */
+const NEON_COLOR = "#00d4ff";
+const NEON_DIM = "#0088bb";
+const LEAD_COLOR = "#0d6efd";
+const GLASS_TINT = "#c8e8ff";
 
-const neonCyan = new THREE.Color("#00CCFF");
-const neonDim = new THREE.Color("#0077AA");
-const leadBlue = new THREE.Color("#0D66FF");
+const COL_POSITIONS = [-3.6, -1.2, 1.2, 3.6];
+const COL_W = 1.6;
+const COL_H = 4.0;
+const COL_D = 0.6;
 
-/* ── Wireframe edges ── */
-function GlowEdges({ w, h, d, color, intensity = 0.8, opacity = 0.6, r = 0.008 }: {
-  w: number; h: number; d: number; color: THREE.Color;
-  intensity?: number; opacity?: number; r?: number;
-}) {
-  const hw = w / 2, hh = h / 2, hd = d / 2;
-  const edges = useMemo(() => [
-    { p: [0, hh, hd], ro: [0, 0, 0], l: w },
-    { p: [0, hh, -hd], ro: [0, 0, 0], l: w },
-    { p: [hw, hh, 0], ro: [0, Math.PI / 2, 0], l: d },
-    { p: [-hw, hh, 0], ro: [0, Math.PI / 2, 0], l: d },
-    { p: [0, -hh, hd], ro: [0, 0, 0], l: w },
-    { p: [0, -hh, -hd], ro: [0, 0, 0], l: w },
-    { p: [hw, -hh, 0], ro: [0, Math.PI / 2, 0], l: d },
-    { p: [-hw, -hh, 0], ro: [0, Math.PI / 2, 0], l: d },
-    { p: [hw, 0, hd], ro: [Math.PI / 2, 0, 0], l: h },
-    { p: [-hw, 0, hd], ro: [Math.PI / 2, 0, 0], l: h },
-    { p: [hw, 0, -hd], ro: [Math.PI / 2, 0, 0], l: h },
-    { p: [-hw, 0, -hd], ro: [Math.PI / 2, 0, 0], l: h },
-  ], [w, h, d, hw, hh, hd]);
+const N_LEADS = 8;
+const LEAD_CUBE = 0.42;
+const CARD_SCALE: [number, number, number] = [1.4, 0.18, 0.55]; // x,y,z when "card"
+
+const SPEED_MULT = 1.0; // global speed multiplier
+
+/* ═══════════════════════════════════════════════
+   MATERIALS (reusable instances)
+   ═══════════════════════════════════════════════ */
+const glassProps = {
+  color: GLASS_TINT,
+  transparent: true,
+  opacity: 0.08,
+  roughness: 0.1,
+  metalness: 0,
+  transmission: 0.9,
+  thickness: 0.5,
+  clearcoat: 1,
+  clearcoatRoughness: 0.05,
+  ior: 1.45,
+  envMapIntensity: 1.5,
+  side: THREE.DoubleSide as THREE.Side,
+} as const;
+
+const leadGlassProps = {
+  color: LEAD_COLOR,
+  transparent: true,
+  opacity: 0.15,
+  roughness: 0.1,
+  metalness: 0,
+  transmission: 0.85,
+  thickness: 0.4,
+  clearcoat: 1,
+  clearcoatRoughness: 0.08,
+  ior: 1.4,
+  emissive: LEAD_COLOR,
+  emissiveIntensity: 0.3,
+  envMapIntensity: 1.2,
+  side: THREE.DoubleSide as THREE.Side,
+} as const;
+
+/* ═══════════════════════════════════════════════
+   COLUMN — glass box + neon edges
+   ═══════════════════════════════════════════════ */
+function Column({ x }: { x: number }) {
+  return (
+    <group position={[x, 0, 0]}>
+      <mesh>
+        <boxGeometry args={[COL_W, COL_H, COL_D]} />
+        <meshPhysicalMaterial {...glassProps} />
+        <Edges
+          threshold={15}
+          scale={1}
+          renderOrder={1}
+        >
+          <meshBasicMaterial color={NEON_COLOR} toneMapped={false} transparent opacity={0.7} />
+        </Edges>
+      </mesh>
+      {/* Shelf dividers */}
+      {[-0.8, 0, 0.8].map((y, i) => (
+        <mesh key={i} position={[0, y, COL_D / 2 + 0.003]}>
+          <planeGeometry args={[COL_W * 0.85, 0.004]} />
+          <meshBasicMaterial color={NEON_DIM} toneMapped={false} transparent opacity={0.25} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   CURVED TUBES — connecting column bases
+   ═══════════════════════════════════════════════ */
+function ConnectionTube({ from, to }: { from: number; to: number }) {
+  const curve = useMemo(() => {
+    const mid = (from + to) / 2;
+    return new THREE.CatmullRomCurve3([
+      new THREE.Vector3(from, -COL_H / 2 + 0.1, 0),
+      new THREE.Vector3(mid, -COL_H / 2 - 0.6, 0.15),
+      new THREE.Vector3(to, -COL_H / 2 + 0.1, 0),
+    ]);
+  }, [from, to]);
+
+  const tubeGeo = useMemo(() => new THREE.TubeGeometry(curve, 24, 0.04, 8, false), [curve]);
 
   return (
     <group>
-      {edges.map((e, i) => (
-        <mesh key={i} position={e.p as [number, number, number]} rotation={e.ro as [number, number, number]}>
-          <cylinderGeometry args={[r, r, e.l, 6]} />
-          <meshStandardMaterial
-            color={color} emissive={color} emissiveIntensity={intensity}
-            transparent opacity={opacity} toneMapped={false}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-/* ── Connection tubes between columns + chaos→col0 + col3→output ── */
-function Tubes() {
-  const ref = useRef<THREE.Group>(null);
-  useFrame(({ clock }) => {
-    if (!ref.current) return;
-    ref.current.children.forEach((c, i) => {
-      const m = (c as THREE.Mesh).material as THREE.MeshStandardMaterial;
-      if (m) m.emissiveIntensity = 0.35 + Math.sin(clock.getElapsedTime() * 2.5 + i * 1.8) * 0.25;
-    });
-  });
-
-  const segs: { fx: number; tx: number; y: number }[] = [];
-  for (let i = 0; i < COL_X.length - 1; i++) {
-    segs.push({ fx: COL_X[i], tx: COL_X[i + 1], y: COL_SIZE.h * 0.28 });
-    segs.push({ fx: COL_X[i], tx: COL_X[i + 1], y: -COL_SIZE.h * 0.28 });
-  }
-  segs.push({ fx: CHAOS_X, tx: COL_X[0], y: 0 });
-  segs.push({ fx: COL_X[3], tx: OUT_X, y: 0 });
-
-  return (
-    <group ref={ref}>
-      {segs.map((s, i) => {
-        const mx = (s.fx + s.tx) / 2;
-        const len = Math.abs(s.tx - s.fx);
-        return (
-          <mesh key={i} position={[mx, s.y, 0]}>
-            <boxGeometry args={[len, 0.022, 0.022]} />
-            <meshStandardMaterial
-              color={neonCyan} emissive={neonCyan} emissiveIntensity={0.35}
-              transparent opacity={0.28} toneMapped={false}
-            />
-          </mesh>
-        );
-      })}
-    </group>
-  );
-}
-
-/* ── Kanban column ── */
-function Column({ x, color }: { x: number; color: THREE.Color }) {
-  return (
-    <group position={[x, 0, 0]}>
-      {/* Glass body */}
-      <mesh>
-        <boxGeometry args={[COL_SIZE.w, COL_SIZE.h, COL_SIZE.d]} />
-        <meshPhysicalMaterial
-          color="#E0F0FF" transparent opacity={0.04}
-          roughness={0.01} metalness={0}
-          transmission={0.96} thickness={0.4}
-          clearcoat={1} clearcoatRoughness={0.01}
-          ior={1.5} side={THREE.DoubleSide} envMapIntensity={2}
-        />
+      {/* Glass tube */}
+      <mesh geometry={tubeGeo}>
+        <meshPhysicalMaterial {...glassProps} opacity={0.06} />
       </mesh>
-      {/* Neon wireframe */}
-      <GlowEdges w={COL_SIZE.w} h={COL_SIZE.h} d={COL_SIZE.d} color={color} intensity={0.7} opacity={0.5} r={0.012} />
-      {/* Shelf lines */}
-      {[-1.0, 0, 1.0].map((yy, i) => (
-        <mesh key={i} position={[0, yy, COL_SIZE.d / 2 + 0.005]}>
-          <boxGeometry args={[COL_SIZE.w - 0.2, 0.003, 0.003]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.25} transparent opacity={0.15} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-/* ── Chaos icosphere (input) ── */
-function ChaosInput() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.y = clock.getElapsedTime() * 0.12;
-    meshRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.08) * 0.15;
-  });
-
-  return (
-    <group position={[CHAOS_X, 0, 0]}>
-      {/* Glass ico */}
-      <mesh ref={meshRef}>
-        <icosahedronGeometry args={[1.8, 2]} />
-        <meshPhysicalMaterial
-          color="#C0E8FF" transparent opacity={0.05}
-          roughness={0.01} transmission={0.95} thickness={0.3}
-          wireframe side={THREE.DoubleSide}
-        />
-      </mesh>
-      {/* Neon wireframe overlay */}
-      <mesh rotation={meshRef.current?.rotation}>
-        <icosahedronGeometry args={[1.82, 2]} />
-        <meshStandardMaterial
-          color={neonCyan} emissive={neonCyan} emissiveIntensity={1.2}
-          transparent opacity={0.22} wireframe toneMapped={false}
-        />
+      {/* Neon core */}
+      <mesh geometry={new THREE.TubeGeometry(curve, 24, 0.012, 6, false)}>
+        <meshBasicMaterial color={NEON_DIM} toneMapped={false} transparent opacity={0.5} />
       </mesh>
     </group>
   );
 }
 
-/* ── Structured output cylinder ── */
-function OutputStructured() {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame(({ clock }) => {
-    if (!ref.current) return;
-    ref.current.rotation.x = clock.getElapsedTime() * 0.05;
-  });
-
-  return (
-    <group position={[OUT_X, 0, 0]}>
-      <mesh ref={ref} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[1.2, 1.2, 3.5, 24, 1, true]} />
-        <meshPhysicalMaterial
-          color="#C0E8FF" transparent opacity={0.05}
-          roughness={0.01} transmission={0.95} thickness={0.3}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
-      {/* Neon ring edges */}
-      {[-1.75, 0, 1.75].map((yOff, i) => (
-        <mesh key={i} position={[0, yOff, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.2, 0.012, 8, 32]} />
-          <meshStandardMaterial
-            color={neonCyan} emissive={neonCyan} emissiveIntensity={1.0}
-            transparent opacity={0.5} toneMapped={false}
-          />
-        </mesh>
-      ))}
-      {/* Vertical neon lines */}
-      {[0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI, (4 * Math.PI) / 3, (5 * Math.PI) / 3].map((angle, i) => (
-        <mesh key={`v${i}`} position={[Math.cos(angle) * 1.2, 0, Math.sin(angle) * 1.2]}>
-          <cylinderGeometry args={[0.008, 0.008, 3.5, 4]} />
-          <meshStandardMaterial
-            color={neonDim} emissive={neonDim} emissiveIntensity={0.5}
-            transparent opacity={0.3} toneMapped={false}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-/* ── Lead cube — traverses chaos → 4 columns → output ── */
+/* ═══════════════════════════════════════════════
+   LEAD CUBE — morphs cube ↔ card as it travels
+   ═══════════════════════════════════════════════ */
 function LeadCube({ index, cycle, onDone }: { index: number; cycle: number; onDone: () => void }) {
   const ref = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const elapsed = useRef(0);
-  const phase = useRef(0); // 0=wait, 1..5=segments, 6=done
+  const phase = useRef(0); // 0=wait, 1..4=column segments, 5=exit, 6=done
   const done = useRef(false);
-  const spin = useRef((Math.random() - 0.5) * 3);
+  const spin = useRef((Math.random() - 0.5) * 2.5);
 
+  // Waypoints: start off-screen left, then each column, then off-screen right
   const cfg = useMemo(() => {
-    const delay = (index / N_LEADS) * 2.5 + Math.random() * 0.8;
+    const delay = (index / N_LEADS) * 3.5 + Math.random() * 1.5;
+    const startX = COL_POSITIONS[0] - 3;
+    const endX = COL_POSITIONS[3] + 3;
     const wp = [
-      { x: CHAOS_X + (Math.random() - 0.5) * 1.2, y: (Math.random() - 0.5) * 2 },
-      { x: COL_X[0] + (Math.random() - 0.5) * 0.5, y: (Math.random() - 0.5) * 1.5 },
-      { x: COL_X[1] + (Math.random() - 0.5) * 0.5, y: (Math.random() - 0.5) * 1.5 },
-      { x: COL_X[2] + (Math.random() - 0.5) * 0.5, y: (Math.random() - 0.5) * 1.5 },
-      { x: COL_X[3] + (Math.random() - 0.5) * 0.5, y: (Math.random() - 0.5) * 1.5 },
-      { x: OUT_X + (Math.random() - 0.5) * 0.3, y: (Math.random() - 0.5) * 1.8 },
+      { x: startX, y: (Math.random() - 0.5) * 1.5 },
+      ...COL_POSITIONS.map(cx => ({ x: cx, y: (Math.random() - 0.5) * 1.2 })),
+      { x: endX, y: (Math.random() - 0.5) * 1.0 },
     ];
-    const dur = wp.slice(1).map(() => 0.55 + Math.random() * 0.5);
-    const wait = wp.slice(1).map(() => 0.3 + Math.random() * 1.0);
+    // flight duration per segment
+    const dur = wp.slice(1).map(() => (0.5 + Math.random() * 0.4) / SPEED_MULT);
+    // idle time at each column
+    const wait = wp.slice(1).map((_, i) => i === 0 || i === wp.length - 2 ? 0.1 : (0.6 + Math.random() * 1.2) / SPEED_MULT);
     return { delay, wp, dur, wait };
   }, [index, cycle]);
 
+  // Reset on cycle change
   useMemo(() => { phase.current = 0; elapsed.current = 0; done.current = false; }, [cycle]);
 
   useFrame((_, dt) => {
-    if (!ref.current) return;
+    if (!ref.current || !meshRef.current) return;
     elapsed.current += dt;
     const p = phase.current;
 
+    // Phase 0: waiting to spawn
     if (p === 0) {
       ref.current.visible = false;
-      ref.current.position.set(cfg.wp[0].x, cfg.wp[0].y, 0.15);
+      ref.current.position.set(cfg.wp[0].x, cfg.wp[0].y, 0);
       if (elapsed.current > cfg.delay) { phase.current = 1; elapsed.current = 0; }
       return;
     }
@@ -231,104 +163,157 @@ function LeadCube({ index, cycle, onDone }: { index: number; cycle: number; onDo
     const seg = p - 1;
 
     if (seg < cfg.dur.length) {
-      if (elapsed.current < cfg.wait[seg]) {
-        // Idle with subtle bob
+      const waitT = cfg.wait[seg];
+      const isIdle = elapsed.current < waitT;
+
+      if (isIdle) {
+        // Idle at column — morph to CARD shape
+        const morphT = Math.min(elapsed.current / Math.max(waitT * 0.3, 0.15), 1);
+        const e = morphT * morphT * (3 - 2 * morphT); // smoothstep
+        meshRef.current.scale.set(
+          THREE.MathUtils.lerp(1, CARD_SCALE[0], e),
+          THREE.MathUtils.lerp(1, CARD_SCALE[1], e),
+          THREE.MathUtils.lerp(1, CARD_SCALE[2], e),
+        );
         ref.current.position.x = cfg.wp[seg].x;
-        ref.current.position.y = cfg.wp[seg].y + Math.sin(elapsed.current * 3 + index) * 0.025;
-        ref.current.rotation.x *= 0.97; ref.current.rotation.y *= 0.97;
+        ref.current.position.y = cfg.wp[seg].y + Math.sin(elapsed.current * 2.5 + index) * 0.015;
+        ref.current.position.z = 0;
+        ref.current.rotation.x *= 0.92;
+        ref.current.rotation.y *= 0.92;
+        ref.current.rotation.z *= 0.92;
         return;
       }
 
-      const mt = elapsed.current - cfg.wait[seg];
+      // Flying — morph back to CUBE shape
+      const mt = elapsed.current - waitT;
       const t = Math.min(mt / cfg.dur[seg], 1);
-      const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const easeT = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-      const from = cfg.wp[seg], to = cfg.wp[seg + 1];
-      ref.current.position.x = THREE.MathUtils.lerp(from.x, to.x, e);
-      ref.current.position.y = THREE.MathUtils.lerp(from.y, to.y, e);
-      ref.current.position.z = 0.15 + Math.sin(t * Math.PI) * 0.55;
-      ref.current.rotation.y += spin.current * dt * (1 - e * 0.6);
-      ref.current.rotation.x += spin.current * 0.3 * dt * (1 - e * 0.6);
+      // Morph back to cube in first 30% of flight
+      const cubeMorph = Math.min(mt / (cfg.dur[seg] * 0.3), 1);
+      const cm = cubeMorph * cubeMorph * (3 - 2 * cubeMorph);
+      meshRef.current.scale.set(
+        THREE.MathUtils.lerp(CARD_SCALE[0], 1, cm),
+        THREE.MathUtils.lerp(CARD_SCALE[1], 1, cm),
+        THREE.MathUtils.lerp(CARD_SCALE[2], 1, cm),
+      );
 
-      if (t >= 1) { phase.current = p + 1; elapsed.current = 0; ref.current.rotation.set(0, 0, 0); }
+      const from = cfg.wp[seg];
+      const to = cfg.wp[seg + 1];
+      ref.current.position.x = THREE.MathUtils.lerp(from.x, to.x, easeT);
+      ref.current.position.y = THREE.MathUtils.lerp(from.y, to.y, easeT);
+      // Arc in the air (Z axis = up)
+      ref.current.position.z = Math.sin(easeT * Math.PI) * 1.4;
+
+      // Tumble while flying
+      ref.current.rotation.y += spin.current * dt * (1 - easeT * 0.5);
+      ref.current.rotation.x += spin.current * 0.4 * dt;
+
+      if (t >= 1) {
+        phase.current = p + 1;
+        elapsed.current = 0;
+        ref.current.rotation.set(0, 0, 0);
+      }
     } else {
+      // Done
       if (!done.current) { done.current = true; onDone(); }
-      ref.current.position.y = cfg.wp[cfg.wp.length - 1].y + Math.sin(elapsed.current * 0.7 + index) * 0.02;
+      ref.current.visible = false;
     }
   });
 
   return (
     <group ref={ref} visible={false}>
-      {/* Glass body */}
-      <mesh>
-        <boxGeometry args={[CUBE, CUBE, CUBE]} />
-        <meshPhysicalMaterial
-          color="#B0E0FF" transparent opacity={0.08}
-          roughness={0.1} transmission={0.9} thickness={0.5}
-          clearcoat={1} clearcoatRoughness={0.02} ior={1.45}
-          side={THREE.DoubleSide} envMapIntensity={2}
-        />
+      <mesh ref={meshRef}>
+        <boxGeometry args={[LEAD_CUBE, LEAD_CUBE, LEAD_CUBE]} />
+        <meshPhysicalMaterial {...leadGlassProps} />
+        <Edges threshold={15}>
+          <meshBasicMaterial color={LEAD_COLOR} toneMapped={false} transparent opacity={0.9} />
+        </Edges>
       </mesh>
-      {/* Luminescent inner core */}
-      <mesh>
-        <boxGeometry args={[CUBE * 0.45, CUBE * 0.45, CUBE * 0.45]} />
-        <meshStandardMaterial
-          color="#0066FF" emissive="#0066FF" emissiveIntensity={5}
-          transparent opacity={0.2} toneMapped={false}
-        />
+      {/* Inner luminescent core */}
+      <mesh scale={0.35}>
+        <boxGeometry args={[LEAD_CUBE, LEAD_CUBE, LEAD_CUBE]} />
+        <meshBasicMaterial color={LEAD_COLOR} toneMapped={false} transparent opacity={0.25} />
       </mesh>
-      {/* Neon wireframe */}
-      <GlowEdges w={CUBE} h={CUBE} d={CUBE} color={leadBlue} intensity={2} opacity={0.85} r={0.007} />
     </group>
   );
 }
 
-/* ── Particles ── */
+/* ═══════════════════════════════════════════════
+   PARTICLES — ambient dust
+   ═══════════════════════════════════════════════ */
 function Particles() {
-  const count = 45;
-  const pRef = useRef<THREE.Points>(null);
+  const count = 35;
+  const ref = useRef<THREE.Points>(null);
   const pos = useMemo(() => {
     const a = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      a[i * 3] = (Math.random() - 0.5) * 22;
-      a[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      a[i * 3] = (Math.random() - 0.5) * 14;
+      a[i * 3 + 1] = (Math.random() - 0.5) * 8;
       a[i * 3 + 2] = (Math.random() - 0.5) * 4;
     }
     return a;
   }, []);
 
   useFrame(({ clock }) => {
-    if (!pRef.current) return;
-    const p = pRef.current.geometry.attributes.position;
+    if (!ref.current) return;
+    const p = ref.current.geometry.attributes.position;
     for (let i = 0; i < count; i++) {
-      const y = p.getY(i) - 0.003;
-      p.setY(i, y < -5 ? 5 : y);
-      p.setX(i, p.getX(i) + Math.sin(clock.getElapsedTime() * 0.2 + i * 0.6) * 0.001);
+      const y = p.getY(i) - 0.002;
+      p.setY(i, y < -4 ? 4 : y);
+      p.setX(i, p.getX(i) + Math.sin(clock.getElapsedTime() * 0.15 + i * 0.7) * 0.0008);
     }
     p.needsUpdate = true;
   });
 
   return (
-    <points ref={pRef}>
+    <points ref={ref}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[pos, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#38BDF8" size={0.04} transparent opacity={0.18} sizeAttenuation />
+      <pointsMaterial color={NEON_DIM} size={0.035} transparent opacity={0.2} sizeAttenuation />
     </points>
   );
 }
 
-/* ── Ground ── */
+/* ═══════════════════════════════════════════════
+   GROUND PLANE — subtle reflective surface
+   ═══════════════════════════════════════════════ */
 function Ground() {
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -COL_SIZE.h / 2 - 0.05, 0]}>
-      <planeGeometry args={[28, 12]} />
-      <meshStandardMaterial color="#060E1A" roughness={0.1} metalness={0.7} transparent opacity={0.22} />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -COL_H / 2 - 0.08, 0]}>
+      <planeGeometry args={[20, 10]} />
+      <meshStandardMaterial color="#0a1628" roughness={0.15} metalness={0.6} transparent opacity={0.25} />
     </mesh>
   );
 }
 
-/* ── Scene ── */
+/* ═══════════════════════════════════════════════
+   POSTPROCESSING — Bloom + DepthOfField
+   ═══════════════════════════════════════════════ */
+function Effects() {
+  const { camera } = useThree();
+  return (
+    <EffectComposer multisampling={0}>
+      <DepthOfField
+        focusDistance={0}
+        focalLength={0.055}
+        bokehScale={4}
+        target={[0, 0, 0]}
+      />
+      <Bloom
+        luminanceThreshold={0.2}
+        luminanceSmoothing={0.9}
+        intensity={0.6}
+        mipmapBlur
+      />
+    </EffectComposer>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   SCENE — orchestrates everything
+   ═══════════════════════════════════════════════ */
 function Scene() {
   const [cycle, setCycle] = useState(0);
   const doneN = useRef(0);
@@ -336,46 +321,59 @@ function Scene() {
   const onDone = useCallback(() => {
     doneN.current++;
     if (doneN.current >= N_LEADS) {
-      setTimeout(() => { doneN.current = 0; setCycle(c => c + 1); }, 4500);
+      setTimeout(() => { doneN.current = 0; setCycle(c => c + 1); }, 3000);
     }
   }, []);
 
   return (
     <>
-      {/* Lighting — soft area + blue sun accent */}
-      <ambientLight intensity={0.45} color="#E0F2FE" />
-      <directionalLight position={[-5, 8, 10]} intensity={0.55} color="#F0F9FF" />
-      <directionalLight position={[0, 10, 0]} intensity={0.25} color="#0077FF" />
-      {/* Neon accent point lights */}
-      <pointLight position={[-8, 0, 6]} intensity={4} color="#0088FF" distance={18} decay={2} />
-      <pointLight position={[0, -3, 6]} intensity={3} color="#00CCFF" distance={16} decay={2} />
-      <pointLight position={[8, 0, 6]} intensity={3} color="#0EA5E9" distance={16} decay={2} />
-      <pointLight position={[0, 5, 4]} intensity={1.8} color="#38BDF8" distance={14} decay={2} />
+      {/* Lighting */}
+      <ambientLight intensity={0.5} color="#dde8f8" />
+      <directionalLight position={[-4, 8, 6]} intensity={0.6} color="#e8f0ff" />
+      <directionalLight position={[2, 6, -3]} intensity={0.25} color="#003399" />
+      <pointLight position={[0, -2, 5]} intensity={3} color={NEON_COLOR} distance={14} decay={2} />
+      <pointLight position={[-5, 1, 4]} intensity={2} color="#0066cc" distance={12} decay={2} />
+      <pointLight position={[5, 1, 4]} intensity={2} color="#0099ff" distance={12} decay={2} />
+
+      <Environment preset="city" environmentIntensity={0.3} />
 
       <Particles />
       <Ground />
-      <Tubes />
-      <ChaosInput />
-      <OutputStructured />
 
-      {COL_X.map((x, i) => (
-        <Column key={i} x={x} color={i === 0 ? neonCyan : neonDim} />
+      {/* Connection tubes between columns */}
+      {COL_POSITIONS.slice(0, -1).map((x, i) => (
+        <ConnectionTube key={i} from={x} to={COL_POSITIONS[i + 1]} />
       ))}
 
+      {/* Kanban columns */}
+      {COL_POSITIONS.map((x, i) => (
+        <Column key={i} x={x} />
+      ))}
+
+      {/* Lead cubes */}
       {Array.from({ length: N_LEADS }).map((_, i) => (
         <LeadCube key={`${cycle}-${i}`} index={i} cycle={cycle} onDone={onDone} />
       ))}
+
+      <Effects />
     </>
   );
 }
 
-/* ── Export ── */
+/* ═══════════════════════════════════════════════
+   EXPORT
+   ═══════════════════════════════════════════════ */
 const KanbanBoard3D = () => (
   <div className="w-full h-full min-h-[500px] lg:min-h-[650px] rounded-3xl overflow-hidden">
     <Canvas
-      camera={{ position: [0, 1.5, 12], fov: 42 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
+      camera={{ position: [0, 3, 10], fov: 38 }}
+      dpr={[1, 1.5]}
+      gl={{
+        antialias: true,
+        alpha: true,
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.3,
+      }}
       style={{ background: "transparent" }}
     >
       <Suspense fallback={null}>
