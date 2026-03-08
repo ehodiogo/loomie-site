@@ -18,7 +18,7 @@ const features = [
     desc: "Identifique exatamente onde sua operação trava. Dashboards em tempo real mostram os gargalos operacionais para que você tome decisões baseadas em dados, não em achismos.",
   },
   {
-    icon: Funnel,
+    icon: Filter,
     title: "Funis Visuais de Venda",
     desc: "Visualize cada etapa do seu processo comercial com funis personalizáveis. Saiba exatamente onde cada lead está e o que precisa acontecer para avançá-lo.",
   },
