@@ -34,12 +34,12 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* ── Orbiting icons layer (z-1, behind glass blocks at z-3) ── */}
-      <div className="absolute inset-0 pointer-events-none z-[1]">
-        {/* Center the orbit around the glass composition area */}
+      {/* ── Orbiting icons layer (z-[2], behind glass blocks at z-[3]) ── */}
+      <div className="absolute inset-0 pointer-events-none z-[2] overflow-hidden">
+        {/* Anchor orbit to the right-side glass composition area only */}
         <div
           className="absolute"
-          style={{ left: "50%", top: "50%", width: 0, height: 0 }}
+          style={{ left: "75%", top: "50%", width: 0, height: 0 }}
         >
           {orbitingIcons.map(({ Icon, duration, delay, rx, ry, size }, i) => (
             <motion.div
