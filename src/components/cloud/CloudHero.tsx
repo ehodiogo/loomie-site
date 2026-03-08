@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
-import leadIngestionImg from "@/assets/lead-ingestion.png";
+import { lazy, Suspense } from "react";
+
+const KanbanBoard3D = lazy(() => import("@/components/cloud/KanbanBoard3D"));
 
 const CloudHero = () => {
   return (
@@ -59,30 +61,22 @@ const CloudHero = () => {
             </motion.a>
           </div>
 
-          {/* Right Column — 40% — Lead Ingestion Visual */}
+          {/* Right Column — 40% — 3D Kanban */}
           <motion.div
             className="lg:col-span-2 relative"
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
           >
-            <div className="relative rounded-3xl overflow-hidden glow-border-primary">
-              {/* Pulsing glow behind image */}
-              <motion.div
-                className="absolute inset-0 rounded-3xl"
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  background: "radial-gradient(ellipse at 50% 30%, hsl(var(--glow-cyan) / 0.15), transparent 70%)",
-                }}
-              />
-              <img
-                src={leadIngestionImg}
-                alt="Visualização do pipeline de leads sendo processados automaticamente pelo Loomie Cloud"
-                className="w-full h-auto relative z-10"
-                loading="eager"
-              />
-            </div>
+            <Suspense
+              fallback={
+                <div className="w-full min-h-[400px] lg:min-h-[500px] rounded-3xl flex items-center justify-center" style={{ background: "linear-gradient(180deg, hsl(210 30% 8%) 0%, hsl(200 40% 12%) 100%)" }}>
+                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                </div>
+              }
+            >
+              <KanbanBoard3D />
+            </Suspense>
 
             {/* Floating stat badge */}
             <motion.div
