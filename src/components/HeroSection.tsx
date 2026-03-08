@@ -1,28 +1,23 @@
-import { motion, useMotionValue, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MessageCircle, Instagram, Mail, Phone, Globe, Send, AtSign, Radio, Wifi, Share2, Rss, Bell } from "lucide-react";
-import { wordStagger, wordReveal, blurUp, staggerContainer, scaleItem, ease, viewport } from "@/lib/animations";
+import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
-const floatingIcons = [
-  { Icon: Phone, x: "82%", y: "15%", size: 17, delay: 0, duration: 7 },
-  { Icon: Globe, x: "90%", y: "28%", size: 20, delay: 1.2, duration: 8 },
-  { Icon: Send, x: "75%", y: "48%", size: 15, delay: 0.5, duration: 6 },
-  { Icon: AtSign, x: "93%", y: "58%", size: 19, delay: 2, duration: 7.5 },
-  { Icon: Radio, x: "80%", y: "72%", size: 14, delay: 0.8, duration: 8.5 },
-  { Icon: Wifi, x: "88%", y: "40%", size: 15, delay: 1.5, duration: 5.5 },
-  { Icon: Share2, x: "72%", y: "25%", size: 17, delay: 3, duration: 6.5 },
-  { Icon: Rss, x: "95%", y: "45%", size: 13, delay: 2.5, duration: 9 },
-  { Icon: Bell, x: "78%", y: "82%", size: 15, delay: 1, duration: 6 },
-  { Icon: MessageCircle, x: "68%", y: "62%", size: 12, delay: 3.5, duration: 7.5 },
-  { Icon: Instagram, x: "92%", y: "18%", size: 14, delay: 0.3, duration: 7 },
-  { Icon: Mail, x: "70%", y: "38%", size: 14, delay: 2.2, duration: 6.2 },
-];
-
-const orbitIcons = [
-  { Icon: MessageCircle, delay: 0, speed: "animate-orbit" },
-  { Icon: Instagram, delay: 5, speed: "animate-orbit-slow" },
-  { Icon: Mail, delay: 10, speed: "animate-orbit-fast" },
+/* Icons that orbit behind the glass composition */
+const orbitingIcons = [
+  { Icon: Phone, duration: 14, delay: 0, rx: 220, ry: 180, size: 17 },
+  { Icon: Globe, duration: 18, delay: 1.5, rx: 260, ry: 200, size: 20 },
+  { Icon: Send, duration: 12, delay: 3, rx: 190, ry: 160, size: 15 },
+  { Icon: AtSign, duration: 16, delay: 4.5, rx: 240, ry: 190, size: 19 },
+  { Icon: Radio, duration: 20, delay: 2, rx: 200, ry: 170, size: 14 },
+  { Icon: Wifi, duration: 15, delay: 5, rx: 250, ry: 210, size: 15 },
+  { Icon: Share2, duration: 13, delay: 6, rx: 210, ry: 175, size: 17 },
+  { Icon: Rss, duration: 17, delay: 7, rx: 230, ry: 185, size: 13 },
+  { Icon: Bell, duration: 19, delay: 3.5, rx: 270, ry: 220, size: 15 },
+  { Icon: MessageCircle, duration: 11, delay: 8, rx: 195, ry: 165, size: 12 },
+  { Icon: Instagram, duration: 16, delay: 1, rx: 245, ry: 195, size: 14 },
+  { Icon: Mail, duration: 14, delay: 5.5, rx: 215, ry: 180, size: 14 },
 ];
 
 const HeroSection = () => {
@@ -39,45 +34,52 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* Floating convergence icons */}
+      {/* ── Orbiting icons layer (z-1, behind glass blocks at z-3) ── */}
       <div className="absolute inset-0 pointer-events-none z-[1]">
-        {floatingIcons.map(({ Icon, x, y, size, delay, duration }, i) => (
-          <motion.div
-            key={i}
-            className="absolute glass-panel p-2.5"
-            style={{ left: x, top: y }}
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{
-              opacity: [0.1, 0.35, 0.1],
-              y: [0, -14, 0],
-              x: [0, i % 2 === 0 ? -8 : 8, 0],
-              scale: [0.92, 1, 0.92],
-            }}
-            transition={{
-              duration,
-              delay: delay + 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Icon className="text-primary" size={size} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Orbiting icons */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[2]">
-        <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px]">
-          {orbitIcons.map(({ Icon, delay, speed }, i) => (
-            <div
+        {/* Center the orbit around the glass composition area */}
+        <div
+          className="absolute"
+          style={{ left: "50%", top: "50%", width: 0, height: 0 }}
+        >
+          {orbitingIcons.map(({ Icon, duration, delay, rx, ry, size }, i) => (
+            <motion.div
               key={i}
-              className={`absolute inset-0 flex items-center justify-center ${speed}`}
-              style={{ animationDelay: `${delay}s` }}
+              className="absolute glass-panel p-2.5"
+              style={{
+                left: 0,
+                top: 0,
+                translateX: "-50%",
+                translateY: "-50%",
+              }}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0.08, 0.35, 0.08],
+                x: [
+                  Math.cos(0) * rx,
+                  Math.cos(Math.PI * 0.5) * rx,
+                  Math.cos(Math.PI) * rx,
+                  Math.cos(Math.PI * 1.5) * rx,
+                  Math.cos(Math.PI * 2) * rx,
+                ],
+                y: [
+                  Math.sin(0) * ry,
+                  Math.sin(Math.PI * 0.5) * ry,
+                  Math.sin(Math.PI) * ry,
+                  Math.sin(Math.PI * 1.5) * ry,
+                  Math.sin(Math.PI * 2) * ry,
+                ],
+                rotate: [0, 90, 180, 270, 360],
+                scale: [0.85, 1.05, 0.85, 1.05, 0.85],
+              }}
+              transition={{
+                duration,
+                delay,
+                repeat: Infinity,
+                ease: "linear",
+              }}
             >
-              <div className="glass-panel p-3">
-                <Icon className="w-5 h-5 text-primary" />
-              </div>
-            </div>
+              <Icon className="text-primary" size={size} />
+            </motion.div>
           ))}
         </div>
       </div>
@@ -86,10 +88,9 @@ const HeroSection = () => {
         {/* Left: Text */}
         <div
           ref={parallaxRef}
-          className="flex-1 flex flex-col items-start text-left gap-8"
+          className="flex-1 flex flex-col items-start text-left gap-8 z-10"
           style={{ transform: `translateY(${parallaxY}px)` }}
         >
-          {/* Headline with word stagger */}
           <motion.h1
             variants={wordStagger}
             initial="hidden"
@@ -103,7 +104,6 @@ const HeroSection = () => {
             ))}
           </motion.h1>
 
-          {/* Subtitle with blur reveal */}
           <motion.p
             variants={blurUp}
             initial="hidden"
@@ -114,7 +114,6 @@ const HeroSection = () => {
             Unifique canais, automatize processos e escale receita recorrente — tudo em uma plataforma.
           </motion.p>
 
-          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -130,7 +129,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Right: Isometric glass composition */}
+        {/* Right: Isometric glass composition (z-3, icons pass behind this) */}
         <motion.div
           ref={blocksRef}
           initial={{ scale: 0.8, opacity: 0, rotate: -3 }}
