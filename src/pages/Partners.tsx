@@ -416,6 +416,133 @@ const Partners = () => {
 
       <div className="section-divider" />
 
+      {/* ═══ Developers — Sell Automations ═══ */}
+      <section className="relative py-28 overflow-hidden">
+        <div className="absolute inset-0 radial-fade opacity-20" />
+        {/* Floating code icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[Code2, Terminal, Workflow, KeyRound, Lock].map((Icon, i) => (
+            <motion.div
+              key={i}
+              className="absolute glass-panel p-2.5"
+              style={{ right: `${8 + (i % 3) * 12}%`, top: `${8 + i * 16}%` }}
+              animate={{
+                opacity: [0.06, 0.2, 0.06],
+                y: [0, -10, 0],
+                rotate: [0, i % 2 === 0 ? 3 : -3, 0],
+              }}
+              transition={{ duration: 7 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.8 }}
+            >
+              <Icon className="text-primary" size={16} />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="relative container mx-auto px-6">
+          <motion.div
+            variants={slideFromLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="text-center mb-16"
+          >
+            <span className="section-badge mb-4 inline-block">Para Desenvolvedores</span>
+            <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-4 mt-4">
+              Venda suas automações <span className="text-gradient-primary">por recorrência.</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Crie, publique e monetize automações no marketplace da Loomie. Defina seu preço e ganhe receita recorrente a cada cliente que utilizar.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={staggerContainer(0.1)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+          >
+            {[
+              {
+                icon: Terminal,
+                title: "API Completa do CRM",
+                desc: "Faça qualquer tarefa dentro do CRM utilizando apenas a API. Crie, leia, atualize e delete — controle total via endpoints RESTful.",
+                badge: "Full Access",
+              },
+              {
+                icon: KeyRound,
+                title: "Gerenciamento de Chaves",
+                desc: "Não se preocupe em cobrar ou com vazamento de dados. A Loomie gerencia as chaves do seu cliente com total transparência de gastos — segurança zero-trust.",
+                badge: "Zero-Trust",
+              },
+              {
+                icon: Lock,
+                title: "Prompt Criptografado",
+                desc: "O prompt do seu agente é criptografado de ponta a ponta. Seu cliente utiliza a automação mas nunca terá acesso ao prompt ou à lógica proprietária.",
+                badge: "E2E Encrypted",
+              },
+              {
+                icon: Store,
+                title: "Marketplace Integrado",
+                desc: "Estipule o preço do seu projeto, publique no marketplace e distribua para milhares de clientes em poucos cliques. Receita recorrente automática.",
+                badge: "Monetize",
+              },
+              {
+                icon: Workflow,
+                title: "Nó da Comunidade n8n",
+                desc: "Integração nativa com n8n através do nó da comunidade Loomie. Conecte seus workflows com o ecossistema completo de automação.",
+                badge: "n8n Native",
+              },
+              {
+                icon: RefreshCcw,
+                title: "Receita Recorrente",
+                desc: "Cada automação vendida gera receita mensal passiva. Quanto mais clientes assinam, maior seu faturamento — sem esforço adicional.",
+                badge: "Passive Income",
+              },
+            ].map(({ icon: Icon, title, desc, badge }) => (
+              <motion.div
+                key={title}
+                variants={fadeUpItem}
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                className="card-elevated group relative"
+              >
+                <div className="absolute top-4 right-4">
+                  <span className="text-[10px] font-mono font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                    {badge}
+                  </span>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors duration-300">
+                  <Icon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-foreground mb-2">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Dev CTA */}
+          <motion.div
+            variants={blurUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="mt-12 text-center"
+          >
+            <a
+              href="https://crm.loomiecrm.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Começar a Vender Automações
+              <Code2 className="w-4 h-4" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
       {/* ═══ Plans ═══ */}
       <section className="relative py-28 overflow-hidden">
         <div className="absolute inset-0 radial-fade opacity-20" />
