@@ -12,9 +12,9 @@ const CloudHero = () => {
       <div className="absolute inset-0 radial-fade" />
 
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-        <div className="grid lg:grid-cols-5 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Column — 60% */}
-          <div className="lg:col-span-3">
+          <div>
             <motion.span
               variants={blurUp}
               initial="hidden"
@@ -63,14 +63,14 @@ const CloudHero = () => {
 
           {/* Right Column — 40% — 3D Kanban */}
           <motion.div
-            className="lg:col-span-2 relative"
+            className="relative"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
           >
             <Suspense
               fallback={
-                <div className="w-full min-h-[400px] lg:min-h-[500px] rounded-3xl flex items-center justify-center">
+                <div className="w-full min-h-[500px] lg:min-h-[600px] rounded-3xl flex items-center justify-center">
                   <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                 </div>
               }

@@ -162,56 +162,69 @@ const GlassColumn = forwardRef<THREE.Group, { x: number; label: string; color: s
 
     return (
       <group position={[x, 0, 0]}>
-        {/* Column body — nearly invisible glass */}
+        {/* Column body — brilliant blue glass */}
         <RoundedBox args={[COLUMN_WIDTH, COLUMN_HEIGHT, 0.25]} radius={0.12} smoothness={4}>
           <meshPhysicalMaterial
-            color="#E0F2FE"
+            color="#38BDF8"
             transparent
-            opacity={0.04}
-            roughness={0.05}
-            metalness={0}
-            transmission={0.95}
-            thickness={0.4}
+            opacity={0.08}
+            roughness={0.02}
+            metalness={0.15}
+            transmission={0.92}
+            thickness={0.6}
             clearcoat={1}
-            clearcoatRoughness={0.05}
+            clearcoatRoughness={0.02}
+            ior={1.5}
+            reflectivity={0.8}
+            envMapIntensity={1.5}
             side={THREE.DoubleSide}
           />
         </RoundedBox>
 
-        {/* Luminescent edge border */}
+        {/* Luminescent edge border — brighter */}
         <RoundedBox args={[COLUMN_WIDTH + 0.03, COLUMN_HEIGHT + 0.03, 0.23]} radius={0.13} smoothness={4} position={[0, 0, -0.005]}>
           <meshStandardMaterial
             ref={edgeRef}
             color={color}
             emissive={color}
-            emissiveIntensity={0.12}
+            emissiveIntensity={0.25}
             transparent
-            opacity={0.08}
+            opacity={0.15}
             side={THREE.DoubleSide}
           />
         </RoundedBox>
 
         {/* Top edge glow line */}
         <mesh position={[0, COLUMN_HEIGHT / 2, 0.13]}>
-          <boxGeometry args={[COLUMN_WIDTH - 0.1, 0.015, 0.015]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} transparent opacity={0.4} />
+          <boxGeometry args={[COLUMN_WIDTH - 0.1, 0.02, 0.02]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1} transparent opacity={0.5} />
         </mesh>
 
         {/* Bottom edge glow line */}
         <mesh position={[0, -COLUMN_HEIGHT / 2, 0.13]}>
-          <boxGeometry args={[COLUMN_WIDTH - 0.1, 0.015, 0.015]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4} transparent opacity={0.25} />
+          <boxGeometry args={[COLUMN_WIDTH - 0.1, 0.02, 0.02]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} transparent opacity={0.35} />
         </mesh>
 
-        {/* Label — simple mesh text alternative */}
+        {/* Left & right vertical edge glow */}
+        <mesh position={[-COLUMN_WIDTH / 2, 0, 0.13]}>
+          <boxGeometry args={[0.015, COLUMN_HEIGHT - 0.1, 0.015]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} transparent opacity={0.3} />
+        </mesh>
+        <mesh position={[COLUMN_WIDTH / 2, 0, 0.13]}>
+          <boxGeometry args={[0.015, COLUMN_HEIGHT - 0.1, 0.015]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} transparent opacity={0.3} />
+        </mesh>
+
+        {/* Label bar */}
         <mesh position={[0, COLUMN_HEIGHT / 2 + 0.3, 0]}>
           <planeGeometry args={[COLUMN_WIDTH * 0.8, 0.18]} />
           <meshStandardMaterial
             color={color}
             emissive={color}
-            emissiveIntensity={0.3}
+            emissiveIntensity={0.4}
             transparent
-            opacity={0.15}
+            opacity={0.2}
           />
         </mesh>
       </group>
@@ -291,12 +304,14 @@ function KanbanScene() {
 
   return (
     <>
-      {/* Soft ambient — matches light site background */}
-      <ambientLight intensity={0.6} color="#E0F2FE" />
-      <directionalLight position={[-3, 4, 5]} intensity={0.4} color="#BAE6FD" />
-      {/* Subtle blue fill from below-left (matching site's global light direction) */}
-      <pointLight position={[-3, -3, 4]} intensity={1.5} color="#0EA5E9" distance={12} decay={2} />
-      <pointLight position={[0, 5, 2]} intensity={0.8} color="#38BDF8" distance={8} decay={2} />
+      {/* Bright ambient for glass reflections */}
+      <ambientLight intensity={0.8} color="#E0F2FE" />
+      <directionalLight position={[-3, 4, 5]} intensity={0.6} color="#BAE6FD" />
+      <directionalLight position={[3, 2, -3]} intensity={0.3} color="#7DD3FC" />
+      {/* Blue fill from below-left */}
+      <pointLight position={[-3, -3, 4]} intensity={2} color="#0EA5E9" distance={14} decay={2} />
+      <pointLight position={[0, 5, 2]} intensity={1.2} color="#38BDF8" distance={10} decay={2} />
+      <pointLight position={[3, 0, 5]} intensity={0.8} color="#22D3EE" distance={8} decay={2} />
 
       <Particles />
 
@@ -321,10 +336,10 @@ function KanbanScene() {
 /* ── Exported Component ── */
 const KanbanBoard3D = () => {
   return (
-    <div className="w-full h-full min-h-[400px] lg:min-h-[500px] rounded-3xl overflow-hidden">
+    <div className="w-full h-full min-h-[500px] lg:min-h-[600px] rounded-3xl overflow-hidden">
       <Canvas
-        camera={{ position: [0, 0.5, 7], fov: 42 }}
-        dpr={[1, 1.5]}
+        camera={{ position: [0, 0.5, 6.5], fov: 45 }}
+        dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
