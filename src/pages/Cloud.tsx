@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 import { motion } from "framer-motion";
-import { MessageCircle, Instagram, Mail, BarChart3, Funnel, Settings, ArrowRight, CheckCircle2, Layers, GitMerge, Users } from "lucide-react";
+import { MessageCircle, Instagram, Mail, BarChart3, Filter, Settings, ArrowRight, CheckCircle2, Layers, GitMerge, Users } from "lucide-react";
 import useParallax from "@/hooks/use-parallax";
 
 const channels = [
