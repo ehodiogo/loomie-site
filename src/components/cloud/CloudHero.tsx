@@ -70,7 +70,7 @@ const CloudHero = () => {
           >
             <Suspense
               fallback={
-                <div className="w-full min-h-[400px] lg:min-h-[500px] rounded-3xl flex items-center justify-center" style={{ background: "linear-gradient(180deg, hsl(210 30% 8%) 0%, hsl(200 40% 12%) 100%)" }}>
+                <div className="w-full min-h-[400px] lg:min-h-[500px] rounded-3xl flex items-center justify-center">
                   <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                 </div>
               }
