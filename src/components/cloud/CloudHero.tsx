@@ -12,7 +12,7 @@ const CloudHero = () => {
       <div className="absolute inset-0 radial-fade" />
 
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 items-center">
           {/* Left Column — 60% */}
           <div>
             <motion.span
