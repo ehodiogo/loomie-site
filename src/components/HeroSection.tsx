@@ -6,18 +6,18 @@ import useParallax from "@/hooks/use-parallax";
 
 /* Icons that orbit behind the glass composition */
 const orbitingIcons = [
-  { Icon: Phone, duration: 14, delay: 0, rx: 220, ry: 180, size: 17 },
-  { Icon: Globe, duration: 18, delay: 1.5, rx: 260, ry: 200, size: 20 },
-  { Icon: Send, duration: 12, delay: 3, rx: 190, ry: 160, size: 15 },
-  { Icon: AtSign, duration: 16, delay: 4.5, rx: 240, ry: 190, size: 19 },
-  { Icon: Radio, duration: 20, delay: 2, rx: 200, ry: 170, size: 14 },
-  { Icon: Wifi, duration: 15, delay: 5, rx: 250, ry: 210, size: 15 },
-  { Icon: Share2, duration: 13, delay: 6, rx: 210, ry: 175, size: 17 },
-  { Icon: Rss, duration: 17, delay: 7, rx: 230, ry: 185, size: 13 },
-  { Icon: Bell, duration: 19, delay: 3.5, rx: 270, ry: 220, size: 15 },
-  { Icon: MessageCircle, duration: 11, delay: 8, rx: 195, ry: 165, size: 12 },
-  { Icon: Instagram, duration: 16, delay: 1, rx: 245, ry: 195, size: 14 },
-  { Icon: Mail, duration: 14, delay: 5.5, rx: 215, ry: 180, size: 14 },
+  { Icon: Phone, duration: 14, delay: 0, rx: 140, ry: 120, size: 17 },
+  { Icon: Globe, duration: 18, delay: 1.5, rx: 160, ry: 140, size: 20 },
+  { Icon: Send, duration: 12, delay: 3, rx: 120, ry: 110, size: 15 },
+  { Icon: AtSign, duration: 16, delay: 4.5, rx: 150, ry: 130, size: 19 },
+  { Icon: Radio, duration: 20, delay: 2, rx: 130, ry: 115, size: 14 },
+  { Icon: Wifi, duration: 15, delay: 5, rx: 155, ry: 145, size: 15 },
+  { Icon: Share2, duration: 13, delay: 6, rx: 135, ry: 120, size: 17 },
+  { Icon: Rss, duration: 17, delay: 7, rx: 145, ry: 125, size: 13 },
+  { Icon: Bell, duration: 19, delay: 3.5, rx: 170, ry: 150, size: 15 },
+  { Icon: MessageCircle, duration: 11, delay: 8, rx: 125, ry: 110, size: 12 },
+  { Icon: Instagram, duration: 16, delay: 1, rx: 150, ry: 135, size: 14 },
+  { Icon: Mail, duration: 14, delay: 5.5, rx: 140, ry: 120, size: 14 },
 ];
 
 const HeroSection = () => {
@@ -34,12 +34,12 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* ── Orbiting icons layer (z-1, behind glass blocks at z-3) ── */}
-      <div className="absolute inset-0 pointer-events-none z-[1]">
-        {/* Center the orbit around the glass composition area */}
+      {/* ── Orbiting icons layer (z-[2], behind glass blocks at z-[3]) ── */}
+      <div className="absolute inset-0 pointer-events-none z-[2] overflow-hidden">
+        {/* Anchor orbit to the right-side glass composition area only */}
         <div
           className="absolute"
-          style={{ left: "50%", top: "50%", width: 0, height: 0 }}
+          style={{ left: "75%", top: "50%", width: 0, height: 0 }}
         >
           {orbitingIcons.map(({ Icon, duration, delay, rx, ry, size }, i) => (
             <motion.div
