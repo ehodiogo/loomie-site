@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Layers, GitMerge, Users, BarChart3, Settings } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
+import leadIngestionImg from "@/assets/lead-ingestion.png";
 
 const CloudHero = () => {
   return (
@@ -8,71 +9,93 @@ const CloudHero = () => {
       <div className="absolute inset-0 grid-line opacity-12" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* Decorative breathing icons */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[Layers, GitMerge, Users, BarChart3, Settings].map((Icon, i) => (
-          <motion.div
-            key={i}
-            className="absolute glass-panel p-3"
-            style={{ left: `${70 + (i % 3) * 10}%`, top: `${15 + i * 15}%` }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-              y: [0, -10, 0],
-              scale: [0.95, 1, 0.95],
-            }}
-            transition={{ duration: 6 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.8 }}
-          >
-            <Icon className="text-primary" size={18} />
-          </motion.div>
-        ))}
-      </div>
-
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-        <div className="max-w-3xl">
-          <motion.span
-            variants={blurUp}
-            initial="hidden"
-            animate="visible"
-            className="section-badge mb-6 inline-block"
-          >
-            Loomie Cloud
-          </motion.span>
+        <div className="grid lg:grid-cols-5 gap-12 items-center">
+          {/* Left Column — 60% */}
+          <div className="lg:col-span-3">
+            <motion.span
+              variants={blurUp}
+              initial="hidden"
+              animate="visible"
+              className="section-badge mb-6 inline-block"
+            >
+              Cansado de perder leads no caos do WhatsApp?
+            </motion.span>
 
-          <motion.h1
-            variants={wordStagger}
-            initial="hidden"
-            animate="visible"
-            className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
-          >
-            {"Pare de perder vendas por falta de organização.".split(" ").map((word, i) => (
-              <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                {word}
-              </motion.span>
-            ))}
-          </motion.h1>
+            <motion.h1
+              variants={wordStagger}
+              initial="hidden"
+              animate="visible"
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
+            >
+              {"Centralize, Automatize e Escale suas Vendas no Zap com o Loomie Cloud.".split(" ").map((word, i) => (
+                <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
+                  {word}
+                </motion.span>
+              ))}
+            </motion.h1>
 
-          <motion.p
-            variants={blurUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-            className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
-          >
-            O CRM completo para quem busca automação real, gestão de processos e controle total da equipe em um só lugar.
-          </motion.p>
+            <motion.p
+              variants={blurUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.6 }}
+              className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
+            >
+              O CRM completo com WhatsApp API Oficial que organiza seu fluxo de atendimento e faz sua equipe vender mais em uma única plataforma.
+            </motion.p>
 
-          <motion.a
-            href="https://crm.loomiecrm.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
-            className="btn-primary"
+            <motion.a
+              href="https://crm.loomiecrm.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
+              className="btn-primary text-base"
+            >
+              Teste grátis por 7 dias
+              <ArrowRight className="w-4 h-4" />
+            </motion.a>
+          </div>
+
+          {/* Right Column — 40% — Lead Ingestion Visual */}
+          <motion.div
+            className="lg:col-span-2 relative"
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
           >
-            Quero escalar meu atendimento agora
-            <ArrowRight className="w-4 h-4" />
-          </motion.a>
+            <div className="relative rounded-3xl overflow-hidden glow-border-primary">
+              {/* Pulsing glow behind image */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  background: "radial-gradient(ellipse at 50% 30%, hsl(var(--glow-cyan) / 0.15), transparent 70%)",
+                }}
+              />
+              <img
+                src={leadIngestionImg}
+                alt="Visualização do pipeline de leads sendo processados automaticamente pelo Loomie Cloud"
+                className="w-full h-auto relative z-10"
+                loading="eager"
+              />
+            </div>
+
+            {/* Floating stat badge */}
+            <motion.div
+              className="absolute -bottom-4 -left-4 glass-panel px-5 py-3 z-20"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+                <span className="font-mono text-xs text-foreground">pipeline_ativo</span>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
