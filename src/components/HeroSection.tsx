@@ -4,21 +4,47 @@ import { MessageCircle, Instagram, Mail, Phone, Globe, Send, AtSign, Radio, Wifi
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
-/* Icons that orbit behind the glass composition */
-const orbitingIcons = [
-  { Icon: Phone, duration: 14, delay: 0, rx: 140, ry: 120, size: 17 },
-  { Icon: Globe, duration: 18, delay: 1.5, rx: 160, ry: 140, size: 20 },
-  { Icon: Send, duration: 12, delay: 3, rx: 120, ry: 110, size: 15 },
-  { Icon: AtSign, duration: 16, delay: 4.5, rx: 150, ry: 130, size: 19 },
-  { Icon: Radio, duration: 20, delay: 2, rx: 130, ry: 115, size: 14 },
-  { Icon: Wifi, duration: 15, delay: 5, rx: 155, ry: 145, size: 15 },
-  { Icon: Share2, duration: 13, delay: 6, rx: 135, ry: 120, size: 17 },
-  { Icon: Rss, duration: 17, delay: 7, rx: 145, ry: 125, size: 13 },
-  { Icon: Bell, duration: 19, delay: 3.5, rx: 170, ry: 150, size: 15 },
-  { Icon: MessageCircle, duration: 11, delay: 8, rx: 125, ry: 110, size: 12 },
-  { Icon: Instagram, duration: 16, delay: 1, rx: 150, ry: 135, size: 14 },
-  { Icon: Mail, duration: 14, delay: 5.5, rx: 140, ry: 120, size: 14 },
-];
+/* Seeded random for consistent positions across renders */
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed * 9301 + 49297) * 49297;
+  return x - Math.floor(x);
+};
+
+/* Floating icons scattered around the glass composition */
+const floatingIcons = [
+  { Icon: Phone, size: 17 },
+  { Icon: Globe, size: 20 },
+  { Icon: Send, size: 15 },
+  { Icon: AtSign, size: 19 },
+  { Icon: Radio, size: 14 },
+  { Icon: Wifi, size: 15 },
+  { Icon: Share2, size: 17 },
+  { Icon: Rss, size: 13 },
+  { Icon: Bell, size: 15 },
+  { Icon: MessageCircle, size: 12 },
+  { Icon: Instagram, size: 14 },
+  { Icon: Mail, size: 14 },
+  { Icon: Phone, size: 13 },
+  { Icon: Globe, size: 16 },
+  { Icon: Send, size: 11 },
+  { Icon: Share2, size: 14 },
+  { Icon: Wifi, size: 12 },
+  { Icon: Bell, size: 16 },
+].map((icon, i) => {
+  // Scatter within a box roughly matching the glass composition area
+  // X: -50% to +50% of composition, Y: -50% to +50%
+  const angle = seededRandom(i * 7 + 3) * Math.PI * 2;
+  const dist = 80 + seededRandom(i * 13 + 1) * 140; // 80–220px from center
+  return {
+    ...icon,
+    x: Math.cos(angle) * dist,
+    y: Math.sin(angle) * dist,
+    driftX: (seededRandom(i * 17 + 5) - 0.5) * 30,
+    driftY: (seededRandom(i * 23 + 9) - 0.5) * 30,
+    duration: 4 + seededRandom(i * 31 + 2) * 6, // 4–10s
+    delay: seededRandom(i * 41 + 7) * 3,
+  };
+});
 
 const HeroSection = () => {
   const headline = "A Nova Estratégia.";
