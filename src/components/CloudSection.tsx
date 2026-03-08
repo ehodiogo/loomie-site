@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Database, Users, Zap, BarChart3 } from "lucide-react";
+import { slideFromLeft, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
 const metrics = [
@@ -10,56 +11,56 @@ const metrics = [
 ];
 
 const CloudSection = () => {
-  const { ref: headerRef, y: headerY } = useParallax({ speed: 0.08 });
-  const { ref: gridRef, y: gridY } = useParallax({ speed: -0.06 });
+  const { ref: gridRef, y: gridY } = useParallax({ speed: -0.05 });
 
   return (
     <section id="cloud" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 radial-fade opacity-50" />
+      <div className="absolute inset-0 radial-fade opacity-40" />
 
       <div className="relative container mx-auto px-6">
+        {/* Header — slides from left */}
         <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          variants={slideFromLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
           className="mb-20"
-          style={{ transform: `translateY(${headerY}px)` }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-mono text-xs tracking-widest uppercase mb-4">
-            Módulo 01
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground">
+          <span className="section-badge mb-4">Módulo 01</span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
             O núcleo da sua operação comercial.
           </h2>
         </motion.div>
 
-        {/* Metrics row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          {metrics.map(({ label, value, icon: Icon }, i) => (
+        {/* Metrics — staggered scale-in */}
+        <motion.div
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+        >
+          {metrics.map(({ label, value, icon: Icon }) => (
             <motion.div
               key={label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="glass-panel p-6 group hover:glow-border-primary transition-all duration-500"
+              variants={scaleItem}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
+              className="card-elevated"
             >
               <Icon className="w-5 h-5 text-primary mb-4" />
               <p className="font-mono text-2xl md:text-3xl font-bold text-foreground">{value}</p>
               <p className="text-sm text-muted-foreground mt-1">{label}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Glass block grid with parallax */}
+        {/* Glass block grid */}
         <motion.div
           ref={gridRef}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          variants={staggerContainer(0.06, 0.2)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
           className="grid grid-cols-3 gap-3 max-w-3xl"
           style={{ transform: `translateY(${gridY}px)` }}
         >
@@ -72,13 +73,10 @@ const CloudSection = () => {
           ].map((block, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              variants={fadeUpItem}
               className={`${block.col} ${block.h} ${
                 block.accent ? "glow-border-primary" : "glass-panel"
-              } flex items-end p-4 rounded-xl`}
+              } flex items-end p-4 rounded-2xl`}
             >
               <span className="font-mono text-xs text-muted-foreground">
                 block_{String(i).padStart(2, "0")}
@@ -87,6 +85,8 @@ const CloudSection = () => {
           ))}
         </motion.div>
       </div>
+
+      <div className="section-divider mt-32" />
     </section>
   );
 };

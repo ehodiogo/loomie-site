@@ -1,74 +1,61 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
 import { MessageCircle, Instagram, Mail, Phone, Globe, Send, AtSign, Radio, Wifi, Share2, Rss, Bell } from "lucide-react";
+import { wordStagger, wordReveal, blurUp, staggerContainer, scaleItem, ease, viewport } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
+
+const floatingIcons = [
+  { Icon: Phone, x: "82%", y: "15%", size: 17, delay: 0, duration: 7 },
+  { Icon: Globe, x: "90%", y: "28%", size: 20, delay: 1.2, duration: 8 },
+  { Icon: Send, x: "75%", y: "48%", size: 15, delay: 0.5, duration: 6 },
+  { Icon: AtSign, x: "93%", y: "58%", size: 19, delay: 2, duration: 7.5 },
+  { Icon: Radio, x: "80%", y: "72%", size: 14, delay: 0.8, duration: 8.5 },
+  { Icon: Wifi, x: "88%", y: "40%", size: 15, delay: 1.5, duration: 5.5 },
+  { Icon: Share2, x: "72%", y: "25%", size: 17, delay: 3, duration: 6.5 },
+  { Icon: Rss, x: "95%", y: "45%", size: 13, delay: 2.5, duration: 9 },
+  { Icon: Bell, x: "78%", y: "82%", size: 15, delay: 1, duration: 6 },
+  { Icon: MessageCircle, x: "68%", y: "62%", size: 12, delay: 3.5, duration: 7.5 },
+  { Icon: Instagram, x: "92%", y: "18%", size: 14, delay: 0.3, duration: 7 },
+  { Icon: Mail, x: "70%", y: "38%", size: 14, delay: 2.2, duration: 6.2 },
+];
 
 const orbitIcons = [
   { Icon: MessageCircle, delay: 0, speed: "animate-orbit" },
-  { Icon: Instagram, delay: 4, speed: "animate-orbit-slow" },
-  { Icon: Mail, delay: 8, speed: "animate-orbit-fast" },
+  { Icon: Instagram, delay: 5, speed: "animate-orbit-slow" },
+  { Icon: Mail, delay: 10, speed: "animate-orbit-fast" },
 ];
-
-const floatingIcons = [
-  { Icon: Phone, x: "85%", y: "18%", size: 18, delay: 0, duration: 6 },
-  { Icon: Globe, x: "90%", y: "35%", size: 22, delay: 1.2, duration: 7 },
-  { Icon: Send, x: "78%", y: "55%", size: 16, delay: 0.5, duration: 5.5 },
-  { Icon: AtSign, x: "92%", y: "65%", size: 20, delay: 2, duration: 6.5 },
-  { Icon: Radio, x: "82%", y: "78%", size: 14, delay: 0.8, duration: 7.5 },
-  { Icon: Wifi, x: "88%", y: "45%", size: 16, delay: 1.5, duration: 5 },
-  { Icon: Share2, x: "75%", y: "30%", size: 18, delay: 3, duration: 6 },
-  { Icon: Rss, x: "95%", y: "50%", size: 14, delay: 2.5, duration: 8 },
-  { Icon: Bell, x: "80%", y: "85%", size: 16, delay: 1, duration: 5.5 },
-  { Icon: MessageCircle, x: "70%", y: "68%", size: 12, delay: 3.5, duration: 7 },
-  { Icon: Instagram, x: "93%", y: "22%", size: 14, delay: 0.3, duration: 6.5 },
-  { Icon: Mail, x: "72%", y: "42%", size: 15, delay: 2.2, duration: 5.8 },
-];
-
-const wordStagger = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const wordReveal = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 const HeroSection = () => {
   const headline = "A Nova Estratégia.";
   const words = headline.split(" ");
-  const { ref: parallaxRef, y: parallaxY } = useParallax({ speed: 0.15 });
-  const { ref: blocksRef, y: blocksY } = useParallax({ speed: -0.1 });
+  const { ref: parallaxRef, y: parallaxY } = useParallax({ speed: 0.12 });
+  const { ref: blocksRef, y: blocksY } = useParallax({ speed: -0.08 });
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true });
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Subtle background grid */}
-      <div className="absolute inset-0 grid-line opacity-20" />
+    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background layers */}
+      <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* Floating convergence icons — behind the blocks */}
+      {/* Floating convergence icons */}
       <div className="absolute inset-0 pointer-events-none z-[1]">
         {floatingIcons.map(({ Icon, x, y, size, delay, duration }, i) => (
           <motion.div
             key={i}
-            className="absolute glass-panel p-2.5 opacity-40"
+            className="absolute glass-panel p-2.5"
             style={{ left: x, top: y }}
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.3 }}
             animate={{
-              opacity: [0.15, 0.45, 0.15],
-              y: [0, -12, 0],
-              x: [0, i % 2 === 0 ? -6 : 6, 0],
-              scale: [0.9, 1, 0.9],
+              opacity: [0.1, 0.35, 0.1],
+              y: [0, -14, 0],
+              x: [0, i % 2 === 0 ? -8 : 8, 0],
+              scale: [0.92, 1, 0.92],
             }}
             transition={{
               duration,
-              delay,
+              delay: delay + 0.5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -80,7 +67,7 @@ const HeroSection = () => {
 
       {/* Orbiting icons */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[2]">
-        <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
+        <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px]">
           {orbitIcons.map(({ Icon, delay, speed }, i) => (
             <div
               key={i}
@@ -95,18 +82,19 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center gap-16 pt-24">
-        {/* Left: Text content with parallax */}
+      <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center gap-16 pt-28">
+        {/* Left: Text */}
         <div
           ref={parallaxRef}
           className="flex-1 flex flex-col items-start text-left gap-8"
           style={{ transform: `translateY(${parallaxY}px)` }}
         >
+          {/* Headline with word stagger */}
           <motion.h1
             variants={wordStagger}
             initial="hidden"
-            animate="visible"
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] text-foreground"
+            animate={isInView ? "visible" : "hidden"}
+            className="font-display text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tight leading-[0.92] text-foreground"
           >
             {words.map((word, i) => (
               <motion.span key={i} variants={wordReveal} className="inline-block mr-4">
@@ -115,36 +103,39 @@ const HeroSection = () => {
             ))}
           </motion.h1>
 
+          {/* Subtitle with blur reveal */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            variants={blurUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            transition={{ delay: 0.6 }}
             className="text-muted-foreground text-lg md:text-xl max-w-md leading-relaxed"
           >
             Unifique canais, automatize processos e escale receita recorrente — tudo em uma plataforma.
           </motion.p>
 
+          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
             className="flex gap-4"
           >
-            <button className="btn-sharp bg-primary text-primary-foreground glow-primary">
+            <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary">
               Começar agora
-            </button>
-            <button className="btn-sharp bg-secondary text-secondary-foreground">
+            </a>
+            <button className="btn-secondary">
               Assistir demo
             </button>
           </motion.div>
         </div>
 
-        {/* Right: Isometric glass blocks with parallax */}
+        {/* Right: Isometric glass composition */}
         <motion.div
           ref={blocksRef}
-          initial={{ scale: 0.85, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ scale: 0.8, opacity: 0, rotate: -3 }}
+          animate={isInView ? { scale: 1, opacity: 1, rotate: 0 } : {}}
+          transition={{ duration: 1.4, ease: ease.smooth, delay: 0.3 }}
           className="flex-1 relative w-full max-w-lg aspect-square z-[3]"
           style={{ transform: `translateY(${blocksY}px)` }}
         >
