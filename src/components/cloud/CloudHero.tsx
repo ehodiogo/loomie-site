@@ -14,7 +14,7 @@ const CloudHero = () => {
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Column — 60% */}
-          <div className="lg:col-span-3">
+          <div>
             <motion.span
               variants={blurUp}
               initial="hidden"
