@@ -304,12 +304,14 @@ function KanbanScene() {
 
   return (
     <>
-      {/* Soft ambient — matches light site background */}
-      <ambientLight intensity={0.6} color="#E0F2FE" />
-      <directionalLight position={[-3, 4, 5]} intensity={0.4} color="#BAE6FD" />
-      {/* Subtle blue fill from below-left (matching site's global light direction) */}
-      <pointLight position={[-3, -3, 4]} intensity={1.5} color="#0EA5E9" distance={12} decay={2} />
-      <pointLight position={[0, 5, 2]} intensity={0.8} color="#38BDF8" distance={8} decay={2} />
+      {/* Bright ambient for glass reflections */}
+      <ambientLight intensity={0.8} color="#E0F2FE" />
+      <directionalLight position={[-3, 4, 5]} intensity={0.6} color="#BAE6FD" />
+      <directionalLight position={[3, 2, -3]} intensity={0.3} color="#7DD3FC" />
+      {/* Blue fill from below-left */}
+      <pointLight position={[-3, -3, 4]} intensity={2} color="#0EA5E9" distance={14} decay={2} />
+      <pointLight position={[0, 5, 2]} intensity={1.2} color="#38BDF8" distance={10} decay={2} />
+      <pointLight position={[3, 0, 5]} intensity={0.8} color="#22D3EE" distance={8} decay={2} />
 
       <Particles />
 
