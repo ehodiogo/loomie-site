@@ -2,9 +2,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 import { motion } from "framer-motion";
-import { Bot, Clock, MessageCircle, Zap, ArrowRight, CheckCircle2, Settings, GitMerge, BarChart3, Users, Cpu, Workflow } from "lucide-react";
+import { Bot, Clock, MessageCircle, Zap, ArrowRight, CheckCircle2, Settings, GitMerge, BarChart3, Users } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
+import { lazy, Suspense } from "react";
+
+const AutomationFlow3D = lazy(() => import("@/components/automacoes/AutomationFlow3D"));
 
 const benefits = [
   {
@@ -42,76 +45,90 @@ const Automacoes = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero */}
+      {/* Hero with 3D Animation */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 grid-line opacity-12" />
         <div className="absolute inset-0 radial-fade" />
 
-        {/* Decorative breathing icons */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[Bot, Cpu, Workflow, Zap, GitMerge, Settings].map((Icon, i) => (
-            <motion.div
-              key={i}
-              className="absolute glass-panel p-3"
-              style={{ left: `${68 + (i % 3) * 11}%`, top: `${12 + i * 14}%` }}
-              animate={{
-                opacity: [0.1, 0.3, 0.1],
-                y: [0, -10, 0],
-                scale: [0.95, 1, 0.95],
-              }}
-              transition={{ duration: 5 + i * 0.8, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
-            >
-              <Icon className="text-primary" size={18} />
-            </motion.div>
-          ))}
-        </div>
-
         <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-          <div className="max-w-3xl">
-            <motion.span
-              variants={blurUp}
-              initial="hidden"
-              animate="visible"
-              className="section-badge mb-6 inline-block"
-            >
-              Loomie Automações
-            </motion.span>
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 items-center">
+            {/* Left Column — Text */}
+            <div>
+              <motion.span
+                variants={blurUp}
+                initial="hidden"
+                animate="visible"
+                className="section-badge mb-6 inline-block"
+              >
+                Loomie Automações
+              </motion.span>
 
-            <motion.h1
-              variants={wordStagger}
-              initial="hidden"
-              animate="visible"
-              className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
-            >
-              {"Automações com IA que trabalham por você.".split(" ").map((word, i) => (
-                <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                  {word}
-                </motion.span>
-              ))}
-            </motion.h1>
+              <motion.h1
+                variants={wordStagger}
+                initial="hidden"
+                animate="visible"
+                className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
+              >
+                {"Automações com IA que trabalham por você.".split(" ").map((word, i) => (
+                  <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.h1>
 
-            <motion.p
-              variants={blurUp}
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: 0.6 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
-            >
-              Deixe a Inteligência Artificial cuidar das tarefas repetitivas enquanto você foca no crescimento do seu negócio. Automações 24/7, sem esforço manual.
-            </motion.p>
+              <motion.p
+                variants={blurUp}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.6 }}
+                className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
+              >
+                Deixe a Inteligência Artificial cuidar das tarefas repetitivas enquanto você foca no crescimento do seu negócio. Automações 24/7, sem esforço manual.
+              </motion.p>
 
-            <motion.a
-              href="https://crm.loomiecrm.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
-              className="btn-primary"
+              <motion.a
+                href="https://crm.loomiecrm.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
+                className="btn-primary"
+              >
+                Quero automatizar meu negócio
+                <ArrowRight className="w-4 h-4" />
+              </motion.a>
+            </div>
+
+            {/* Right Column — 3D Automation Flow */}
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
             >
-              Quero automatizar meu negócio
-              <ArrowRight className="w-4 h-4" />
-            </motion.a>
+              <Suspense
+                fallback={
+                  <div className="w-full min-h-[500px] lg:min-h-[650px] rounded-3xl flex items-center justify-center">
+                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  </div>
+                }
+              >
+                <AutomationFlow3D />
+              </Suspense>
+
+              {/* Floating stat badge */}
+              <motion.div
+                className="absolute -bottom-4 -left-4 glass-panel px-5 py-3 z-20"
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+                  <span className="font-mono text-xs text-foreground">fluxo_ativo</span>
+                </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
