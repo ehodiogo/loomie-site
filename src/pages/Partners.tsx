@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 import {
   ArrowRight, CheckCircle2, Handshake, TrendingUp, ShieldCheck, BarChart3,
   Gauge, Clock, DollarSign, Blocks, Settings, LayoutGrid, CalendarDays,
-  Rocket, Star, Crown, ArrowUpRight, ChevronRight
+  Rocket, Star, Crown, ArrowUpRight, ChevronRight,
+  Code2, KeyRound, Lock, Store, Workflow, Terminal, ShoppingBag, RefreshCcw
 } from "lucide-react";
 import {
   wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight,
