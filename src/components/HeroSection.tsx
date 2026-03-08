@@ -4,21 +4,47 @@ import { MessageCircle, Instagram, Mail, Phone, Globe, Send, AtSign, Radio, Wifi
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
-/* Icons that orbit behind the glass composition */
-const orbitingIcons = [
-  { Icon: Phone, duration: 14, delay: 0, rx: 140, ry: 120, size: 17 },
-  { Icon: Globe, duration: 18, delay: 1.5, rx: 160, ry: 140, size: 20 },
-  { Icon: Send, duration: 12, delay: 3, rx: 120, ry: 110, size: 15 },
-  { Icon: AtSign, duration: 16, delay: 4.5, rx: 150, ry: 130, size: 19 },
-  { Icon: Radio, duration: 20, delay: 2, rx: 130, ry: 115, size: 14 },
-  { Icon: Wifi, duration: 15, delay: 5, rx: 155, ry: 145, size: 15 },
-  { Icon: Share2, duration: 13, delay: 6, rx: 135, ry: 120, size: 17 },
-  { Icon: Rss, duration: 17, delay: 7, rx: 145, ry: 125, size: 13 },
-  { Icon: Bell, duration: 19, delay: 3.5, rx: 170, ry: 150, size: 15 },
-  { Icon: MessageCircle, duration: 11, delay: 8, rx: 125, ry: 110, size: 12 },
-  { Icon: Instagram, duration: 16, delay: 1, rx: 150, ry: 135, size: 14 },
-  { Icon: Mail, duration: 14, delay: 5.5, rx: 140, ry: 120, size: 14 },
-];
+/* Seeded random for consistent positions across renders */
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed * 9301 + 49297) * 49297;
+  return x - Math.floor(x);
+};
+
+/* Floating icons scattered around the glass composition */
+const floatingIcons = [
+  { Icon: Phone, size: 17 },
+  { Icon: Globe, size: 20 },
+  { Icon: Send, size: 15 },
+  { Icon: AtSign, size: 19 },
+  { Icon: Radio, size: 14 },
+  { Icon: Wifi, size: 15 },
+  { Icon: Share2, size: 17 },
+  { Icon: Rss, size: 13 },
+  { Icon: Bell, size: 15 },
+  { Icon: MessageCircle, size: 12 },
+  { Icon: Instagram, size: 14 },
+  { Icon: Mail, size: 14 },
+  { Icon: Phone, size: 13 },
+  { Icon: Globe, size: 16 },
+  { Icon: Send, size: 11 },
+  { Icon: Share2, size: 14 },
+  { Icon: Wifi, size: 12 },
+  { Icon: Bell, size: 16 },
+].map((icon, i) => {
+  // Scatter within a box roughly matching the glass composition area
+  // X: -50% to +50% of composition, Y: -50% to +50%
+  const angle = seededRandom(i * 7 + 3) * Math.PI * 2;
+  const dist = 80 + seededRandom(i * 13 + 1) * 140; // 80–220px from center
+  return {
+    ...icon,
+    x: Math.cos(angle) * dist,
+    y: Math.sin(angle) * dist,
+    driftX: (seededRandom(i * 17 + 5) - 0.5) * 30,
+    driftY: (seededRandom(i * 23 + 9) - 0.5) * 30,
+    duration: 4 + seededRandom(i * 31 + 2) * 6, // 4–10s
+    delay: seededRandom(i * 41 + 7) * 3,
+  };
+});
 
 const HeroSection = () => {
   const headline = "A Nova Estratégia.";
@@ -34,48 +60,34 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* ── Orbiting icons layer (z-[2], behind glass blocks at z-[3]) ── */}
+      {/* ── Floating icons layer (z-[2], behind glass blocks at z-[3]) ── */}
       <div className="absolute inset-0 pointer-events-none z-[2] overflow-hidden">
-        {/* Anchor orbit to the right-side glass composition area only */}
         <div
           className="absolute"
           style={{ left: "75%", top: "50%", width: 0, height: 0 }}
         >
-          {orbitingIcons.map(({ Icon, duration, delay, rx, ry, size }, i) => (
+          {floatingIcons.map(({ Icon, size, x, y, driftX, driftY, duration, delay }, i) => (
             <motion.div
               key={i}
               className="absolute glass-panel p-2.5"
               style={{
-                left: 0,
-                top: 0,
+                left: x,
+                top: y,
                 translateX: "-50%",
                 translateY: "-50%",
               }}
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, scale: 0.6 }}
               animate={{
-                opacity: [0.08, 0.35, 0.08],
-                x: [
-                  Math.cos(0) * rx,
-                  Math.cos(Math.PI * 0.5) * rx,
-                  Math.cos(Math.PI) * rx,
-                  Math.cos(Math.PI * 1.5) * rx,
-                  Math.cos(Math.PI * 2) * rx,
-                ],
-                y: [
-                  Math.sin(0) * ry,
-                  Math.sin(Math.PI * 0.5) * ry,
-                  Math.sin(Math.PI) * ry,
-                  Math.sin(Math.PI * 1.5) * ry,
-                  Math.sin(Math.PI * 2) * ry,
-                ],
-                rotate: [0, 90, 180, 270, 360],
-                scale: [0.85, 1.05, 0.85, 1.05, 0.85],
+                opacity: [0.15, 0.45, 0.15],
+                x: [0, driftX, -driftX * 0.5, driftX * 0.7, 0],
+                y: [0, driftY * 0.7, -driftY, driftY * 0.5, 0],
+                scale: [0.9, 1.05, 0.95, 1.02, 0.9],
               }}
               transition={{
                 duration,
                 delay,
                 repeat: Infinity,
-                ease: "linear",
+                ease: "easeInOut",
               }}
             >
               <Icon className="text-primary" size={size} />
