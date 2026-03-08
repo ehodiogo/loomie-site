@@ -60,48 +60,34 @@ const HeroSection = () => {
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
-      {/* ── Orbiting icons layer (z-[2], behind glass blocks at z-[3]) ── */}
+      {/* ── Floating icons layer (z-[2], behind glass blocks at z-[3]) ── */}
       <div className="absolute inset-0 pointer-events-none z-[2] overflow-hidden">
-        {/* Anchor orbit to the right-side glass composition area only */}
         <div
           className="absolute"
           style={{ left: "75%", top: "50%", width: 0, height: 0 }}
         >
-          {orbitingIcons.map(({ Icon, duration, delay, rx, ry, size }, i) => (
+          {floatingIcons.map(({ Icon, size, x, y, driftX, driftY, duration, delay }, i) => (
             <motion.div
               key={i}
               className="absolute glass-panel p-2.5"
               style={{
-                left: 0,
-                top: 0,
+                left: x,
+                top: y,
                 translateX: "-50%",
                 translateY: "-50%",
               }}
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 0, scale: 0.6 }}
               animate={{
-                opacity: [0.08, 0.35, 0.08],
-                x: [
-                  Math.cos(0) * rx,
-                  Math.cos(Math.PI * 0.5) * rx,
-                  Math.cos(Math.PI) * rx,
-                  Math.cos(Math.PI * 1.5) * rx,
-                  Math.cos(Math.PI * 2) * rx,
-                ],
-                y: [
-                  Math.sin(0) * ry,
-                  Math.sin(Math.PI * 0.5) * ry,
-                  Math.sin(Math.PI) * ry,
-                  Math.sin(Math.PI * 1.5) * ry,
-                  Math.sin(Math.PI * 2) * ry,
-                ],
-                rotate: [0, 90, 180, 270, 360],
-                scale: [0.85, 1.05, 0.85, 1.05, 0.85],
+                opacity: [0.15, 0.45, 0.15],
+                x: [0, driftX, -driftX * 0.5, driftX * 0.7, 0],
+                y: [0, driftY * 0.7, -driftY, driftY * 0.5, 0],
+                scale: [0.9, 1.05, 0.95, 1.02, 0.9],
               }}
               transition={{
                 duration,
                 delay,
                 repeat: Infinity,
-                ease: "linear",
+                ease: "easeInOut",
               }}
             >
               <Icon className="text-primary" size={size} />
