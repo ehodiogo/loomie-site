@@ -1,9 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
-import { lazy, Suspense } from "react";
-
-const KanbanBoard3D = lazy(() => import("@/components/cloud/KanbanBoard3D"));
+import kanbanImage from "@/assets/kanban-3d.png";
 
 const CloudHero = () => {
   return (
