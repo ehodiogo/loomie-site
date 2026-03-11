@@ -1,9 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
-import { lazy, Suspense } from "react";
-
-const KanbanBoard3D = lazy(() => import("@/components/cloud/KanbanBoard3D"));
+import kanbanImage from "@/assets/kanban-3d.png";
 
 const CloudHero = () => {
   return (
@@ -68,15 +66,11 @@ const CloudHero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
           >
-            <Suspense
-              fallback={
-                <div className="w-full min-h-[500px] lg:min-h-[600px] rounded-3xl flex items-center justify-center">
-                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                </div>
-              }
-            >
-              <KanbanBoard3D />
-            </Suspense>
+            <img
+              src={kanbanImage}
+              alt="Pipeline Kanban 3D"
+              className="w-full h-auto mix-blend-screen"
+            />
 
             {/* Floating stat badge */}
             <motion.div
