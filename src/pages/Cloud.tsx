@@ -8,6 +8,7 @@ import CloudProcess from "@/components/cloud/CloudProcess";
 import CloudPricing from "@/components/cloud/CloudPricing";
 import CloudFAQ from "@/components/cloud/CloudFAQ";
 import CloudCTA from "@/components/cloud/CloudCTA";
+import CloudExtension from "@/components/cloud/CloudExtension";
 
 const Cloud = () => {
   useLenis();
@@ -18,6 +19,8 @@ const Cloud = () => {
       <CloudHero />
       <div className="section-divider" />
       <CloudFeatures />
+      <div className="section-divider" />
+      <CloudExtension />
       <div className="section-divider" />
       <CloudCopy />
       <div className="section-divider" />
