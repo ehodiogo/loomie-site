@@ -1,7 +1,52 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageCircle, Instagram, Mail, Globe } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
-import kanbanImage from "@/assets/kanban-3d.png";
+import { Marquee } from "@/components/ui/3d-testimonials";
+
+const channels = [
+  { name: "WhatsApp", icon: MessageCircle, color: "text-green-400" },
+  { name: "Instagram", icon: Instagram, color: "text-pink-400" },
+  { name: "Widget", icon: Globe, color: "text-sky-400" },
+  { name: "Email", icon: Mail, color: "text-amber-400" },
+];
+
+const leads = [
+  { name: "Ana Costa", channel: 0, msg: "Quero saber mais sobre o plano Pro" },
+  { name: "Carlos Mendes", channel: 1, msg: "Vi o anúncio, podem me ajudar?" },
+  { name: "Fernanda Lima", channel: 2, msg: "Preciso de um orçamento urgente" },
+  { name: "Rafael Souza", channel: 3, msg: "Gostaria de agendar uma demo" },
+  { name: "Juliana Alves", channel: 0, msg: "Vocês atendem empresa grande?" },
+  { name: "Pedro Martins", channel: 1, msg: "Quanto custa a integração?" },
+  { name: "Mariana Rocha", channel: 2, msg: "Estou comparando com outro CRM" },
+  { name: "Lucas Ferreira", channel: 3, msg: "Preciso migrar meus dados" },
+  { name: "Beatriz Santos", channel: 0, msg: "Tem teste grátis disponível?" },
+  { name: "Thiago Oliveira", channel: 1, msg: "Quero automatizar meu funil" },
+  { name: "Camila Dias", channel: 2, msg: "Funciona com API oficial?" },
+  { name: "Bruno Nunes", channel: 3, msg: "Preciso de suporte técnico" },
+];
+
+function LeadCard({ name, channel, msg }: { name: string; channel: number; msg: string }) {
+  const ch = channels[channel];
+  const Icon = ch.icon;
+  return (
+    <div className="glass-panel p-4 w-[220px] flex flex-col gap-2 shrink-0">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-semibold text-primary">Novo lead</span>
+        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+      </div>
+      <p className="text-sm font-medium text-foreground truncate">{name}</p>
+      <div className="flex items-center gap-1.5">
+        <Icon className={`w-3.5 h-3.5 ${ch.color}`} />
+        <span className="text-xs text-muted-foreground">{ch.name}</span>
+      </div>
+      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 italic">"{msg}"</p>
+    </div>
+  );
+}
+
+const col1 = leads.slice(0, 4);
+const col2 = leads.slice(4, 8);
+const col3 = leads.slice(8, 12);
 
 const CloudHero = () => {
   return (
@@ -11,7 +56,7 @@ const CloudHero = () => {
 
       <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 items-center">
-          {/* Left Column — 60% */}
+          {/* Left Column */}
           <div>
             <motion.span
               variants={blurUp}
@@ -59,30 +104,38 @@ const CloudHero = () => {
             </motion.a>
           </div>
 
-          {/* Right Column — 40% — 3D Kanban */}
+          {/* Right Column — Lead Marquee Kanban */}
           <motion.div
-            className="relative"
+            className="relative h-[500px] lg:h-[550px] overflow-hidden rounded-2xl"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
+            style={{ perspective: "400px" }}
           >
-            <img
-              src={kanbanImage}
-              alt="Pipeline Kanban 3D"
-              className="w-full h-auto mix-blend-screen"
-            />
-
-            {/* Floating stat badge */}
-            <motion.div
-              className="absolute -bottom-4 -left-4 glass-panel px-5 py-3 z-20"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            <div
+              className="flex gap-4 h-full items-center justify-center"
+              style={{ transform: "rotateY(-8deg) rotateX(2deg)" }}
             >
-              <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-                <span className="font-mono text-xs text-foreground">pipeline_ativo</span>
-              </div>
-            </motion.div>
+              <Marquee vertical pauseOnHover className="[--duration:22s] h-full" repeat={3}>
+                {col1.map((l, i) => (
+                  <LeadCard key={i} {...l} />
+                ))}
+              </Marquee>
+              <Marquee vertical pauseOnHover reverse className="[--duration:26s] h-full" repeat={3}>
+                {col2.map((l, i) => (
+                  <LeadCard key={i} {...l} />
+                ))}
+              </Marquee>
+              <Marquee vertical pauseOnHover className="[--duration:30s] h-full" repeat={3}>
+                {col3.map((l, i) => (
+                  <LeadCard key={i} {...l} />
+                ))}
+              </Marquee>
+            </div>
+
+            {/* Gradient masks */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent z-10" />
           </motion.div>
         </div>
       </div>
