@@ -9,7 +9,7 @@ const plans = [
     desc: "Para equipes pequenas e negócios em validação",
     monthly: 169.90,
     annual: 141.58,
-    features: ["5 Usuários Incluídos", "10.000 Contatos", "10 Pipelines", "API Aberta (100k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 30d)"],
+    features: ["2 Canais", "5 Usuários Incluídos", "10.000 Contatos", "10 Pipelines", "API Aberta (100k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 30d)"],
     popular: false,
   },
   {
@@ -17,7 +17,7 @@ const plans = [
     desc: "O motor para empresas e agências em escala",
     monthly: 299.90,
     annual: 249.92,
-    features: ["10 Usuários Incluídos", "50.000 Contatos", "20 Pipelines", "API Aberta (250k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 60d)"],
+    features: ["3 Canais", "10 Usuários Incluídos", "50.000 Contatos", "20 Pipelines", "API Aberta (250k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 60d)"],
     popular: true,
   },
   {
@@ -25,7 +25,7 @@ const plans = [
     desc: "Para operações de alta performance",
     monthly: 599.90,
     annual: 499.92,
-    features: ["25 Usuários Incluídos", "300.000 Contatos", "Pipelines Ilimitados", "API Aberta (500k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 180d)"],
+    features: ["5 Canais", "25 Usuários Incluídos", "300.000 Contatos", "Pipelines Ilimitados", "API Aberta (500k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 180d)"],
     popular: false,
   },
 ];
