@@ -25,7 +25,7 @@ const plans = [
     desc: "Para operações de alta performance",
     monthly: 599.90,
     annual: 499.92,
-    features: ["25 Usuários Incluídos", "300.000 Contatos", "Pipelines Ilimitados", "API Aberta (500k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 180d)"],
+    features: ["5 Canais", "25 Usuários Incluídos", "300.000 Contatos", "Pipelines Ilimitados", "API Aberta (500k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 180d)"],
     popular: false,
   },
 ];
