@@ -131,6 +131,8 @@ export default {
         "shimmer": "shimmer 3s linear infinite",
         "breathe": "breathe 5s ease-in-out infinite",
         "dash": "dash 2s ease-in-out forwards",
+        "marquee": "marquee var(--duration) infinite linear",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
   },
