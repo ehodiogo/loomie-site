@@ -9,7 +9,7 @@ const plans = [
     desc: "Para equipes pequenas e negócios em validação",
     monthly: 169.90,
     annual: 141.58,
-    features: ["5 Usuários Incluídos", "10.000 Contatos", "10 Pipelines", "API Aberta (100k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 30d)"],
+    features: ["2 Canais", "5 Usuários Incluídos", "10.000 Contatos", "10 Pipelines", "API Aberta (100k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 30d)"],
     popular: false,
   },
   {
