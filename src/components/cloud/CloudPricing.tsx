@@ -17,7 +17,7 @@ const plans = [
     desc: "O motor para empresas e agências em escala",
     monthly: 299.90,
     annual: 249.92,
-    features: ["10 Usuários Incluídos", "50.000 Contatos", "20 Pipelines", "API Aberta (250k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 60d)"],
+    features: ["3 Canais", "10 Usuários Incluídos", "50.000 Contatos", "20 Pipelines", "API Aberta (250k req/dia)", "Nó Nativo n8n", "Backup Diário (Retenção 60d)"],
     popular: true,
   },
   {
