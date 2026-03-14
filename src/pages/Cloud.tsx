@@ -9,6 +9,7 @@ import CloudPricing from "@/components/cloud/CloudPricing";
 import CloudFAQ from "@/components/cloud/CloudFAQ";
 import CloudCTA from "@/components/cloud/CloudCTA";
 import CloudExtension from "@/components/cloud/CloudExtension";
+import CloudTestimonials from "@/components/cloud/CloudTestimonials";
 
 const Cloud = () => {
   useLenis();
@@ -23,6 +24,8 @@ const Cloud = () => {
       <CloudExtension />
       <div className="section-divider" />
       <CloudCopy />
+      <div className="section-divider" />
+      <CloudTestimonials />
       <div className="section-divider" />
       <CloudProcess />
       <div className="section-divider" />
