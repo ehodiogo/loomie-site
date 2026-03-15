@@ -214,119 +214,85 @@ const Partners = () => {
         <div className="absolute inset-0 grid-line opacity-12" />
         <div className="absolute inset-0 radial-fade" />
 
-        {/* Breathing icons */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[Handshake, TrendingUp, DollarSign, Star, Crown, Rocket].map((Icon, i) => (
-            <motion.div
-              key={i}
-              className="absolute glass-panel p-3"
-              style={{ left: `${68 + (i % 3) * 11}%`, top: `${12 + i * 14}%` }}
-              animate={{
-                opacity: [0.08, 0.25, 0.08],
-                y: [0, -12, 0],
-                scale: [0.95, 1.02, 0.95],
-              }}
-              transition={{ duration: 6 + i * 0.9, repeat: Infinity, ease: "easeInOut", delay: i * 0.7 }}
-            >
-              <Icon className="text-primary" size={18} />
-            </motion.div>
-          ))}
-        </div>
-
         <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-          <div className="max-w-3xl">
-            <motion.span
-              variants={blurUp}
-              initial="hidden"
-              animate="visible"
-              className="section-badge mb-6 inline-block"
-            >
-              Growth Partner
-            </motion.span>
-
-            <motion.h1
-              variants={wordStagger}
-              initial="hidden"
-              animate="visible"
-              className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
-            >
-              {"Venda estratégia de alto valor. Nós cuidamos da tecnologia.".split(" ").map((word, i) => (
-                <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                  {word}
-                </motion.span>
-              ))}
-            </motion.h1>
-
-            <motion.p
-              variants={blurUp}
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: 0.6 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
-            >
-              Transforme sua agência de revendedora de ferramentas em consultoria estratégica de vendas high-ticket. Foque no que importa — nós cuidamos da infraestrutura.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
-              className="flex flex-wrap gap-4"
-            >
-              <a
-                href="https://crm.loomiecrm.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left — Text */}
+            <div>
+              <motion.span
+                variants={blurUp}
+                initial="hidden"
+                animate="visible"
+                className="section-badge mb-6 inline-block"
               >
-                Iniciar Parceria
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a href="#benefits" className="btn-secondary">
-                Ver Benefícios
-                <ChevronRight className="w-4 h-4" />
-              </a>
+                Growth Partner
+              </motion.span>
+
+              <motion.h1
+                variants={wordStagger}
+                initial="hidden"
+                animate="visible"
+                className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
+              >
+                {"Venda estratégia de alto valor. Nós cuidamos da tecnologia.".split(" ").map((word, i) => (
+                  <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.h1>
+
+              <motion.p
+                variants={blurUp}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.6 }}
+                className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
+              >
+                Transforme sua agência de revendedora de ferramentas em consultoria estratégica de vendas high-ticket. Foque no que importa — nós cuidamos da infraestrutura.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
+                className="flex flex-wrap gap-4"
+              >
+                <a
+                  href="https://crm.loomiecrm.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                >
+                  Iniciar Parceria
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a href="#benefits" className="btn-secondary">
+                  Ver Benefícios
+                  <ChevronRight className="w-4 h-4" />
+                </a>
+              </motion.div>
+            </div>
+
+            {/* Right — World Map */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
+              className="hidden lg:block"
+            >
+              <WorldMap
+                dots={[
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -3.71, lng: -38.52 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
+                ]}
+                lineColor="hsl(199, 89%, 48%)"
+              />
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ World Map ═══ */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="relative container mx-auto px-6">
-          <motion.div
-            variants={blurUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewport}
-            className="text-center mb-10"
-          >
-            <h2 className="font-display text-2xl md:text-4xl font-extrabold text-foreground mb-3">
-              Parceiros em <span className="text-gradient-primary">todo o Brasil.</span>
-            </h2>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto">
-              Uma rede crescente de agências e consultores conectados pela Loomie.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewport}
-            transition={{ duration: 0.8, ease: ease.smooth }}
-          >
-            <WorldMap
-              dots={[
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -3.71, lng: -38.52 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
-                { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
-              ]}
-              lineColor="hsl(199, 89%, 48%)"
-            />
-          </motion.div>
         </div>
       </section>
 
