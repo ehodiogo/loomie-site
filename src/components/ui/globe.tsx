@@ -41,6 +41,8 @@ const GLOBE_CONFIG: COBEOptions = {
   ],
 }
 
+const ALL_MARKERS = GLOBE_CONFIG.markers!
+
 export function Globe({
   className,
   config = GLOBE_CONFIG,
@@ -50,10 +52,12 @@ export function Globe({
 }) {
   let phi = 0
   let width = 0
+  let frameCount = 0
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pointerInteracting = useRef<number | null>(null)
   const pointerInteractionMovement = useRef(0)
   const [r, setR] = useState(0)
+  const markerScales = useRef(ALL_MARKERS.map(() => 0))
 
   const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value
@@ -76,6 +80,37 @@ export function Globe({
       state.phi = phi + r
       state.width = width * 2
       state.height = width * 2
+      frameCount++
+
+      // Animate markers: grow/shrink based on whether they face the camera
+      const currentPhi = phi + r
+      const theta = config.theta ?? 0.3
+      state.markers = ALL_MARKERS.map((marker, i) => {
+        const [lat, lng] = marker.location as [number, number]
+        const markerPhi = ((90 - lat) * Math.PI) / 180
+        const markerTheta = ((180 + lng) * Math.PI) / 180
+
+        // Dot product to check if marker faces the camera
+        const cx = Math.sin(markerPhi) * Math.cos(markerTheta)
+        const cz = Math.sin(markerPhi) * Math.sin(markerTheta)
+        const cy = Math.cos(markerPhi)
+
+        const vx = Math.sin(Math.PI / 2 - theta) * Math.cos(currentPhi)
+        const vz = Math.sin(Math.PI / 2 - theta) * Math.sin(currentPhi)
+        const vy = Math.cos(Math.PI / 2 - theta)
+
+        const dot = cx * vx + cy * vy + cz * vz
+        const visible = dot > 0.2
+
+        // Smooth scale transition
+        const target = visible ? 1 : 0
+        markerScales.current[i] += (target - markerScales.current[i]) * 0.06
+
+        return {
+          location: marker.location,
+          size: (marker.size as number) * markerScales.current[i],
+        }
+      })
     },
     [r],
   )
