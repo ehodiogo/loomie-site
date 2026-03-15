@@ -19,7 +19,7 @@ export function WorldMap({ dots = [], lineColor = "#0ea5e9" }: MapProps) {
     const map = new DottedMap({ height: 100, grid: "diagonal" });
     return map.getSVG({
       radius: 0.22,
-      color: "#FFFFFF40",
+      color: "#00000020",
       shape: "circle",
       backgroundColor: "transparent",
     });
