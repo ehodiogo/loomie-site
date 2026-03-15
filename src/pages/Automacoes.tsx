@@ -129,18 +129,14 @@ const Automacoes = () => {
               </motion.a>
             </div>
 
-            {/* Right — 3D Robot */}
+            {/* Right — AI Task Flow */}
             <motion.div
-              className="relative h-[500px]"
-              style={{ filter: 'hue-rotate(200deg) saturate(1.4) brightness(1.15)' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8, ease: ease.smooth }}
             >
-              <SplineScene 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full"
-              />
+              <AITaskFlow />
             </motion.div>
           </div>
         </div>
