@@ -85,15 +85,21 @@ export function Globe({
       state.height = width * 2
       frameCount++
 
-      // Animate markers: grow/shrink based on whether they face the camera
+      // Staggered reveal: wave 1 unlocks immediately, wave 2 after ~60 frames
       const currentPhi = phi + r
       const theta = config.theta ?? 0.3
       state.markers = ALL_MARKERS.map((marker, i) => {
+        // Delay: wave 1 markers unlock at frame 0, wave 2 at frame 60+
+        const unlockFrame = i < WAVE_1_COUNT ? 0 : 60 + (i - WAVE_1_COUNT) * 20
+        if (frameCount < unlockFrame) {
+          markerScales.current[i] = 0
+          return { location: marker.location, size: 0 }
+        }
+
         const [lat, lng] = marker.location as [number, number]
         const markerPhi = ((90 - lat) * Math.PI) / 180
         const markerTheta = ((180 + lng) * Math.PI) / 180
 
-        // Dot product to check if marker faces the camera
         const cx = Math.sin(markerPhi) * Math.cos(markerTheta)
         const cz = Math.sin(markerPhi) * Math.sin(markerTheta)
         const cy = Math.cos(markerPhi)
@@ -105,7 +111,6 @@ export function Globe({
         const dot = cx * vx + cy * vy + cz * vz
         const visible = dot > 0.2
 
-        // Smooth scale transition
         const target = visible ? 1 : 0
         markerScales.current[i] += (target - markerScales.current[i]) * 0.06
 
