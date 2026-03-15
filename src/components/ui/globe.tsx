@@ -25,13 +25,23 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [23.8103, 90.4125], size: 0.05 },
     { location: [30.0444, 31.2357], size: 0.07 },
     { location: [39.9042, 116.4074], size: 0.08 },
-    { location: [-23.5505, -46.6333], size: 0.1 },
+    { location: [-23.5505, -46.6333], size: 0.12 },
+    { location: [-22.9068, -43.1729], size: 0.1 },
+    { location: [-15.7975, -47.8919], size: 0.08 },
+    { location: [-19.9167, -43.9345], size: 0.07 },
+    { location: [-3.1190, -60.0217], size: 0.06 },
+    { location: [-12.9714, -38.5124], size: 0.07 },
+    { location: [-25.4284, -49.2733], size: 0.06 },
+    { location: [-30.0346, -51.2177], size: 0.07 },
+    { location: [-8.0476, -34.8770], size: 0.05 },
     { location: [19.4326, -99.1332], size: 0.1 },
     { location: [40.7128, -74.006], size: 0.1 },
     { location: [34.6937, 135.5022], size: 0.05 },
     { location: [41.0082, 28.9784], size: 0.06 },
   ],
 }
+
+const ALL_MARKERS = GLOBE_CONFIG.markers!
 
 export function Globe({
   className,
@@ -42,10 +52,12 @@ export function Globe({
 }) {
   let phi = 0
   let width = 0
+  let frameCount = 0
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pointerInteracting = useRef<number | null>(null)
   const pointerInteractionMovement = useRef(0)
   const [r, setR] = useState(0)
+  const markerScales = useRef(ALL_MARKERS.map(() => 0))
 
   const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value
@@ -68,6 +80,37 @@ export function Globe({
       state.phi = phi + r
       state.width = width * 2
       state.height = width * 2
+      frameCount++
+
+      // Animate markers: grow/shrink based on whether they face the camera
+      const currentPhi = phi + r
+      const theta = config.theta ?? 0.3
+      state.markers = ALL_MARKERS.map((marker, i) => {
+        const [lat, lng] = marker.location as [number, number]
+        const markerPhi = ((90 - lat) * Math.PI) / 180
+        const markerTheta = ((180 + lng) * Math.PI) / 180
+
+        // Dot product to check if marker faces the camera
+        const cx = Math.sin(markerPhi) * Math.cos(markerTheta)
+        const cz = Math.sin(markerPhi) * Math.sin(markerTheta)
+        const cy = Math.cos(markerPhi)
+
+        const vx = Math.sin(Math.PI / 2 - theta) * Math.cos(currentPhi)
+        const vz = Math.sin(Math.PI / 2 - theta) * Math.sin(currentPhi)
+        const vy = Math.cos(Math.PI / 2 - theta)
+
+        const dot = cx * vx + cy * vy + cz * vz
+        const visible = dot > 0.2
+
+        // Smooth scale transition
+        const target = visible ? 1 : 0
+        markerScales.current[i] += (target - markerScales.current[i]) * 0.06
+
+        return {
+          location: marker.location,
+          size: (marker.size as number) * markerScales.current[i],
+        }
+      })
     },
     [r],
   )
