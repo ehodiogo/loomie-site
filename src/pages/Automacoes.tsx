@@ -7,8 +7,6 @@ import { wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight, stagger
 import useParallax from "@/hooks/use-parallax";
 import { useRef } from "react";
 import { SplineScene } from "@/components/ui/splite";
-import useParallax from "@/hooks/use-parallax";
-import { useRef } from "react";
 
 const benefits = [
   {
