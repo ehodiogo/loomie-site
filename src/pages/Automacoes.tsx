@@ -6,6 +6,7 @@ import { Bot, Clock, MessageCircle, Zap, ArrowRight, CheckCircle2, Settings, Git
 import { wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 import { useRef } from "react";
+import { SplineScene } from "@/components/ui/splite";
 
 const benefits = [
   {
@@ -128,74 +129,17 @@ const Automacoes = () => {
               </motion.a>
             </div>
 
-            {/* Right — Interactive showcase */}
+            {/* Right — 3D Robot */}
             <motion.div
-              className="relative"
+              className="relative h-[500px]"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
             >
-              <div className="relative grid grid-cols-2 gap-4">
-                {/* Main large card */}
-                <TiltCard className="col-span-2 glass-panel p-8 rounded-2xl cursor-pointer">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Zap className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-mono text-xs text-muted-foreground">STATUS</p>
-                      <p className="font-display text-foreground font-bold">Fluxo Ativo</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    {[85, 92, 78, 95, 88, 91, 97].map((v, i) => (
-                      <motion.div
-                        key={i}
-                        className="flex-1 rounded-sm bg-primary/20 overflow-hidden"
-                        style={{ height: 60 }}
-                      >
-                        <motion.div
-                          className="w-full bg-primary/40 rounded-sm"
-                          initial={{ height: 0 }}
-                          animate={{ height: `${v}%` }}
-                          transition={{ delay: 1 + i * 0.1, duration: 0.8, ease: ease.smooth }}
-                          style={{ marginTop: `${100 - v}%` }}
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-                </TiltCard>
-
-                {/* Bottom left */}
-                <TiltCard className="glass-panel p-6 rounded-2xl cursor-pointer">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
-                    <MessageCircle className="w-5 h-5 text-accent" />
-                  </div>
-                  <p className="font-mono text-2xl font-bold text-gradient-primary">847</p>
-                  <p className="text-xs text-muted-foreground mt-1">Mensagens enviadas hoje</p>
-                </TiltCard>
-
-                {/* Bottom right */}
-                <TiltCard className="glass-panel p-6 rounded-2xl cursor-pointer">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
-                    <Bot className="w-5 h-5 text-primary" />
-                  </div>
-                  <p className="font-mono text-2xl font-bold text-gradient-primary">99.2%</p>
-                  <p className="text-xs text-muted-foreground mt-1">Uptime da automação</p>
-                </TiltCard>
-              </div>
-
-              {/* Floating badge */}
-              <motion.div
-                className="absolute -bottom-4 -left-4 glass-panel px-5 py-3 rounded-xl z-20"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-                  <span className="font-mono text-xs text-foreground">fluxo_ativo</span>
-                </div>
-              </motion.div>
+              <SplineScene 
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
+              />
             </motion.div>
           </div>
         </div>
