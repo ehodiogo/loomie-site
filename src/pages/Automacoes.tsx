@@ -132,6 +132,7 @@ const Automacoes = () => {
             {/* Right — 3D Robot */}
             <motion.div
               className="relative h-[500px]"
+              style={{ filter: 'hue-rotate(200deg) saturate(1.4) brightness(1.15)' }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
