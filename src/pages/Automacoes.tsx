@@ -6,6 +6,9 @@ import { Bot, Clock, MessageCircle, Zap, ArrowRight, CheckCircle2, Settings, Git
 import { wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 import { useRef } from "react";
+import { SplineScene } from "@/components/ui/splite";
+import useParallax from "@/hooks/use-parallax";
+import { useRef } from "react";
 
 const benefits = [
   {
