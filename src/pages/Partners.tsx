@@ -277,7 +277,7 @@ const Partners = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
-              className="hidden lg:flex items-center self-stretch -mr-6"
+              className="hidden lg:flex items-center self-stretch min-h-[500px] -mr-6"
             >
               <div className="w-full">
                 <WorldMap
