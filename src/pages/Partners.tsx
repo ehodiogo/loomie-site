@@ -277,20 +277,36 @@ const Partners = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
-              className="hidden lg:block"
+              className="hidden lg:block overflow-hidden rounded-2xl -mr-12 -my-8"
             >
-              <WorldMap
-                dots={[
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -3.71, lng: -38.52 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
-                ]}
-                lineColor="hsl(199, 89%, 48%)"
-              />
+              <div className="scale-[1.6] origin-center translate-x-[-5%]">
+                <WorldMap
+                  dots={[
+                    // América do Sul
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -34.6, lng: -58.38 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.04, lng: -77.03 } },
+                    // América do Norte
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 37.77, lng: -122.42 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 19.43, lng: -99.13 } },
+                    // Europa
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 48.86, lng: 2.35 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.42, lng: -3.7 } },
+                    // Ásia & Oceania
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 35.68, lng: 139.69 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 1.35, lng: 103.82 } },
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.87, lng: 151.21 } },
+                    // África
+                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.92, lng: 18.42 } },
+                  ]}
+                  lineColor="hsl(199, 89%, 48%)"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
