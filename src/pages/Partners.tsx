@@ -214,37 +214,15 @@ const Partners = () => {
         <div className="absolute inset-0 grid-line opacity-12" />
         <div className="absolute inset-0 radial-fade" />
 
-        {/* World Map — full right side, absolute */}
+        {/* Globe — full right side, absolute */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
           className="hidden lg:block absolute top-0 bottom-0 right-0 w-[55%]"
         >
-          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="w-[130%] max-w-none">
-              <WorldMap
-                dots={[
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -34.6, lng: -58.38 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.04, lng: -77.03 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 37.77, lng: -122.42 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 19.43, lng: -99.13 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 48.86, lng: 2.35 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.42, lng: -3.7 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 35.68, lng: 139.69 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 1.35, lng: 103.82 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.87, lng: 151.21 } },
-                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.92, lng: 18.42 } },
-                ]}
-                lineColor="hsl(199, 89%, 48%)"
-              />
-            </div>
+          <div className="relative w-full h-full flex items-center justify-center">
+            <Globe className="relative inset-auto w-full max-w-[700px]" />
           </div>
         </motion.div>
 
