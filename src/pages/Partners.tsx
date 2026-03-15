@@ -214,94 +214,93 @@ const Partners = () => {
         <div className="absolute inset-0 grid-line opacity-12" />
         <div className="absolute inset-0 radial-fade" />
 
-        <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left — Text */}
-            <div>
-              <motion.span
-                variants={blurUp}
-                initial="hidden"
-                animate="visible"
-                className="section-badge mb-6 inline-block"
-              >
-                Growth Partner
-              </motion.span>
-
-              <motion.h1
-                variants={wordStagger}
-                initial="hidden"
-                animate="visible"
-                className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
-              >
-                {"Venda estratégia de alto valor. Nós cuidamos da tecnologia.".split(" ").map((word, i) => (
-                  <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.h1>
-
-              <motion.p
-                variants={blurUp}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: 0.6 }}
-                className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
-              >
-                Transforme sua agência de revendedora de ferramentas em consultoria estratégica de vendas high-ticket. Foque no que importa — nós cuidamos da infraestrutura.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
-                className="flex flex-wrap gap-4"
-              >
-                <a
-                  href="https://crm.loomiecrm.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary"
-                >
-                  Iniciar Parceria
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-                <a href="#benefits" className="btn-secondary">
-                  Ver Benefícios
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              </motion.div>
+        {/* World Map — full right side, absolute */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
+          className="hidden lg:block absolute top-0 bottom-0 right-0 w-[55%]"
+        >
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+            <div className="w-[130%] max-w-none">
+              <WorldMap
+                dots={[
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -34.6, lng: -58.38 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.04, lng: -77.03 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 37.77, lng: -122.42 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 19.43, lng: -99.13 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 48.86, lng: 2.35 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.42, lng: -3.7 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 35.68, lng: 139.69 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: 1.35, lng: 103.82 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.87, lng: 151.21 } },
+                  { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.92, lng: 18.42 } },
+                ]}
+                lineColor="hsl(199, 89%, 48%)"
+              />
             </div>
+          </div>
+        </motion.div>
 
-            {/* Right — World Map */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
-              className="hidden lg:flex items-center self-stretch min-h-[500px] -mr-6"
+        <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
+          <div className="max-w-xl lg:max-w-[45%]">
+            <motion.span
+              variants={blurUp}
+              initial="hidden"
+              animate="visible"
+              className="section-badge mb-6 inline-block"
             >
-              <div className="w-full">
-                <WorldMap
-                  dots={[
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -34.6, lng: -58.38 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.04, lng: -77.03 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 37.77, lng: -122.42 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 19.43, lng: -99.13 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 48.86, lng: 2.35 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.42, lng: -3.7 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 35.68, lng: 139.69 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: 1.35, lng: 103.82 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.87, lng: 151.21 } },
-                    { start: { lat: -23.55, lng: -46.63 }, end: { lat: -33.92, lng: 18.42 } },
-                  ]}
-                  lineColor="hsl(199, 89%, 48%)"
-                />
-              </div>
+              Growth Partner
+            </motion.span>
+
+            <motion.h1
+              variants={wordStagger}
+              initial="hidden"
+              animate="visible"
+              className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.92] text-foreground mb-6"
+            >
+              {"Venda estratégia de alto valor. Nós cuidamos da tecnologia.".split(" ").map((word, i) => (
+                <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
+                  {word}
+                </motion.span>
+              ))}
+            </motion.h1>
+
+            <motion.p
+              variants={blurUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.6 }}
+              className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
+            >
+              Transforme sua agência de revendedora de ferramentas em consultoria estratégica de vendas high-ticket. Foque no que importa — nós cuidamos da infraestrutura.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
+              className="flex flex-wrap gap-4"
+            >
+              <a
+                href="https://crm.loomiecrm.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Iniciar Parceria
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a href="#benefits" className="btn-secondary">
+                Ver Benefícios
+                <ChevronRight className="w-4 h-4" />
+              </a>
             </motion.div>
           </div>
         </div>
