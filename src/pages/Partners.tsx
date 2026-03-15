@@ -13,7 +13,7 @@ import {
   wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight,
   staggerContainer, fadeUpItem, scaleItem, maskReveal, viewport, ease
 } from "@/lib/animations";
-import { WorldMap } from "@/components/ui/world-map";
+import { Globe } from "@/components/ui/globe";
 import useParallax from "@/hooks/use-parallax";
 
 /* ── Data ── */
