@@ -20,28 +20,31 @@ const GLOBE_CONFIG: COBEOptions = {
   markerColor: [0.2, 0.4, 1],
   glowColor: [0.85, 0.85, 0.85],
   markers: [
-    { location: [14.5995, 120.9842], size: 0.03 },
-    { location: [19.076, 72.8777], size: 0.1 },
-    { location: [23.8103, 90.4125], size: 0.05 },
-    { location: [30.0444, 31.2357], size: 0.07 },
-    { location: [39.9042, 116.4074], size: 0.08 },
-    { location: [-23.5505, -46.6333], size: 0.12 },
-    { location: [-22.9068, -43.1729], size: 0.1 },
-    { location: [-15.7975, -47.8919], size: 0.08 },
-    { location: [-19.9167, -43.9345], size: 0.07 },
-    { location: [-3.1190, -60.0217], size: 0.06 },
-    { location: [-12.9714, -38.5124], size: 0.07 },
-    { location: [-25.4284, -49.2733], size: 0.06 },
-    { location: [-30.0346, -51.2177], size: 0.07 },
-    { location: [-8.0476, -34.8770], size: 0.05 },
-    { location: [19.4326, -99.1332], size: 0.1 },
-    { location: [40.7128, -74.006], size: 0.1 },
-    { location: [34.6937, 135.5022], size: 0.05 },
-    { location: [41.0082, 28.9784], size: 0.06 },
+    // Wave 1 — appear early (frames 0-60, ~first half rotation)
+    { location: [-23.5505, -46.6333], size: 0.12 },  // São Paulo
+    { location: [40.7128, -74.006], size: 0.1 },      // NYC
+    { location: [-22.9068, -43.1729], size: 0.1 },    // Rio
+    { location: [19.4326, -99.1332], size: 0.1 },     // Mexico City
+    { location: [-15.7975, -47.8919], size: 0.08 },   // Brasília
+    { location: [-30.0346, -51.2177], size: 0.07 },   // Porto Alegre
+    { location: [30.0444, 31.2357], size: 0.07 },     // Cairo
+    { location: [-12.9714, -38.5124], size: 0.07 },   // Salvador
+    { location: [41.0082, 28.9784], size: 0.06 },     // Istanbul
+    // Wave 2 — appear later (frames 60-200)
+    { location: [14.5995, 120.9842], size: 0.03 },    // Manila
+    { location: [19.076, 72.8777], size: 0.1 },       // Mumbai
+    { location: [23.8103, 90.4125], size: 0.05 },     // Dhaka
+    { location: [39.9042, 116.4074], size: 0.08 },    // Beijing
+    { location: [-19.9167, -43.9345], size: 0.07 },   // BH
+    { location: [-3.1190, -60.0217], size: 0.06 },    // Manaus
+    { location: [-25.4284, -49.2733], size: 0.06 },   // Curitiba
+    { location: [-8.0476, -34.8770], size: 0.05 },    // Recife
+    { location: [34.6937, 135.5022], size: 0.05 },    // Osaka
   ],
 }
 
 const ALL_MARKERS = GLOBE_CONFIG.markers!
+const WAVE_1_COUNT = 9 // first 9 markers appear early
 
 export function Globe({
   className,
