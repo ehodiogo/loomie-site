@@ -13,6 +13,7 @@ import {
   wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight,
   staggerContainer, fadeUpItem, scaleItem, maskReveal, viewport, ease
 } from "@/lib/animations";
+import { WorldMap } from "@/components/ui/world-map";
 import useParallax from "@/hooks/use-parallax";
 
 /* ── Data ── */
@@ -287,6 +288,45 @@ const Partners = () => {
               </a>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ World Map ═══ */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="relative container mx-auto px-6">
+          <motion.div
+            variants={blurUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="text-center mb-10"
+          >
+            <h2 className="font-display text-2xl md:text-4xl font-extrabold text-foreground mb-3">
+              Parceiros em <span className="text-gradient-primary">todo o Brasil.</span>
+            </h2>
+            <p className="text-muted-foreground text-base max-w-xl mx-auto">
+              Uma rede crescente de agências e consultores conectados pela Loomie.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewport}
+            transition={{ duration: 0.8, ease: ease.smooth }}
+          >
+            <WorldMap
+              dots={[
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -22.9, lng: -43.17 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -15.79, lng: -47.88 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -12.97, lng: -38.51 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -3.71, lng: -38.52 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: -30.03, lng: -51.23 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: 40.71, lng: -74.0 } },
+                { start: { lat: -23.55, lng: -46.63 }, end: { lat: 51.5, lng: -0.12 } },
+              ]}
+              lineColor="hsl(199, 89%, 48%)"
+            />
+          </motion.div>
         </div>
       </section>
 
