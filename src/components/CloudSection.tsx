@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Database, Users, Zap, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Database, Users, Zap, BarChart3, ArrowRight, Layers, GitMerge, Shield } from "lucide-react";
 import { slideFromLeft, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 
@@ -10,29 +11,50 @@ const metrics = [
   { label: "Integrações Ativas", value: "48", icon: Database },
 ];
 
+const features = [
+  {
+    icon: Layers,
+    title: "Pipelines Visuais",
+    desc: "Organize sua operação com quadros Kanban e pipelines customizáveis para cada etapa do funil.",
+  },
+  {
+    icon: GitMerge,
+    title: "Integrações Nativas",
+    desc: "Conecte com WhatsApp, e-mail, redes sociais e mais de 40 ferramentas em um só lugar.",
+  },
+  {
+    icon: Shield,
+    title: "Dados Seguros",
+    desc: "Backup diário automático, criptografia e controle de acesso por equipe e nível.",
+  },
+];
+
 const CloudSection = () => {
   const { ref: gridRef, y: gridY } = useParallax({ speed: -0.05 });
 
   return (
-    <section id="cloud" className="relative py-32 overflow-hidden">
+    <section id="cloud" className="relative py-28 lg:py-36 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-40" />
 
       <div className="relative container mx-auto px-6">
-        {/* Header — slides from left */}
+        {/* Header */}
         <motion.div
           variants={slideFromLeft}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-20"
+          className="mb-16"
         >
-          
+          <span className="section-badge mb-4 inline-block">Loomie Cloud</span>
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
             O núcleo da sua operação comercial.
           </h2>
+          <p className="text-muted-foreground text-lg mt-4 max-w-xl">
+            Centralize leads, gerencie pipelines e tome decisões baseadas em dados — tudo em uma plataforma intuitiva.
+          </p>
         </motion.div>
 
-        {/* Metrics — staggered scale-in */}
+        {/* Metrics */}
         <motion.div
           variants={staggerContainer(0.12)}
           initial="hidden"
@@ -54,39 +76,43 @@ const CloudSection = () => {
           ))}
         </motion.div>
 
-        {/* Glass block grid */}
+        {/* Features row */}
         <motion.div
-          ref={gridRef}
-          variants={staggerContainer(0.06, 0.2)}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-3 gap-3 max-w-3xl"
-          style={{ transform: `translateY(${gridY}px)` }}
+          className="grid md:grid-cols-3 gap-6 mb-16"
         >
-          {[
-            { col: "col-span-2", h: "h-32", accent: true },
-            { col: "col-span-1", h: "h-32", accent: false },
-            { col: "col-span-1", h: "h-24", accent: false },
-            { col: "col-span-1", h: "h-24", accent: true },
-            { col: "col-span-1", h: "h-24", accent: false },
-          ].map((block, i) => (
+          {features.map(({ icon: Icon, title, desc }) => (
             <motion.div
-              key={i}
+              key={title}
               variants={fadeUpItem}
-              className={`${block.col} ${block.h} ${
-                block.accent ? "glow-border-primary" : "glass-panel"
-              } flex items-end p-4 rounded-2xl`}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
+              className="card-elevated group"
             >
-              <span className="font-mono text-xs text-muted-foreground">
-                block_{String(i).padStart(2, "0")}
-              </span>
+              <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors duration-300">
+                <Icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-display text-base font-bold text-foreground mb-2">{title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
             </motion.div>
           ))}
         </motion.div>
-      </div>
 
-      <div className="section-divider mt-32" />
+        {/* CTA */}
+        <motion.div
+          variants={fadeUpItem}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
+          <Link to="/cloud" className="btn-secondary">
+            Explorar o Cloud
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 };
