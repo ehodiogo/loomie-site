@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { TrendingUp, Blocks, BadgeCheck, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { TrendingUp, Blocks, BadgeCheck, ArrowUpRight, ArrowRight, Handshake, ShieldCheck, BarChart3 } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, cardHover, viewport } from "@/lib/animations";
 
 const partners = [
@@ -11,24 +12,53 @@ const partners = [
   { name: "APIConnect", category: "Integrações", arr: "R$ 540K", badge: "Growing" },
 ];
 
+const highlights = [
+  { icon: TrendingUp, label: "Comissão recorrente de até 6%" },
+  { icon: ShieldCheck, label: "Suporte técnico dedicado Level 2" },
+  { icon: BarChart3, label: "Dashboards de ROI para seus clientes" },
+];
+
 const PartnersSection = () => {
   return (
-    <section id="partners" className="relative py-32 overflow-hidden">
+    <section id="partners" className="relative py-28 lg:py-36 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-25" />
 
       <div className="relative container mx-auto px-6">
-        {/* Header — center-aligned blur-up */}
+        {/* Header */}
         <motion.div
           variants={blurUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-20 text-center"
+          className="mb-16 text-center"
         >
-          
+          <span className="section-badge mb-4 inline-block">Growth Partners</span>
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl mx-auto leading-tight text-foreground mt-4">
             Construa receita recorrente no ecossistema.
           </h2>
+          <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+            Transforme sua agência em consultoria estratégica de vendas. Nós cuidamos da tecnologia — você foca na estratégia.
+          </p>
+        </motion.div>
+
+        {/* Highlights row */}
+        <motion.div
+          variants={staggerContainer(0.1)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="flex flex-wrap justify-center gap-6 mb-16"
+        >
+          {highlights.map(({ icon: Icon, label }) => (
+            <motion.div
+              key={label}
+              variants={fadeUpItem}
+              className="flex items-center gap-3 glass-panel px-5 py-3"
+            >
+              <Icon className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-foreground font-medium">{label}</span>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Partner grid */}
@@ -37,7 +67,7 @@ const PartnersSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16"
         >
           {partners.map((partner) => (
             <motion.div
@@ -72,16 +102,18 @@ const PartnersSection = () => {
           ))}
         </motion.div>
 
+        {/* CTA */}
         <motion.div
           variants={blurUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mt-16 text-center"
+          className="text-center"
         >
-          <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary">
+          <Link to="/partners" className="btn-primary">
             Tornar-se Partner
-          </a>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </motion.div>
       </div>
     </section>
