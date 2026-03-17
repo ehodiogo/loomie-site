@@ -8,7 +8,7 @@ const metrics = [
   { label: "Leads Unificados", value: "12.4K", icon: Users },
   { label: "Taxa de Conversão", value: "34.8%", icon: BarChart3 },
   { label: "Tempo de Resposta", value: "< 2min", icon: Zap },
-  { label: "Integrações Ativas", value: "48", icon: Database },
+  { label: "n8n — Integrações Ilimitadas", value: "∞", icon: Database },
 ];
 
 const features = [
@@ -33,7 +33,7 @@ const CloudSection = () => {
   const { ref: gridRef, y: gridY } = useParallax({ speed: -0.05 });
 
   return (
-    <section id="cloud" className="relative py-28 lg:py-36 overflow-hidden">
+    <section id="cloud" className="relative py-16 lg:py-20 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-40" />
 
       <div className="relative container mx-auto px-6">

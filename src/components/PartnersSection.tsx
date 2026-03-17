@@ -20,7 +20,7 @@ const highlights = [
 
 const PartnersSection = () => {
   return (
-    <section id="partners" className="relative py-28 lg:py-36 overflow-hidden">
+    <section id="partners" className="relative py-16 lg:py-20 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-25" />
 
       <div className="relative container mx-auto px-6">
