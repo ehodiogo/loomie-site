@@ -26,7 +26,7 @@ const CloudSection = () => {
           viewport={viewport}
           className="mb-20"
         >
-          <span className="section-badge mb-4">Módulo 01</span>
+          
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
             O núcleo da sua operação comercial.
           </h2>
