@@ -25,7 +25,7 @@ const PartnersSection = () => {
           viewport={viewport}
           className="mb-20 text-center"
         >
-          <span className="section-badge mb-4">Módulo 03</span>
+          
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl mx-auto leading-tight text-foreground mt-4">
             Construa receita recorrente no ecossistema.
           </h2>

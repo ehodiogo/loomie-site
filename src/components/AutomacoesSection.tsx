@@ -30,7 +30,7 @@ const AutomacoesSection = () => {
           viewport={viewport}
           className="mb-20 md:text-right md:ml-auto md:max-w-2xl"
         >
-          <span className="section-badge mb-4">Módulo 02</span>
+          
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
             Raio-X da sua eficiência.
           </h2>
