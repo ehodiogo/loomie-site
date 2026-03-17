@@ -20,7 +20,7 @@ const AutomacoesSection = () => {
   const { ref: statsRef, y: statsY } = useParallax({ speed: -0.04 });
 
   return (
-    <section id="automações" className="relative py-28 lg:py-36 overflow-hidden">
+    <section id="automações" className="relative py-16 lg:py-20 overflow-hidden">
       {/* Scan line effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent animate-scan-line" />
