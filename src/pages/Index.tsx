@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import CloudSection from "@/components/CloudSection";
-import AutomacoesSection from "@/components/AutomacoesSection";
-import PartnersSection from "@/components/PartnersSection";
+import PivotSection from "@/components/PivotSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import MathSection from "@/components/MathSection";
+import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 
@@ -14,11 +15,13 @@ const Index = () => {
       <Header />
       <HeroSection />
       <div className="section-divider" />
-      <CloudSection />
+      <PivotSection />
       <div className="section-divider" />
-      <AutomacoesSection />
+      <FeaturesSection />
       <div className="section-divider" />
-      <PartnersSection />
+      <MathSection />
+      <div className="section-divider" />
+      <FinalCTASection />
       <Footer />
     </div>
   );
