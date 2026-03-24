@@ -1,21 +1,30 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { TrendingUp, Blocks, BadgeCheck, ArrowUpRight, ArrowRight, Handshake, ShieldCheck, BarChart3 } from "lucide-react";
-import { blurUp, staggerContainer, fadeUpItem, cardHover, viewport } from "@/lib/animations";
-
-const partners = [
-  { name: "IntegraPay", category: "Pagamentos", arr: "R$ 2.4M", badge: "Active" },
-  { name: "ChatBot Pro", category: "Atendimento", arr: "R$ 1.8M", badge: "Active" },
-  { name: "DataSync", category: "Analytics", arr: "R$ 960K", badge: "Growing" },
-  { name: "FormBuilder", category: "Captação", arr: "R$ 1.2M", badge: "Active" },
-  { name: "MailForce", category: "Email Marketing", arr: "R$ 780K", badge: "New" },
-  { name: "APIConnect", category: "Integrações", arr: "R$ 540K", badge: "Growing" },
-];
+import { Code2, ShieldCheck, Store, Key, ArrowRight, TrendingUp, Lock, Cpu } from "lucide-react";
+import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 
 const highlights = [
-  { icon: TrendingUp, label: "Comissão recorrente de até 6%" },
-  { icon: ShieldCheck, label: "Suporte técnico dedicado Level 2" },
-  { icon: BarChart3, label: "Dashboards de ROI para seus clientes" },
+  { icon: Store, label: "Publique no Marketplace e ganhe por recorrência" },
+  { icon: Lock, label: "Prompts e agentes criptografados (IP Shield)" },
+  { icon: Key, label: "Gestão de credenciais Zero-Trust por cliente" },
+];
+
+const steps = [
+  {
+    icon: Code2,
+    title: "Desenvolva seu Fluxo",
+    desc: "Crie automações no n8n, Make ou qualquer ferramenta. Exponha via Webhook — sua lógica nunca sai do seu servidor.",
+  },
+  {
+    icon: Cpu,
+    title: "Publique como Produto",
+    desc: "Transforme seu workflow em um Micro-SaaS listado no marketplace. Interface, billing e onboarding já estão prontos.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Escale por Recorrência",
+    desc: "Cada novo assinante gera MRR automático. Sem suporte técnico, sem calls de setup — o Loomie gerencia tudo.",
+  },
 ];
 
 const PartnersSection = () => {
@@ -32,12 +41,12 @@ const PartnersSection = () => {
           viewport={viewport}
           className="mb-16 text-center"
         >
-          <span className="section-badge mb-4 inline-block">Growth Partners</span>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl mx-auto leading-tight text-foreground mt-4">
-            Construa receita recorrente no ecossistema.
+          <span className="section-badge mb-4 inline-block">Developer Marketplace</span>
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-3xl mx-auto leading-tight text-foreground mt-4">
+            Venda suas automações por recorrência.
           </h2>
           <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-            Transforme sua agência em consultoria estratégica de vendas. Nós cuidamos da tecnologia — você foca na estratégia.
+            Transforme seus melhores workflows em produtos SaaS. Distribuição, billing e proteção de IP — tudo integrado.
           </p>
         </motion.div>
 
@@ -47,7 +56,7 @@ const PartnersSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="flex flex-wrap justify-center gap-6 mb-16"
+          className="flex flex-wrap justify-center gap-4 mb-16"
         >
           {highlights.map(({ icon: Icon, label }) => (
             <motion.div
@@ -61,43 +70,29 @@ const PartnersSection = () => {
           ))}
         </motion.div>
 
-        {/* Partner grid */}
+        {/* Steps */}
         <motion.div
-          variants={staggerContainer(0.08)}
+          variants={staggerContainer(0.12)}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16"
+          className="grid md:grid-cols-3 gap-6 mb-16"
         >
-          {partners.map((partner) => (
+          {steps.map(({ icon: Icon, title, desc }, i) => (
             <motion.div
-              key={partner.name}
+              key={title}
               variants={fadeUpItem}
-              whileHover={cardHover}
-              className="card-elevated cursor-pointer group"
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
+              className="card-elevated group relative"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <Blocks className="w-4 h-4 text-primary" />
-                  <span className="font-display font-semibold text-foreground">{partner.name}</span>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+              <span className="absolute top-4 right-4 font-mono text-xs text-muted-foreground/50">
+                0{i + 1}
+              </span>
+              <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors duration-300">
+                <Icon className="w-6 h-6 text-primary" />
               </div>
-
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4">
-                {partner.category}
-              </p>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-3 h-3 text-primary" />
-                  <span className="font-mono text-sm text-foreground">{partner.arr} ARR</span>
-                </div>
-                <span className="flex items-center gap-1 text-xs font-mono text-primary">
-                  <BadgeCheck className="w-3 h-3" />
-                  {partner.badge}
-                </span>
-              </div>
+              <h3 className="font-display text-base font-bold text-foreground mb-2">{title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -111,7 +106,7 @@ const PartnersSection = () => {
           className="text-center"
         >
           <Link to="/partners" className="btn-primary">
-            Tornar-se Partner
+            Explorar o Marketplace
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

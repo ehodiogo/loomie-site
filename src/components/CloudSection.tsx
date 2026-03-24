@@ -1,37 +1,34 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Database, Users, Zap, BarChart3, ArrowRight, Layers, GitMerge, Shield } from "lucide-react";
-import { slideFromLeft, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
-import useParallax from "@/hooks/use-parallax";
+import { Webhook, Terminal, ShieldCheck, ArrowRight, Server, Workflow, Lock } from "lucide-react";
+import { slideFromLeft, staggerContainer, fadeUpItem, scaleItem, viewport } from "@/lib/animations";
 
 const metrics = [
-  { label: "Leads Unificados", value: "12.4K", icon: Users },
-  { label: "Taxa de Conversão", value: "34.8%", icon: BarChart3 },
-  { label: "Tempo de Resposta", value: "< 2min", icon: Zap },
-  { label: "n8n — Integrações Ilimitadas", value: "∞", icon: Database },
+  { label: "API Oficial WhatsApp", value: "WA", icon: Terminal },
+  { label: "Webhooks Ilimitados", value: "∞", icon: Webhook },
+  { label: "Uptime Garantido", value: "99.9%", icon: Server },
+  { label: "n8n Nativo", value: "Built-in", icon: Workflow },
 ];
 
 const features = [
   {
-    icon: Layers,
-    title: "Pipelines Visuais",
-    desc: "Organize sua operação com quadros Kanban e pipelines customizáveis para cada etapa do funil.",
+    icon: Terminal,
+    title: "Front-end como Serviço",
+    desc: "Seu cliente interage com pipelines, painéis e formulários prontos. Você só entrega o payload via Webhook — sem construir UI.",
   },
   {
-    icon: GitMerge,
-    title: "Integrações Nativas",
-    desc: "Conecte com WhatsApp, e-mail, redes sociais e mais de 40 ferramentas em um só lugar.",
+    icon: Workflow,
+    title: "WhatsApp API + n8n",
+    desc: "Conecte seus fluxos n8n à API Oficial do WhatsApp. Atendimento omnichannel com a lógica que você já domina.",
   },
   {
-    icon: Shield,
-    title: "Dados Seguros",
-    desc: "Backup diário automático, criptografia e controle de acesso por equipe e nível.",
+    icon: Lock,
+    title: "Isolamento de Ambiente",
+    desc: "Cada cliente opera em workspace isolado. Seus workflows, credenciais e dados nunca se misturam entre contas.",
   },
 ];
 
 const CloudSection = () => {
-  const { ref: gridRef, y: gridY } = useParallax({ speed: -0.05 });
-
   return (
     <section id="cloud" className="relative py-16 lg:py-20 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-40" />
@@ -46,11 +43,11 @@ const CloudSection = () => {
           className="mb-16"
         >
           <span className="section-badge mb-4 inline-block">Loomie Cloud</span>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-2xl leading-tight text-foreground mt-4">
-            O núcleo da sua operação comercial.
+          <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight text-foreground mt-4">
+            A infraestrutura que transforma seu script em produto.
           </h2>
           <p className="text-muted-foreground text-lg mt-4 max-w-xl">
-            Centralize leads, gerencie pipelines e tome decisões baseadas em dados — tudo em uma plataforma intuitiva.
+            Plugue seus workflows via Webhook. Nós entregamos a interface enterprise, o WhatsApp API e a gestão de usuários. Seu código roda no seu servidor — nós cuidamos do resto.
           </p>
         </motion.div>
 
@@ -108,7 +105,7 @@ const CloudSection = () => {
           viewport={viewport}
         >
           <Link to="/cloud" className="btn-secondary">
-            Explorar o Cloud
+            Ver Documentação do Cloud
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
