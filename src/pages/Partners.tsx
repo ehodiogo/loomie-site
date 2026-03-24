@@ -126,17 +126,19 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 };
 
 /* ── Earnings Calculator ── */
-const EarningsCalculator = () => {
+const EarningsCalculator = ({ supportMode }: { supportMode: "loomie" | "partner" }) => {
   const [selectedPlan, setSelectedPlan] = useState(1);
   const [clients, setClients] = useState(15);
 
   const planPrices = [169.9, 299.9, 599.9];
   const planNames = ["Essential", "Scale", "Pro"];
 
+  const tiers = tiersData[supportMode];
+
   const getCommissionRate = (c: number) => {
-    if (c <= 10) return 0.03;
-    if (c <= 25) return 0.05;
-    return 0.06;
+    if (c <= 10) return tiers[0].rate;
+    if (c <= 25) return tiers[1].rate;
+    return tiers[2].rate;
   };
 
   const rate = getCommissionRate(clients);
@@ -145,7 +147,6 @@ const EarningsCalculator = () => {
 
   return (
     <div className="space-y-8">
-      {/* Plan selector */}
       <div className="flex gap-3 justify-center flex-wrap">
         {planNames.map((name, i) => (
           <button
@@ -163,7 +164,6 @@ const EarningsCalculator = () => {
         ))}
       </div>
 
-      {/* Slider */}
       <div className="space-y-3">
         <div className="flex justify-between items-baseline">
           <span className="text-sm text-muted-foreground">Número de clientes</span>
@@ -183,12 +183,11 @@ const EarningsCalculator = () => {
         </div>
       </div>
 
-      {/* Result */}
       <div className="glass-panel glow-border-primary p-8 text-center">
         <p className="text-sm text-muted-foreground mb-1">Ganhos mensais estimados</p>
         <AnimatePresence mode="wait">
           <motion.p
-            key={earnings}
+            key={`${earnings}-${supportMode}`}
             initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
