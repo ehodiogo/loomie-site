@@ -1,29 +1,29 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Code2, ShieldCheck, Store, Key, ArrowRight, TrendingUp, Lock, Cpu } from "lucide-react";
+import { Code2, TrendingUp, Store, ArrowRight, Percent, Users, ShieldCheck } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 
 const highlights = [
-  { icon: Store, label: "Publique no Marketplace e ganhe por recorrência" },
-  { icon: Lock, label: "Prompts e agentes criptografados (IP Shield)" },
-  { icon: Key, label: "Gestão de credenciais Zero-Trust por cliente" },
+  { icon: Percent, label: "Comissão recorrente de até 6% sobre a carteira ativa" },
+  { icon: Store, label: "Publique automações no Marketplace e ganhe por assinatura" },
+  { icon: ShieldCheck, label: "Proteção de IP — seus prompts e fluxos criptografados" },
 ];
 
-const steps = [
+const benefits = [
   {
-    icon: Code2,
-    title: "Desenvolva seu Fluxo",
-    desc: "Crie automações no n8n, Make ou qualquer ferramenta. Exponha via Webhook — sua lógica nunca sai do seu servidor.",
+    icon: Store,
+    title: "Distribua no Marketplace",
+    desc: "Publique sua automação como um produto 'As a Service'. Alcance uma base de usuários que já busca soluções prontas — sem prospecção.",
   },
   {
-    icon: Cpu,
-    title: "Publique como Produto",
-    desc: "Transforme seu workflow em um Micro-SaaS listado no marketplace. Interface, billing e onboarding já estão prontos.",
+    icon: Percent,
+    title: "Comissão Recorrente",
+    desc: "Além do valor da automação, receba uma comissão mensal de até 6% com base na sua carteira de clientes ativos. Quanto mais retém, mais ganha.",
   },
   {
-    icon: TrendingUp,
-    title: "Escale por Recorrência",
-    desc: "Cada novo assinante gera MRR automático. Sem suporte técnico, sem calls de setup — o Loomie gerencia tudo.",
+    icon: Users,
+    title: "Gestão de Carteira",
+    desc: "Acompanhe em tempo real quantos clientes ativos sua automação atende. Dashboard dedicado com MRR, churn e projeção de receita.",
   },
 ];
 
@@ -33,7 +33,6 @@ const PartnersSection = () => {
       <div className="absolute inset-0 radial-fade opacity-25" />
 
       <div className="relative container mx-auto px-6">
-        {/* Header */}
         <motion.div
           variants={blurUp}
           initial="hidden"
@@ -41,16 +40,16 @@ const PartnersSection = () => {
           viewport={viewport}
           className="mb-16 text-center"
         >
-          <span className="section-badge mb-4 inline-block">Developer Marketplace</span>
+          <span className="section-badge mb-4 inline-block">Growth Partners</span>
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-3xl mx-auto leading-tight text-foreground mt-4">
-            Venda suas automações por recorrência.
+            Monetize suas automações e construa receita recorrente.
           </h2>
           <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-            Transforme seus melhores workflows em produtos SaaS. Distribuição, billing e proteção de IP — tudo integrado.
+            Distribua seus fluxos no marketplace, receba pelo uso e ganhe comissão mensal sobre toda a sua carteira de clientes ativos.
           </p>
         </motion.div>
 
-        {/* Highlights row */}
+        {/* Highlights */}
         <motion.div
           variants={staggerContainer(0.1)}
           initial="hidden"
@@ -70,7 +69,7 @@ const PartnersSection = () => {
           ))}
         </motion.div>
 
-        {/* Steps */}
+        {/* Benefits */}
         <motion.div
           variants={staggerContainer(0.12)}
           initial="hidden"
@@ -78,7 +77,7 @@ const PartnersSection = () => {
           viewport={viewport}
           className="grid md:grid-cols-3 gap-6 mb-16"
         >
-          {steps.map(({ icon: Icon, title, desc }, i) => (
+          {benefits.map(({ icon: Icon, title, desc }, i) => (
             <motion.div
               key={title}
               variants={fadeUpItem}
@@ -97,7 +96,6 @@ const PartnersSection = () => {
           ))}
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           variants={blurUp}
           initial="hidden"
@@ -106,7 +104,7 @@ const PartnersSection = () => {
           className="text-center"
         >
           <Link to="/partners" className="btn-primary">
-            Explorar o Marketplace
+            Tornar-se Partner
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
