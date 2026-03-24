@@ -88,11 +88,18 @@ const plans = [
   },
 ];
 
-const tiers = [
-  { name: "START", range: "0–10 clientes ativos", commission: "3%", icon: Rocket, popular: false },
-  { name: "SCALE", range: "11–25 clientes ativos", commission: "5%", icon: Star, popular: true },
-  { name: "PRO", range: "+26 clientes ativos", commission: "6%", icon: Crown, popular: false },
-];
+const tiersData = {
+  loomie: [
+    { name: "START", range: "0–10 clientes ativos", commission: "3%", rate: 0.03, icon: Rocket, popular: false },
+    { name: "SCALE", range: "11–25 clientes ativos", commission: "5%", rate: 0.05, icon: Star, popular: true },
+    { name: "PRO", range: "+26 clientes ativos", commission: "6%", rate: 0.06, icon: Crown, popular: false },
+  ],
+  partner: [
+    { name: "START", range: "0–10 clientes ativos", commission: "7%", rate: 0.07, icon: Rocket, popular: false },
+    { name: "SCALE", range: "11–25 clientes ativos", commission: "12%", rate: 0.12, icon: Star, popular: true },
+    { name: "PRO", range: "+26 clientes ativos", commission: "16%", rate: 0.16, icon: Crown, popular: false },
+  ],
+};
 
 /* ── Animated Counter ── */
 const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
@@ -119,17 +126,19 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 };
 
 /* ── Earnings Calculator ── */
-const EarningsCalculator = () => {
+const EarningsCalculator = ({ supportMode }: { supportMode: "loomie" | "partner" }) => {
   const [selectedPlan, setSelectedPlan] = useState(1);
   const [clients, setClients] = useState(15);
 
   const planPrices = [169.9, 299.9, 599.9];
   const planNames = ["Essential", "Scale", "Pro"];
 
+  const tiers = tiersData[supportMode];
+
   const getCommissionRate = (c: number) => {
-    if (c <= 10) return 0.03;
-    if (c <= 25) return 0.05;
-    return 0.06;
+    if (c <= 10) return tiers[0].rate;
+    if (c <= 25) return tiers[1].rate;
+    return tiers[2].rate;
   };
 
   const rate = getCommissionRate(clients);
@@ -138,7 +147,6 @@ const EarningsCalculator = () => {
 
   return (
     <div className="space-y-8">
-      {/* Plan selector */}
       <div className="flex gap-3 justify-center flex-wrap">
         {planNames.map((name, i) => (
           <button
@@ -156,7 +164,6 @@ const EarningsCalculator = () => {
         ))}
       </div>
 
-      {/* Slider */}
       <div className="space-y-3">
         <div className="flex justify-between items-baseline">
           <span className="text-sm text-muted-foreground">Número de clientes</span>
@@ -176,12 +183,11 @@ const EarningsCalculator = () => {
         </div>
       </div>
 
-      {/* Result */}
       <div className="glass-panel glow-border-primary p-8 text-center">
         <p className="text-sm text-muted-foreground mb-1">Ganhos mensais estimados</p>
         <AnimatePresence mode="wait">
           <motion.p
-            key={earnings}
+            key={`${earnings}-${supportMode}`}
             initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
@@ -200,7 +206,118 @@ const EarningsCalculator = () => {
   );
 };
 
-/* ── Page ── */
+/* ── Commission Section with Toggle ── */
+const CommissionSection = () => {
+  const [supportMode, setSupportMode] = useState<"loomie" | "partner">("loomie");
+  const tiers = tiersData[supportMode];
+
+  return (
+    <>
+      {/* Toggle */}
+      <div className="flex justify-center mb-12">
+        <div className="glass-panel p-1.5 inline-flex gap-1 rounded-full">
+          <button
+            onClick={() => setSupportMode("loomie")}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              supportMode === "loomie"
+                ? "bg-primary text-primary-foreground shadow-lg"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Loomie cuida do suporte
+          </button>
+          <button
+            onClick={() => setSupportMode("partner")}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              supportMode === "partner"
+                ? "bg-primary text-primary-foreground shadow-lg"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Você cuida do suporte
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={supportMode}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 0.25 }}
+          className="text-center text-sm text-muted-foreground mb-10 max-w-lg mx-auto"
+        >
+          {supportMode === "loomie"
+            ? "A Loomie cuida do suporte Tier 1 e treinamento dos seus clientes. Você foca em vendas e estratégia."
+            : "Você assume o suporte Tier 1 e treinamento, e recebe comissões significativamente maiores."}
+        </motion.p>
+      </AnimatePresence>
+
+      <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        {/* Tiers */}
+        <motion.div
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="space-y-4"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={supportMode}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4"
+            >
+              {tiers.map(({ name, range, commission, icon: Icon, popular }) => (
+                <div
+                  key={name}
+                  className={`card-elevated flex items-center gap-5 ${popular ? "glow-border-primary" : ""}`}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-mono text-base font-bold text-foreground">{name}</h3>
+                      {popular && <span className="section-badge text-[9px] py-0.5 px-2">Popular</span>}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{range}</p>
+                  </div>
+                  <span className="font-mono text-2xl font-bold text-gradient-primary">{commission}</span>
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            * Taxa de reserva de infraestrutura de R$ 475,00 para partners com 0 clientes ativos.
+          </p>
+        </motion.div>
+
+        {/* Calculator */}
+        <motion.div
+          variants={slideFromRight}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="card-elevated"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <Gauge className="w-5 h-5 text-primary" />
+            <h3 className="font-display text-lg font-bold text-foreground">Calculadora de Ganhos</h3>
+          </div>
+          <EarningsCalculator supportMode={supportMode} />
+        </motion.div>
+      </div>
+    </>
+  );
+};
+
+
 const Partners = () => {
   useLenis();
   const { ref: statsRef, y: statsY } = useParallax({ speed: -0.03 });
@@ -606,7 +723,7 @@ const Partners = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="text-center mb-16"
+            className="text-center mb-10"
           >
             <span className="section-badge mb-4 inline-block">Comissões</span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-4 mt-4">
@@ -614,55 +731,8 @@ const Partners = () => {
             </h2>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {/* Tiers */}
-            <motion.div
-              variants={staggerContainer(0.12)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="space-y-4"
-            >
-              {tiers.map(({ name, range, commission, icon: Icon, popular }) => (
-                <motion.div
-                  key={name}
-                  variants={fadeUpItem}
-                  className={`card-elevated flex items-center gap-5 ${popular ? "glow-border-primary" : ""}`}
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-mono text-base font-bold text-foreground">{name}</h3>
-                      {popular && <span className="section-badge text-[9px] py-0.5 px-2">Popular</span>}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{range}</p>
-                  </div>
-                  <span className="font-mono text-2xl font-bold text-gradient-primary">{commission}</span>
-                </motion.div>
-              ))}
-
-              <p className="text-xs text-muted-foreground text-center mt-4">
-                * Taxa de reserva de infraestrutura de R$ 475,00 para partners com 0 clientes ativos.
-              </p>
-            </motion.div>
-
-            {/* Calculator */}
-            <motion.div
-              variants={slideFromRight}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="card-elevated"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <Gauge className="w-5 h-5 text-primary" />
-                <h3 className="font-display text-lg font-bold text-foreground">Calculadora de Ganhos</h3>
-              </div>
-              <EarningsCalculator />
-            </motion.div>
-          </div>
+          {/* Toggle */}
+          <CommissionSection />
         </div>
       </section>
 
