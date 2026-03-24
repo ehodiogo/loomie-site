@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import PivotSection from "@/components/PivotSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import MathSection from "@/components/MathSection";
+import CloudSection from "@/components/CloudSection";
+import PartnersSection from "@/components/PartnersSection";
 import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
@@ -20,6 +22,10 @@ const Index = () => {
       <FeaturesSection />
       <div className="section-divider" />
       <MathSection />
+      <div className="section-divider" />
+      <CloudSection />
+      <div className="section-divider" />
+      <PartnersSection />
       <div className="section-divider" />
       <FinalCTASection />
       <Footer />
