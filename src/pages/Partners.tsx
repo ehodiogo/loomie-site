@@ -88,11 +88,18 @@ const plans = [
   },
 ];
 
-const tiers = [
-  { name: "START", range: "0–10 clientes ativos", commission: "3%", icon: Rocket, popular: false },
-  { name: "SCALE", range: "11–25 clientes ativos", commission: "5%", icon: Star, popular: true },
-  { name: "PRO", range: "+26 clientes ativos", commission: "6%", icon: Crown, popular: false },
-];
+const tiersData = {
+  loomie: [
+    { name: "START", range: "0–10 clientes ativos", commission: "3%", rate: 0.03, icon: Rocket, popular: false },
+    { name: "SCALE", range: "11–25 clientes ativos", commission: "5%", rate: 0.05, icon: Star, popular: true },
+    { name: "PRO", range: "+26 clientes ativos", commission: "6%", rate: 0.06, icon: Crown, popular: false },
+  ],
+  partner: [
+    { name: "START", range: "0–10 clientes ativos", commission: "7%", rate: 0.07, icon: Rocket, popular: false },
+    { name: "SCALE", range: "11–25 clientes ativos", commission: "12%", rate: 0.12, icon: Star, popular: true },
+    { name: "PRO", range: "+26 clientes ativos", commission: "16%", rate: 0.16, icon: Crown, popular: false },
+  ],
+};
 
 /* ── Animated Counter ── */
 const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
