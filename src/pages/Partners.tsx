@@ -206,7 +206,118 @@ const EarningsCalculator = ({ supportMode }: { supportMode: "loomie" | "partner"
   );
 };
 
-/* ── Page ── */
+/* ── Commission Section with Toggle ── */
+const CommissionSection = () => {
+  const [supportMode, setSupportMode] = useState<"loomie" | "partner">("loomie");
+  const tiers = tiersData[supportMode];
+
+  return (
+    <>
+      {/* Toggle */}
+      <div className="flex justify-center mb-12">
+        <div className="glass-panel p-1.5 inline-flex gap-1 rounded-full">
+          <button
+            onClick={() => setSupportMode("loomie")}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              supportMode === "loomie"
+                ? "bg-primary text-primary-foreground shadow-lg"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Loomie cuida do suporte
+          </button>
+          <button
+            onClick={() => setSupportMode("partner")}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              supportMode === "partner"
+                ? "bg-primary text-primary-foreground shadow-lg"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Você cuida do suporte
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={supportMode}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 0.25 }}
+          className="text-center text-sm text-muted-foreground mb-10 max-w-lg mx-auto"
+        >
+          {supportMode === "loomie"
+            ? "A Loomie cuida do suporte Tier 1 e treinamento dos seus clientes. Você foca em vendas e estratégia."
+            : "Você assume o suporte Tier 1 e treinamento, e recebe comissões significativamente maiores."}
+        </motion.p>
+      </AnimatePresence>
+
+      <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        {/* Tiers */}
+        <motion.div
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="space-y-4"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={supportMode}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4"
+            >
+              {tiers.map(({ name, range, commission, icon: Icon, popular }) => (
+                <div
+                  key={name}
+                  className={`card-elevated flex items-center gap-5 ${popular ? "glow-border-primary" : ""}`}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/[0.08] flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-mono text-base font-bold text-foreground">{name}</h3>
+                      {popular && <span className="section-badge text-[9px] py-0.5 px-2">Popular</span>}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{range}</p>
+                  </div>
+                  <span className="font-mono text-2xl font-bold text-gradient-primary">{commission}</span>
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            * Taxa de reserva de infraestrutura de R$ 475,00 para partners com 0 clientes ativos.
+          </p>
+        </motion.div>
+
+        {/* Calculator */}
+        <motion.div
+          variants={slideFromRight}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="card-elevated"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <Gauge className="w-5 h-5 text-primary" />
+            <h3 className="font-display text-lg font-bold text-foreground">Calculadora de Ganhos</h3>
+          </div>
+          <EarningsCalculator supportMode={supportMode} />
+        </motion.div>
+      </div>
+    </>
+  );
+};
+
+
 const Partners = () => {
   useLenis();
   const { ref: statsRef, y: statsY } = useParallax({ speed: -0.03 });
