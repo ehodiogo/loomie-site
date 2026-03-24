@@ -612,7 +612,7 @@ const Partners = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="text-center mb-16"
+            className="text-center mb-10"
           >
             <span className="section-badge mb-4 inline-block">Comissões</span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-4 mt-4">
@@ -620,55 +620,8 @@ const Partners = () => {
             </h2>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {/* Tiers */}
-            <motion.div
-              variants={staggerContainer(0.12)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="space-y-4"
-            >
-              {tiers.map(({ name, range, commission, icon: Icon, popular }) => (
-                <motion.div
-                  key={name}
-                  variants={fadeUpItem}
-                  className={`card-elevated flex items-center gap-5 ${popular ? "glow-border-primary" : ""}`}
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-mono text-base font-bold text-foreground">{name}</h3>
-                      {popular && <span className="section-badge text-[9px] py-0.5 px-2">Popular</span>}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{range}</p>
-                  </div>
-                  <span className="font-mono text-2xl font-bold text-gradient-primary">{commission}</span>
-                </motion.div>
-              ))}
-
-              <p className="text-xs text-muted-foreground text-center mt-4">
-                * Taxa de reserva de infraestrutura de R$ 475,00 para partners com 0 clientes ativos.
-              </p>
-            </motion.div>
-
-            {/* Calculator */}
-            <motion.div
-              variants={slideFromRight}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="card-elevated"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <Gauge className="w-5 h-5 text-primary" />
-                <h3 className="font-display text-lg font-bold text-foreground">Calculadora de Ganhos</h3>
-              </div>
-              <EarningsCalculator />
-            </motion.div>
-          </div>
+          {/* Toggle */}
+          <CommissionSection />
         </div>
       </section>
 
