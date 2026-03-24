@@ -1,30 +1,45 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Webhook, Terminal, ShieldCheck, ArrowRight, Server, Workflow, Lock } from "lucide-react";
+import { ArrowRight, MessageSquare, BarChart3, Kanban, Radio, Webhook, ShieldCheck } from "lucide-react";
 import { slideFromLeft, staggerContainer, fadeUpItem, scaleItem, viewport } from "@/lib/animations";
 
 const metrics = [
-  { label: "API Oficial WhatsApp", value: "WA", icon: Terminal },
-  { label: "Webhooks Ilimitados", value: "∞", icon: Webhook },
-  { label: "Uptime Garantido", value: "99.9%", icon: Server },
-  { label: "n8n Nativo", value: "Built-in", icon: Workflow },
+  { label: "WhatsApp API Oficial", value: "WA", icon: MessageSquare },
+  { label: "Canais Conectados", value: "Multi", icon: Radio },
+  { label: "Pipelines Customizáveis", value: "Kanban", icon: Kanban },
+  { label: "Dashboards em Tempo Real", value: "Live", icon: BarChart3 },
 ];
 
 const features = [
   {
-    icon: Terminal,
-    title: "Front-end como Serviço",
-    desc: "Seu cliente interage com pipelines, painéis e formulários prontos. Você só entrega o payload via Webhook — sem construir UI.",
+    icon: Radio,
+    title: "Atendimento Omnichannel",
+    desc: "WhatsApp (API Oficial), Instagram, e-mail e chat web em uma única caixa de entrada. Sem trocar de aba, sem perder contexto.",
   },
   {
-    icon: Workflow,
-    title: "WhatsApp API + n8n",
-    desc: "Conecte seus fluxos n8n à API Oficial do WhatsApp. Atendimento omnichannel com a lógica que você já domina.",
+    icon: Kanban,
+    title: "Pipelines & Funis Visuais",
+    desc: "Arraste leads entre etapas do funil com quadros Kanban. Visualize gargalos, priorize oportunidades e feche mais rápido.",
   },
   {
-    icon: Lock,
-    title: "Isolamento de Ambiente",
-    desc: "Cada cliente opera em workspace isolado. Seus workflows, credenciais e dados nunca se misturam entre contas.",
+    icon: BarChart3,
+    title: "Métricas que Vendem",
+    desc: "Tempo de resposta, taxa de conversão, volume por canal. Dados concretos para provar ROI e justificar o valor do seu serviço.",
+  },
+  {
+    icon: Webhook,
+    title: "Webhooks & n8n Nativo",
+    desc: "Conecte automações externas via Webhook. Integração nativa com n8n para criar fluxos ilimitados sem limite de complexidade.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Workspaces Isolados",
+    desc: "Cada cliente opera em ambiente separado. Credenciais, dados e conversas nunca se misturam entre contas.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Chatbots & Respostas Rápidas",
+    desc: "Configure fluxos de atendimento automatizado com gatilhos inteligentes. Reduza o tempo de primeira resposta para segundos.",
   },
 ];
 
@@ -34,7 +49,6 @@ const CloudSection = () => {
       <div className="absolute inset-0 radial-fade opacity-40" />
 
       <div className="relative container mx-auto px-6">
-        {/* Header */}
         <motion.div
           variants={slideFromLeft}
           initial="hidden"
@@ -44,10 +58,10 @@ const CloudSection = () => {
         >
           <span className="section-badge mb-4 inline-block">Loomie Cloud</span>
           <h2 className="font-display text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight text-foreground mt-4">
-            A infraestrutura que transforma seu script em produto.
+            O CRM que escala seu atendimento e prova seu valor.
           </h2>
           <p className="text-muted-foreground text-lg mt-4 max-w-xl">
-            Plugue seus workflows via Webhook. Nós entregamos a interface enterprise, o WhatsApp API e a gestão de usuários. Seu código roda no seu servidor — nós cuidamos do resto.
+            Pipelines visuais, WhatsApp API Oficial, múltiplos canais e dashboards de performance — tudo o que seu cliente precisa ver para nunca cancelar.
           </p>
         </motion.div>
 
@@ -73,13 +87,13 @@ const CloudSection = () => {
           ))}
         </motion.div>
 
-        {/* Features row */}
+        {/* Features grid */}
         <motion.div
-          variants={staggerContainer(0.12)}
+          variants={staggerContainer(0.1)}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid md:grid-cols-3 gap-6 mb-16"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
         >
           {features.map(({ icon: Icon, title, desc }) => (
             <motion.div
@@ -97,7 +111,6 @@ const CloudSection = () => {
           ))}
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           variants={fadeUpItem}
           initial="hidden"
@@ -105,7 +118,7 @@ const CloudSection = () => {
           viewport={viewport}
         >
           <Link to="/cloud" className="btn-secondary">
-            Ver Documentação do Cloud
+            Conhecer o Loomie Cloud
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
