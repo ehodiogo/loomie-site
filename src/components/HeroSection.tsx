@@ -1,7 +1,6 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, ArrowDownCircle, Clock, XCircle } from "lucide-react";
-import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease } from "@/lib/animations";
+import { motion } from "framer-motion";
+import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, Clock, XCircle } from "lucide-react";
+import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
 
 const painPoints = [
   { icon: RotateCcw, text: "O faturamento reseta todo mês" },
@@ -10,7 +9,6 @@ const painPoints = [
   { icon: AlertTriangle, text: "Zero previsibilidade financeira" },
 ];
 
-/* ── Animated cycle items for the right-side visual ── */
 const cycleSteps = [
   { icon: Clock, label: "Dia 1º", sub: "Novo mês começa" },
   { icon: UserX, label: "Prospecção", sub: "Caçar clientes" },
@@ -20,11 +18,8 @@ const cycleSteps = [
 ];
 
 const HeroSection = () => {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true });
-
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
@@ -34,7 +29,8 @@ const HeroSection = () => {
           <div className="flex-1 flex flex-col items-start gap-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewport}
               transition={{ duration: 0.5, ease: ease.smooth }}
             >
               <span className="section-badge">Para Desenvolvedores & Automadores</span>
@@ -43,7 +39,8 @@ const HeroSection = () => {
             <motion.h1
               variants={wordStagger}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
+              whileInView="visible"
+              viewport={viewport}
               className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.95] text-foreground"
             >
               {["Pare", "de", "vender", '"Setups".'].map((word, i) => (
@@ -65,8 +62,8 @@ const HeroSection = () => {
             <motion.p
               variants={blurUp}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              transition={{ delay: 0.5 }}
+              whileInView="visible"
+              viewport={viewport}
               className="text-muted-foreground text-lg md:text-xl max-w-lg leading-relaxed"
             >
               Transforme seus workflows de <span className="text-foreground font-semibold">n8n</span>,{" "}
@@ -77,7 +74,8 @@ const HeroSection = () => {
             <motion.div
               variants={staggerContainer(0.1, 0.6)}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
+              whileInView="visible"
+              viewport={viewport}
               className="grid grid-cols-2 gap-3 w-full max-w-md"
             >
               {painPoints.map(({ icon: Icon, text }) => (
@@ -94,7 +92,8 @@ const HeroSection = () => {
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewport}
               transition={{ delay: 1, duration: 0.6, ease: ease.smooth }}
               className="flex gap-4 flex-wrap"
             >
@@ -111,7 +110,8 @@ const HeroSection = () => {
           <motion.div
             className="flex-1 w-full max-w-lg lg:max-w-md aspect-square relative"
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={viewport}
             transition={{ duration: 1, delay: 0.3, ease: ease.smooth }}
           >
             {/* Outer rotating dashed ring */}
@@ -135,7 +135,7 @@ const HeroSection = () => {
             {/* Cycle step nodes placed in a circle */}
             {cycleSteps.map(({ icon: Icon, label, sub }, i) => {
               const angle = (i / cycleSteps.length) * Math.PI * 2 - Math.PI / 2;
-              const radius = 42; // % from center
+              const radius = 42;
               const x = 50 + Math.cos(angle) * radius;
               const y = 50 + Math.sin(angle) * radius;
 
@@ -149,7 +149,8 @@ const HeroSection = () => {
                     transform: "translate(-50%, -50%)",
                   }}
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={viewport}
                   transition={{ delay: 0.6 + i * 0.15, duration: 0.5, ease: ease.bounce }}
                 >
                   <motion.div
@@ -193,7 +194,7 @@ const HeroSection = () => {
               </motion.div>
             </div>
 
-            {/* Connecting lines (arcs between nodes) */}
+            {/* Connecting lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
               {cycleSteps.map((_, i) => {
                 const a1 = (i / cycleSteps.length) * Math.PI * 2 - Math.PI / 2;
@@ -212,7 +213,8 @@ const HeroSection = () => {
                     strokeWidth="0.3"
                     strokeDasharray="1 1"
                     initial={{ pathLength: 0, opacity: 0 }}
-                    animate={isInView ? { pathLength: 1, opacity: 0.5 } : {}}
+                    whileInView={{ pathLength: 1, opacity: 0.5 }}
+                    viewport={viewport}
                     transition={{ delay: 0.8 + i * 0.15, duration: 0.5 }}
                   />
                 );
