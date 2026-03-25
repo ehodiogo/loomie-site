@@ -73,7 +73,7 @@ const CloudHero = () => {
               animate="visible"
               className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
             >
-              {"Centralize, Automatize e Escale suas Vendas no Zap com o Loomie Cloud.".split(" ").map((word, i) => (
+              {"O CRM que escala com a sua inteligência, foque apenas nos seus resultados.".split(" ").map((word, i) => (
                 <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
                   {word}
                 </motion.span>
@@ -87,7 +87,7 @@ const CloudHero = () => {
               transition={{ delay: 0.6 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
             >
-              O CRM completo com WhatsApp API Oficial que organiza seu fluxo de atendimento e faz sua equipe vender mais em uma única plataforma.
+              Gerencie vendas, automatize fluxos e centralize sua operação em uma única plataforma desenhada para o seu fluxo de trabalho. Do primeiro "Oi" ao fechamento, a Loomie Cloud coloca a gestão da sua equipe no piloto automático.
             </motion.p>
 
             <motion.a
@@ -99,9 +99,10 @@ const CloudHero = () => {
               transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
               className="btn-primary text-base"
             >
-              Teste grátis por 7 dias
+              Teste grátis agora
               <ArrowRight className="w-4 h-4" />
             </motion.a>
+            <p className="text-xs text-muted-foreground mt-3">Implementação estratégica para novos parceiros</p>
           </div>
 
           {/* Right Column — Lead Marquee Kanban */}
