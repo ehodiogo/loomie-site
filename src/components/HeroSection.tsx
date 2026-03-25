@@ -46,11 +46,20 @@ const HeroSection = () => {
               animate={isInView ? "visible" : "hidden"}
               className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.95] text-foreground"
             >
-              {["O", "Placar", "Zerado."].map((word, i) => (
+              {["Pare", "de", "vender", '"Setups".'].map((word, i) => (
                 <motion.span key={i} variants={wordReveal} className="inline-block mr-3 md:mr-4">
                   {word}
                 </motion.span>
               ))}
+              <br />
+              {["Comece", "a", "construir", "seu"].map((word, i) => (
+                <motion.span key={`b-${i}`} variants={wordReveal} className="inline-block mr-3 md:mr-4">
+                  {word}
+                </motion.span>
+              ))}
+              <motion.span variants={wordReveal} className="inline-block mr-3 md:mr-4 text-primary">
+                Patrimônio de MRR.
+              </motion.span>
             </motion.h1>
 
             <motion.p
@@ -60,8 +69,9 @@ const HeroSection = () => {
               transition={{ delay: 0.5 }}
               className="text-muted-foreground text-lg md:text-xl max-w-lg leading-relaxed"
             >
-              Todo dia 1º, você precisa caçar novos clientes. O faturamento não acumula — ele apenas{" "}
-              <span className="text-foreground font-semibold">reseta</span>.
+              Transforme seus workflows de <span className="text-foreground font-semibold">n8n</span>,{" "}
+              <span className="text-foreground font-semibold">Python</span> e{" "}
+              <span className="text-foreground font-semibold">APIs</span> em produtos Micro-SaaS escaláveis com a infraestrutura da Loomie.
             </motion.p>
 
             <motion.div
