@@ -1,7 +1,6 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, ArrowDownCircle, Clock, XCircle } from "lucide-react";
-import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease } from "@/lib/animations";
+import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
 
 const painPoints = [
   { icon: RotateCcw, text: "O faturamento reseta todo mês" },
