@@ -73,7 +73,7 @@ const CloudHero = () => {
               animate="visible"
               className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
             >
-              {"Centralize, Automatize e Escale suas Vendas no Zap com o Loomie Cloud.".split(" ").map((word, i) => (
+              {"O CRM que escala com a sua inteligência, foque apenas nos seus resultados.".split(" ").map((word, i) => (
                 <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
                   {word}
                 </motion.span>
