@@ -87,7 +87,7 @@ const CloudHero = () => {
               transition={{ delay: 0.6 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
             >
-              O CRM completo com WhatsApp API Oficial que organiza seu fluxo de atendimento e faz sua equipe vender mais em uma única plataforma.
+              Gerencie vendas, automatize fluxos e centralize sua operação em uma única plataforma desenhada para o seu fluxo de trabalho. Do primeiro "Oi" ao fechamento, a Loomie Cloud coloca a gestão da sua equipe no piloto automático.
             </motion.p>
 
             <motion.a
