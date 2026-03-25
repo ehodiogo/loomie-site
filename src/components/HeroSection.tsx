@@ -19,11 +19,8 @@ const cycleSteps = [
 ];
 
 const HeroSection = () => {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true });
-
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
 
