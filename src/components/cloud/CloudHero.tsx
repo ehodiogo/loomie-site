@@ -99,9 +99,10 @@ const CloudHero = () => {
               transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
               className="btn-primary text-base"
             >
-              Teste grátis por 7 dias
+              Teste grátis agora
               <ArrowRight className="w-4 h-4" />
             </motion.a>
+            <p className="text-xs text-muted-foreground mt-3">Implementação estratégica para novos parceiros</p>
           </div>
 
           {/* Right Column — Lead Marquee Kanban */}
