@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Cloud", to: "/cloud" },
   { label: "Automações", to: "/automacoes" },
   { label: "Partners", to: "/partners" },
+  { label: "API Docs", to: "/documentacao" },
 ];
 
 const Header = () => {
