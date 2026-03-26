@@ -208,7 +208,7 @@ const EarningsCalculator = ({ supportMode }: { supportMode: "loomie" | "partner"
 
 /* ── Commission Section with Toggle ── */
 const CommissionSection = () => {
-  const [supportMode, setSupportMode] = useState<"loomie" | "partner">("loomie");
+  const [supportMode, setSupportMode] = useState<"loomie" | "partner">("partner");
   const tiers = tiersData[supportMode];
 
   return (
