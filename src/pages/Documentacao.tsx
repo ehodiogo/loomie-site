@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { Search, Copy, Check, Menu, ArrowLeft, FileText, Code2, Info, ChevronRight } from "lucide-react";
+import { useState, useMemo, useCallback } from "react";
+import { Search, Copy, Check, Menu, ArrowLeft, FileText, Code2, Info, ChevronRight, ChevronDown, Folder } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
