@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Cloud from "./pages/Cloud";
 import Automacoes from "./pages/Automacoes";
 import Partners from "./pages/Partners";
+import Documentacao from "./pages/Documentacao";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
