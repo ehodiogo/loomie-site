@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { Search, Copy, Check, Menu, ArrowLeft, FileText, Code2, Info, ChevronRight } from "lucide-react";
+import { useState, useMemo, useCallback } from "react";
+import { Search, Copy, Check, Menu, ArrowLeft, FileText, Code2, Info, ChevronRight, ChevronDown, Folder } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -220,6 +220,98 @@ function RouteDetail({ route }: { route: ApiRoute }) {
   );
 }
 
+// --- Grouping utility ---
+interface CategoryGroup {
+  name: string;
+  routes: ApiRoute[];
+}
+
+function extractCategory(endpoint: string): string {
+  const path = endpoint.replace(/^[^/]*backend\.loomiecrm\.com/, "").replace(/^\/api\//, "/").replace(/^\//, "");
+  const segment = path.split("/")[0] || "Outros";
+  // Clean up dynamic segments like {id}
+  if (segment.startsWith("{")) return "Outros";
+  return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/[-_]/g, " ");
+}
+
+function groupRoutes(routes: ApiRoute[]): CategoryGroup[] {
+  const map = new Map<string, ApiRoute[]>();
+  for (const r of routes) {
+    const cat = extractCategory(r.endpoint);
+    if (!map.has(cat)) map.set(cat, []);
+    map.get(cat)!.push(r);
+  }
+  return Array.from(map.entries())
+    .map(([name, routes]) => ({ name, routes }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// --- Collapsible category component ---
+function CategoryAccordion({
+  group,
+  isOpen,
+  onToggle,
+  selectedId,
+  onSelect,
+}: {
+  group: CategoryGroup;
+  isOpen: boolean;
+  onToggle: () => void;
+  selectedId: number | null;
+  onSelect: (route: ApiRoute) => void;
+}) {
+  return (
+    <div className="border-b border-border/50 last:border-0">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-muted/40 transition-colors group"
+      >
+        <ChevronDown
+          size={14}
+          className={`text-muted-foreground flex-shrink-0 transition-transform duration-200 ${isOpen ? "" : "-rotate-90"}`}
+        />
+        <Folder size={14} className="text-muted-foreground flex-shrink-0" />
+        <span className="text-xs font-semibold text-foreground truncate">{group.name}</span>
+        <span className="ml-auto text-[10px] font-medium text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded-full flex-shrink-0">
+          {group.routes.length}
+        </span>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-200 ease-in-out ${isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}`}
+      >
+        <div className="pl-4 pr-1 pb-1 space-y-0.5">
+          {group.routes.map((route) => (
+            <button
+              key={route.id}
+              onClick={() => onSelect(route)}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all group/item ${
+                selectedId === route.id
+                  ? "bg-primary/10 border border-primary/20"
+                  : "hover:bg-muted/50 border border-transparent"
+              }`}
+            >
+              <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${methodDotColors[route.method] || "bg-muted-foreground"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-wider flex-shrink-0 w-10 ${
+                selectedId === route.id ? "text-primary" : "text-muted-foreground"
+              }`}>
+                {route.method}
+              </span>
+              <span className={`text-xs font-mono truncate ${
+                selectedId === route.id ? "text-foreground" : "text-muted-foreground group-hover/item:text-foreground"
+              }`}>
+                {route.endpoint.replace("backend.loomiecrm.com", "")}
+              </span>
+              <ChevronRight size={12} className={`ml-auto flex-shrink-0 transition-opacity ${
+                selectedId === route.id ? "opacity-100 text-primary" : "opacity-0 group-hover/item:opacity-50"
+              }`} />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SidebarContent({
   routes,
   search,
@@ -233,6 +325,20 @@ function SidebarContent({
   selectedId: number | null;
   onSelect: (route: ApiRoute) => void;
 }) {
+  const groups = useMemo(() => groupRoutes(routes), [routes]);
+  const isSearching = search.length > 0;
+
+  const [openCategories, setOpenCategories] = useState<Set<string>>(() => new Set());
+
+  const toggleCategory = useCallback((name: string) => {
+    setOpenCategories((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  }, []);
+
   return (
     <div className="flex flex-col h-full">
       {/* Logo / Back */}
@@ -258,35 +364,25 @@ function SidebarContent({
         </div>
       </div>
 
-      {/* Route List */}
+      {/* Grouped Route List */}
       <ScrollArea className="flex-1">
-        <div className="p-2 space-y-0.5">
-          {routes.map((route) => (
-            <button
-              key={route.id}
-              onClick={() => onSelect(route)}
-              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left transition-all group ${
-                selectedId === route.id
-                  ? "bg-primary/10 border border-primary/20"
-                  : "hover:bg-muted/50 border border-transparent"
-              }`}
-            >
-              <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${methodDotColors[route.method] || "bg-muted-foreground"}`} />
-              <span className={`text-[10px] font-bold uppercase tracking-wider flex-shrink-0 w-10 ${
-                selectedId === route.id ? "text-primary" : "text-muted-foreground"
-              }`}>
-                {route.method}
-              </span>
-              <span className={`text-xs font-mono truncate ${
-                selectedId === route.id ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-              }`}>
-                {route.endpoint.replace("backend.loomiecrm.com", "")}
-              </span>
-              <ChevronRight size={12} className={`ml-auto flex-shrink-0 transition-opacity ${
-                selectedId === route.id ? "opacity-100 text-primary" : "opacity-0 group-hover:opacity-50"
-              }`} />
-            </button>
-          ))}
+        <div className="py-1">
+          {groups.length === 0 ? (
+            <div className="p-6 text-center">
+              <p className="text-xs text-muted-foreground">Nenhum endpoint encontrado</p>
+            </div>
+          ) : (
+            groups.map((group) => (
+              <CategoryAccordion
+                key={group.name}
+                group={group}
+                isOpen={isSearching || openCategories.has(group.name)}
+                onToggle={() => toggleCategory(group.name)}
+                selectedId={selectedId}
+                onSelect={onSelect}
+              />
+            ))
+          )}
         </div>
       </ScrollArea>
     </div>
