@@ -18,7 +18,7 @@ const benefits = [
   {
     icon: Percent,
     title: "Comissão Recorrente",
-    desc: "Além do valor da automação, receba uma comissão mensal de até 6% com base na sua carteira de clientes ativos. Quanto mais retém, mais ganha.",
+    desc: "Além do valor da automação, receba uma comissão mensal de até 16% com base na sua carteira de clientes ativos. Quanto mais retém, mais ganha.",
   },
   {
     icon: Users,
