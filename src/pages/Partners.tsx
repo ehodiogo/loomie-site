@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import WaitlistModal from "@/components/WaitlistModal";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
