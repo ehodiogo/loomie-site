@@ -20,7 +20,10 @@ const cycleSteps = [
 ];
 
 const HeroSection = () => {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
+    <>
+    <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
