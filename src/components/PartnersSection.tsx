@@ -4,7 +4,7 @@ import { Code2, TrendingUp, Store, ArrowRight, Percent, Users, ShieldCheck } fro
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 
 const highlights = [
-  { icon: Percent, label: "Comissão recorrente de até 6% sobre a carteira ativa" },
+  { icon: Percent, label: "Comissão recorrente de até 16% sobre a carteira ativa" },
   { icon: Store, label: "Publique automações no Marketplace e ganhe por assinatura" },
   { icon: ShieldCheck, label: "Proteção de IP — seus prompts e fluxos criptografados" },
 ];
