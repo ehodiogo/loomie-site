@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, Clock, XCircle } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
+import WaitlistModal from "./WaitlistModal";
 
 const painPoints = [
   { icon: RotateCcw, text: "O faturamento reseta todo mês" },
