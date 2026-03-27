@@ -384,15 +384,13 @@ const Partners = () => {
               transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href="https://crm.loomiecrm.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setWaitlistOpen(true)}
                 className="btn-primary"
               >
-                Iniciar Parceria
+                Entrar na lista de espera
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
               <a href="#benefits" className="btn-secondary">
                 Ver Benefícios
                 <ChevronRight className="w-4 h-4" />
