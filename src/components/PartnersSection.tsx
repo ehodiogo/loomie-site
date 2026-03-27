@@ -23,7 +23,7 @@ const benefits = [
   {
     icon: Users,
     title: "Gestão de Carteira",
-    desc: "Acompanhe em tempo real quantos clientes ativos sua automação atende. Dashboard dedicado com MRR, churn e projeção de receita.",
+    desc: "Acompanhe em tempo real quantos clientes ativos sua automação atende. Dashboard dedicado com visão completa da sua carteira.",
   },
 ];
 

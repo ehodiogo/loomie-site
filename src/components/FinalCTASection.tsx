@@ -75,6 +75,7 @@ const FinalCTASection = () => {
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 
