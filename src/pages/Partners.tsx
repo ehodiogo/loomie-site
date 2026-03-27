@@ -754,17 +754,15 @@ const Partners = () => {
             <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
               Junte-se ao ecossistema Loomie e comece a gerar receita recorrente com consultoria de alto valor.
             </p>
-            <motion.a
-              href="https://crm.loomiecrm.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.button
+              onClick={() => setWaitlistOpen(true)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               className="btn-primary"
             >
-              Iniciar Parceria
+              Entrar na lista de espera de parceiros
               <ArrowRight className="w-4 h-4" />
-            </motion.a>
+            </motion.button>
 
             <div className="flex flex-wrap justify-center gap-6 mt-8">
               {["Onboarding assistido", "Materiais de vendas inclusos", "Suporte técnico dedicado"].map((item) => (
