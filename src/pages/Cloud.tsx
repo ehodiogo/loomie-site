@@ -31,9 +31,9 @@ const Cloud = () => {
       <div className="section-divider" />
       <CloudPricing />
       <div className="section-divider" />
-      <CloudFAQ />
-      <div className="section-divider" />
       <CloudCTA />
+      <div className="section-divider" />
+      <CloudFAQ />
       <Footer />
     </div>
   );

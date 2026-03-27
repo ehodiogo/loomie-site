@@ -33,7 +33,7 @@ const CloudCTA = () => {
           </motion.a>
 
           <div className="flex flex-wrap justify-center gap-6 mt-8">
-            {["Sem cartão de crédito", "Setup em 5 minutos", "Suporte incluso"].map((item) => (
+            {["Teste gratuito", "Setup em 5 minutos", "Suporte incluso"].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-primary" />
                 {item}
