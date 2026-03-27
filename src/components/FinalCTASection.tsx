@@ -11,7 +11,10 @@ const badges = [
 ];
 
 const FinalCTASection = () => {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
+    <>
+    <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     <section className="relative py-20 lg:py-28 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-40" />
 
