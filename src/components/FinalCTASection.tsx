@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Terminal, Webhook, BookOpen } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
+import WaitlistModal from "./WaitlistModal";
 
 const badges = [
   { icon: BookOpen, text: "Documentação pronta" },
