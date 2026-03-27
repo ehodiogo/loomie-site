@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import WaitlistModal from "@/components/WaitlistModal";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from "framer-motion";
@@ -321,9 +322,11 @@ const CommissionSection = () => {
 const Partners = () => {
   useLenis();
   const { ref: statsRef, y: statsY } = useParallax({ speed: -0.03 });
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
+      <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
       <Header />
 
       {/* ═══ Hero ═══ */}
@@ -383,15 +386,13 @@ const Partners = () => {
               transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href="https://crm.loomiecrm.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setWaitlistOpen(true)}
                 className="btn-primary"
               >
-                Iniciar Parceria
+                Entrar na lista de espera
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
               <a href="#benefits" className="btn-secondary">
                 Ver Benefícios
                 <ChevronRight className="w-4 h-4" />
@@ -755,17 +756,15 @@ const Partners = () => {
             <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
               Junte-se ao ecossistema Loomie e comece a gerar receita recorrente com consultoria de alto valor.
             </p>
-            <motion.a
-              href="https://crm.loomiecrm.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.button
+              onClick={() => setWaitlistOpen(true)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               className="btn-primary"
             >
-              Iniciar Parceria
+              Entrar na lista de espera de parceiros
               <ArrowRight className="w-4 h-4" />
-            </motion.a>
+            </motion.button>
 
             <div className="flex flex-wrap justify-center gap-6 mt-8">
               {["Onboarding assistido", "Materiais de vendas inclusos", "Suporte técnico dedicado"].map((item) => (
