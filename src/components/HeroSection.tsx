@@ -102,9 +102,9 @@ const HeroSection = () => {
               transition={{ delay: 1, duration: 0.6, ease: ease.smooth }}
               className="flex gap-4 flex-wrap"
             >
-              <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                Iniciar Integração — Gratuito
-              </a>
+              <button onClick={() => setWaitlistOpen(true)} className="btn-primary">
+                Entrar para lista de espera
+              </button>
               <button className="btn-secondary">
                 Ver a matemática ↓
               </button>
