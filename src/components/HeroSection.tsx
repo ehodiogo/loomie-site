@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, Clock, XCircle } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
+import WaitlistModal from "./WaitlistModal";
 
 const painPoints = [
   { icon: RotateCcw, text: "O faturamento reseta todo mês" },
@@ -18,7 +20,10 @@ const cycleSteps = [
 ];
 
 const HeroSection = () => {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
+    <>
+    <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 grid-line opacity-15" />
       <div className="absolute inset-0 radial-fade" />
@@ -97,9 +102,9 @@ const HeroSection = () => {
               transition={{ delay: 1, duration: 0.6, ease: ease.smooth }}
               className="flex gap-4 flex-wrap"
             >
-              <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                Iniciar Integração — Gratuito
-              </a>
+              <button onClick={() => setWaitlistOpen(true)} className="btn-primary">
+                Entrar para lista de espera
+              </button>
               <button className="btn-secondary">
                 Ver a matemática ↓
               </button>
@@ -242,6 +247,7 @@ const HeroSection = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

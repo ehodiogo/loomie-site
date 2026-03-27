@@ -28,8 +28,8 @@ const features = [
   },
   {
     icon: Webhook,
-    title: "Webhooks & n8n Nativo",
-    desc: "Conecte automações externas via Webhook. Integração nativa com n8n para criar fluxos ilimitados sem limite de complexidade.",
+    title: "Nó da comunidade n8n",
+    desc: "Conecte automações externas via nó da comunidade n8n. Crie fluxos ilimitados sem limite de complexidade, direto no seu workspace.",
   },
   {
     icon: ShieldCheck,

@@ -4,7 +4,7 @@ import { Code2, TrendingUp, Store, ArrowRight, Percent, Users, ShieldCheck } fro
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 
 const highlights = [
-  { icon: Percent, label: "Comissão recorrente de até 6% sobre a carteira ativa" },
+  { icon: Percent, label: "Comissão recorrente de até 16% sobre a carteira ativa" },
   { icon: Store, label: "Publique automações no Marketplace e ganhe por assinatura" },
   { icon: ShieldCheck, label: "Proteção de IP — seus prompts e fluxos criptografados" },
 ];
@@ -18,12 +18,12 @@ const benefits = [
   {
     icon: Percent,
     title: "Comissão Recorrente",
-    desc: "Além do valor da automação, receba uma comissão mensal de até 6% com base na sua carteira de clientes ativos. Quanto mais retém, mais ganha.",
+    desc: "Além do valor da automação, receba uma comissão mensal de até 16% com base na sua carteira de clientes ativos. Quanto mais retém, mais ganha.",
   },
   {
     icon: Users,
     title: "Gestão de Carteira",
-    desc: "Acompanhe em tempo real quantos clientes ativos sua automação atende. Dashboard dedicado com MRR, churn e projeção de receita.",
+    desc: "Acompanhe em tempo real quantos clientes ativos sua automação atende. Dashboard dedicado com visão completa da sua carteira.",
   },
 ];
 

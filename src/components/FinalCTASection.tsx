@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Terminal, Webhook, BookOpen } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
+import WaitlistModal from "./WaitlistModal";
 
 const badges = [
   { icon: BookOpen, text: "Documentação pronta" },
@@ -9,7 +11,10 @@ const badges = [
 ];
 
 const FinalCTASection = () => {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
+    <>
+    <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     <section className="relative py-20 lg:py-28 overflow-hidden">
       <div className="absolute inset-0 radial-fade opacity-40" />
 
@@ -62,14 +67,15 @@ const FinalCTASection = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="mt-8"
           >
-            <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-10 py-4">
-              Iniciar Integração (Gratuito)
+            <button onClick={() => setWaitlistOpen(true)} className="btn-primary text-base px-10 py-4">
+              Entrar para lista de espera
               <ArrowRight className="w-5 h-5" />
-            </a>
+            </button>
           </motion.div>
         </motion.div>
       </div>
     </section>
+    </>
   );
 };
 
