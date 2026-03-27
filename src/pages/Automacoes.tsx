@@ -289,7 +289,7 @@ const Automacoes = () => {
               </motion.a>
 
               <div className="flex flex-wrap justify-center gap-6 mt-8">
-                {["Sem código necessário", "Integração em 48h", "Suporte dedicado"].map((item) => (
+                {["Sem código necessário", "Projeto personalizado", "Suporte dedicado"].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CheckCircle2 className="w-4 h-4 text-primary" />
                     {item}
