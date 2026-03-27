@@ -67,10 +67,10 @@ const FinalCTASection = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="mt-8"
           >
-            <a href="https://crm.loomiecrm.com/" target="_blank" rel="noopener noreferrer" className="btn-primary text-base px-10 py-4">
-              Iniciar Integração (Gratuito)
+            <button onClick={() => setWaitlistOpen(true)} className="btn-primary text-base px-10 py-4">
+              Entrar para lista de espera
               <ArrowRight className="w-5 h-5" />
-            </a>
+            </button>
           </motion.div>
         </motion.div>
       </div>
