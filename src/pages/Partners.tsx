@@ -322,9 +322,11 @@ const CommissionSection = () => {
 const Partners = () => {
   useLenis();
   const { ref: statsRef, y: statsY } = useParallax({ speed: -0.03 });
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
+      <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
       <Header />
 
       {/* ═══ Hero ═══ */}
