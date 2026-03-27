@@ -101,7 +101,7 @@ const CloudPricing = () => {
                 key={name}
                 variants={fadeUpItem}
                 whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                className={`card-elevated relative flex flex-col ${popular ? "glow-border-primary md:-mt-4 md:mb-[-16px] md:py-10" : ""}`}
+                className={`card-elevated relative flex flex-col ${popular ? "glow-border-primary ring-1 ring-primary/30 md:-mt-4 md:pb-2 md:pt-8" : ""}`}
               >
                 {popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
