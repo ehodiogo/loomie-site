@@ -405,7 +405,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Benefits ═══ */}
-      <section id="benefits" className="relative py-28 overflow-hidden">
+      <section id="benefits" className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 radial-fade opacity-30" />
         <div className="relative container mx-auto px-6">
           <motion.div
@@ -453,7 +453,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Stats ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div
           ref={statsRef}
           className="relative container mx-auto px-6"
@@ -483,7 +483,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Built for Scale ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="relative container mx-auto px-6">
           <motion.div
             variants={slideFromRight}
@@ -529,7 +529,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Developers — Sell Automations ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 radial-fade opacity-20" />
         {/* Floating code icons */}
         <div className="absolute inset-0 pointer-events-none">
@@ -656,7 +656,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Plans ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 radial-fade opacity-20" />
         <div className="relative container mx-auto px-6">
           <motion.div
@@ -717,7 +717,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ Commission Tiers + Calculator ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="relative container mx-auto px-6">
           <motion.div
             variants={blurUp}
@@ -740,7 +740,7 @@ const Partners = () => {
       <div className="section-divider" />
 
       {/* ═══ CTA ═══ */}
-      <section className="relative py-28 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 radial-fade opacity-50" />
         <div className="relative container mx-auto px-6">
           <motion.div
