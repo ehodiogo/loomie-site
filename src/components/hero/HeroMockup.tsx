@@ -57,8 +57,8 @@ const HeroMockup = () => {
         <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border/30 bg-muted/30">
           <div className="flex gap-1">
             <div className="w-2 h-2 rounded-full bg-destructive/50" />
-            <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
-            <div className="w-2 h-2 rounded-full bg-green-500/50" />
+            <div className="w-2 h-2 rounded-full bg-accent/50" />
+            <div className="w-2 h-2 rounded-full bg-primary/50" />
           </div>
           <div className="flex-1 flex justify-center">
             <span className="text-[8px] text-muted-foreground font-mono">workflow.loomie.com.br</span>
