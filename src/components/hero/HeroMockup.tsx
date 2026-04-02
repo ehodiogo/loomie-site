@@ -25,8 +25,8 @@ const HeroMockup = () => {
         <div className="flex items-center gap-2 px-4 py-3 border-b border-border/30 bg-muted/30">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-accent/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-primary/60" />
           </div>
           <div className="flex-1 flex justify-center">
             <div className="px-4 py-1 rounded-md bg-background/50 text-[10px] text-muted-foreground font-mono">
