@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, Clock, XCircle } from "lucide-react";
+import { RotateCcw, DollarSign, UserX, AlertTriangle } from "lucide-react";
+import HeroMockup from "./hero/HeroMockup";
 import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
 import WaitlistModal from "./WaitlistModal";
 
