@@ -12,14 +12,6 @@ const painPoints = [
   { icon: AlertTriangle, text: "Zero previsibilidade financeira" },
 ];
 
-const cycleSteps = [
-  { icon: Clock, label: "Dia 1º", sub: "Novo mês começa" },
-  { icon: UserX, label: "Prospecção", sub: "Caçar clientes" },
-  { icon: DollarSign, label: "Fechar Deal", sub: "Ticket único" },
-  { icon: XCircle, label: "Entrega", sub: "Projeto finalizado" },
-  { icon: RefreshCw, label: "Reset", sub: "Volta ao zero" },
-];
-
 const HeroSection = () => {
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
