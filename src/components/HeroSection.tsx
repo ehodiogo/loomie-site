@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { RotateCcw, DollarSign, UserX, AlertTriangle, RefreshCw, Clock, XCircle } from "lucide-react";
+import { RotateCcw, DollarSign, UserX, AlertTriangle } from "lucide-react";
+import HeroMockup from "./hero/HeroMockup";
 import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
 import WaitlistModal from "./WaitlistModal";
 
@@ -9,14 +10,6 @@ const painPoints = [
   { icon: UserX, text: "Precisa caçar novos clientes" },
   { icon: DollarSign, text: "Ticket único, sem recorrência" },
   { icon: AlertTriangle, text: "Zero previsibilidade financeira" },
-];
-
-const cycleSteps = [
-  { icon: Clock, label: "Dia 1º", sub: "Novo mês começa" },
-  { icon: UserX, label: "Prospecção", sub: "Caçar clientes" },
-  { icon: DollarSign, label: "Fechar Deal", sub: "Ticket único" },
-  { icon: XCircle, label: "Entrega", sub: "Projeto finalizado" },
-  { icon: RefreshCw, label: "Reset", sub: "Volta ao zero" },
 ];
 
 const HeroSection = () => {
@@ -111,139 +104,8 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* ── Right: Animated "Reset Cycle" visual ── */}
-          <motion.div
-            className="flex-1 w-full max-w-lg lg:max-w-md aspect-square relative"
-            initial={{ opacity: 0, scale: 0.85 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={viewport}
-            transition={{ duration: 1, delay: 0.3, ease: ease.smooth }}
-          >
-            {/* Outer rotating dashed ring */}
-            <motion.div
-              className="absolute inset-4 rounded-full border border-dashed border-border"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
-
-            {/* Inner glowing ring */}
-            <motion.div
-              className="absolute inset-12 rounded-full"
-              style={{
-                border: "1px solid hsl(var(--primary) / 0.15)",
-                boxShadow: "0 0 40px hsl(var(--glow-primary) / 0.06), inset 0 0 40px hsl(var(--glow-primary) / 0.03)",
-              }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-
-            {/* Cycle step nodes placed in a circle */}
-            {cycleSteps.map(({ icon: Icon, label, sub }, i) => {
-              const angle = (i / cycleSteps.length) * Math.PI * 2 - Math.PI / 2;
-              const radius = 42;
-              const x = 50 + Math.cos(angle) * radius;
-              const y = 50 + Math.sin(angle) * radius;
-
-              return (
-                <motion.div
-                  key={label}
-                  className="absolute flex flex-col items-center gap-1"
-                  style={{
-                    left: `${x}%`,
-                    top: `${y}%`,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={viewport}
-                  transition={{ delay: 0.6 + i * 0.15, duration: 0.5, ease: ease.bounce }}
-                >
-                  <motion.div
-                    className="glass-panel p-3 relative"
-                    animate={{
-                      boxShadow: [
-                        "0 0 0px hsl(var(--glow-primary) / 0)",
-                        "0 0 20px hsl(var(--glow-primary) / 0.15)",
-                        "0 0 0px hsl(var(--glow-primary) / 0)",
-                      ],
-                    }}
-                    transition={{
-                      duration: 3,
-                      delay: i * 0.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <Icon className="w-5 h-5 text-primary" />
-                  </motion.div>
-                  <span className="text-[10px] font-semibold text-foreground whitespace-nowrap">{label}</span>
-                  <span className="text-[9px] text-muted-foreground whitespace-nowrap">{sub}</span>
-                </motion.div>
-              );
-            })}
-
-            {/* Center "reset" pulse */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                className="absolute w-20 h-20 rounded-full"
-                style={{ background: "hsl(var(--destructive) / 0.06)" }}
-                animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="glass-panel p-4 z-10"
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              >
-                <RefreshCw className="w-6 h-6 text-destructive/60" />
-              </motion.div>
-            </div>
-
-            {/* Connecting lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100">
-              {cycleSteps.map((_, i) => {
-                const a1 = (i / cycleSteps.length) * Math.PI * 2 - Math.PI / 2;
-                const a2 = ((i + 1) / cycleSteps.length) * Math.PI * 2 - Math.PI / 2;
-                const r = 42;
-                const x1 = 50 + Math.cos(a1) * r;
-                const y1 = 50 + Math.sin(a1) * r;
-                const x2 = 50 + Math.cos(a2) * r;
-                const y2 = 50 + Math.sin(a2) * r;
-
-                return (
-                  <motion.line
-                    key={i}
-                    x1={x1} y1={y1} x2={x2} y2={y2}
-                    stroke="hsl(var(--border))"
-                    strokeWidth="0.3"
-                    strokeDasharray="1 1"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 0.5 }}
-                    viewport={viewport}
-                    transition={{ delay: 0.8 + i * 0.15, duration: 0.5 }}
-                  />
-                );
-              })}
-            </svg>
-
-            {/* Animated orbital dot */}
-            <motion.div
-              className="absolute inset-0"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            >
-              <div
-                className="absolute w-2 h-2 rounded-full"
-                style={{
-                  left: "50%",
-                  top: "8%",
-                  transform: "translate(-50%, -50%)",
-                  background: "hsl(var(--primary))",
-                  boxShadow: "0 0 8px hsl(var(--glow-primary) / 0.6)",
-                }}
-              />
-            </motion.div>
-          </motion.div>
+          {/* ── Right: App Mockup ── */}
+          <HeroMockup />
         </div>
       </div>
     </section>
