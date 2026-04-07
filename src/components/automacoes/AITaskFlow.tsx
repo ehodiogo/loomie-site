@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CoreSpinLoader } from "@/components/ui/core-spin-loader";
+import { AILoader } from "@/components/ui/ai-loader";
 import { CheckCircle2, Mail, Users, BarChart3, MessageCircle, Zap } from "lucide-react";
 
 const completedTasks = [
@@ -41,7 +41,7 @@ export function AITaskFlow() {
             <p className="text-center text-sm font-semibold text-foreground mb-4 font-display">
               Agente IA processando...
             </p>
-            <CoreSpinLoader />
+            <AILoader size={120} text="Processando" />
           </motion.div>
         ) : (
           <motion.div
