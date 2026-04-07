@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { RotateCcw, DollarSign, UserX, AlertTriangle } from "lucide-react";
-import HeroMockup from "./hero/HeroMockup";
+import HeroBenefitsAccordion from "./hero/HeroBenefitsAccordion";
 import { wordStagger, wordReveal, blurUp, fadeUpItem, staggerContainer, ease, viewport } from "@/lib/animations";
 import WaitlistModal from "./WaitlistModal";
 
@@ -104,8 +104,8 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* ── Right: App Mockup ── */}
-          <HeroMockup />
+          {/* ── Right: Benefits Accordion ── */}
+          <HeroBenefitsAccordion />
         </div>
       </div>
     </section>
