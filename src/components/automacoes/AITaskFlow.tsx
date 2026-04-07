@@ -1,7 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AILoader } from "@/components/ui/ai-loader";
 import { CheckCircle2, Mail, Users, BarChart3, MessageCircle, Zap } from "lucide-react";
+
+const loadingSteps = [
+  "Analisando funil de vendas...",
+  "Enviando mensagens para clientes...",
+  "Qualificando novos leads...",
+  "Gerando relatório de performance...",
+  "Respondendo WhatsApp automaticamente...",
+  "Otimizando fluxos de automação...",
+];
 
 const completedTasks = [
   { icon: Mail, label: "E-mails de follow-up enviados", detail: "12 leads contactados" },
@@ -12,36 +21,63 @@ const completedTasks = [
 ];
 
 export function AITaskFlow() {
-  const [isProcessing, setIsProcessing] = useState(true);
+  const [phase, setPhase] = useState<"loading" | "done">("loading");
+  const [stepIndex, setStepIndex] = useState(0);
+  const cycleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Cycle through loading steps, then switch to done
   useEffect(() => {
-    const timer = setTimeout(() => setIsProcessing(false), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (phase !== "loading") return;
 
-  useEffect(() => {
-    if (!isProcessing) {
-      const resetTimer = setTimeout(() => setIsProcessing(true), 8000);
-      return () => clearTimeout(resetTimer);
+    if (stepIndex < loadingSteps.length - 1) {
+      const t = setTimeout(() => setStepIndex((i) => i + 1), 1200);
+      return () => clearTimeout(t);
+    } else {
+      // Last step shown, wait a beat then reveal results
+      const t = setTimeout(() => setPhase("done"), 1400);
+      return () => clearTimeout(t);
     }
-  }, [isProcessing]);
+  }, [phase, stepIndex]);
+
+  // After showing results, reset cycle
+  useEffect(() => {
+    if (phase !== "done") return;
+    cycleRef.current = setTimeout(() => {
+      setStepIndex(0);
+      setPhase("loading");
+    }, 8000);
+    return () => { if (cycleRef.current) clearTimeout(cycleRef.current); };
+  }, [phase]);
 
   return (
     <div className="w-full max-w-sm mx-auto">
       <AnimatePresence mode="wait">
-        {isProcessing ? (
+        {phase === "loading" ? (
           <motion.div
             key="processing"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="glass-panel p-8 rounded-2xl"
+            className="glass-panel p-8 rounded-2xl flex flex-col items-center"
           >
-            <p className="text-center text-sm font-semibold text-foreground mb-4 font-display">
-              Agente IA processando...
-            </p>
             <AILoader size={120} text="Processando" />
+
+            {/* Dynamic status message */}
+            <div className="mt-6 h-6 flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={stepIndex}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-xs text-muted-foreground text-center"
+                >
+                  {loadingSteps[stepIndex]}
+                </motion.p>
+              </AnimatePresence>
+            </div>
           </motion.div>
         ) : (
           <motion.div
