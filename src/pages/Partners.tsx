@@ -14,7 +14,7 @@ import {
   wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight,
   staggerContainer, fadeUpItem, scaleItem, maskReveal, viewport, ease
 } from "@/lib/animations";
-import { Globe } from "@/components/ui/globe";
+import { GenerativeArtScene } from "@/components/ui/generative-art-scene";
 import useParallax from "@/hooks/use-parallax";
 
 /* ── Data ── */
@@ -334,16 +334,14 @@ const Partners = () => {
         <div className="absolute inset-0 grid-line opacity-12" />
         <div className="absolute inset-0 radial-fade" />
 
-        {/* Globe — full right side, absolute */}
+        {/* Generative Art — full right side, absolute */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.4, ease: ease.smooth }}
           className="hidden lg:block absolute top-0 bottom-0 right-0 w-[55%]"
         >
-          <div className="relative w-full h-full flex items-center justify-center">
-            <Globe className="relative inset-auto w-full max-w-[700px]" />
-          </div>
+          <GenerativeArtScene />
         </motion.div>
 
         <div className="relative z-10 container mx-auto px-6 pt-32 pb-20">
