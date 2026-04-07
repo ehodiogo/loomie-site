@@ -102,7 +102,16 @@ export function GenerativeArtScene() {
           float diffuse = max(dot(normal, lightDir), 0.0);
           float fresnel = 1.0 - dot(normal, vec3(0.0, 0.0, 1.0));
           fresnel = pow(fresnel, 2.0);
-          vec3 finalColor = color * diffuse + color * fresnel * 0.5;
+
+          // Blue core, white highlights, gray edges
+          vec3 blue = vec3(0.231, 0.510, 0.965);   // #3b82f6
+          vec3 white = vec3(0.9, 0.95, 1.0);
+          vec3 gray = vec3(0.45, 0.50, 0.58);
+
+          vec3 baseColor = mix(blue, white, diffuse * 0.6);
+          vec3 edgeColor = mix(baseColor, gray, fresnel * 0.3);
+          vec3 finalColor = edgeColor + white * fresnel * 0.15;
+
           gl_FragColor = vec4(finalColor, 1.0);
         }
       `,
