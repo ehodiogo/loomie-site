@@ -92,7 +92,7 @@ const CloudPricing = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-center"
+          className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-center pt-6"
         >
           {plans.map(({ name, desc, monthly, annual, features: feats, popular }) => {
             const price = isAnnual ? annual : monthly;
@@ -101,10 +101,10 @@ const CloudPricing = () => {
                 key={name}
                 variants={fadeUpItem}
                 whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                className={`card-elevated relative flex flex-col ${popular ? "glow-border-primary ring-1 ring-primary/30 md:scale-105 md:py-8" : ""}`}
+                className={`card-elevated relative flex flex-col overflow-visible ${popular ? "glow-border-primary ring-1 ring-primary/30 md:scale-105 md:py-8" : ""}`}
               >
                 {popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
                     <span className="section-badge text-[10px]">Mais Popular</span>
                   </div>
                 )}
