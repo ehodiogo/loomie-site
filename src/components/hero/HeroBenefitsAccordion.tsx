@@ -71,11 +71,11 @@ const HeroBenefitsAccordion = () => {
               />
 
               {/* Gradient overlay for readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/50 to-white/10" />
               
               {/* Pattern overlay */}
               <div className="absolute inset-0 opacity-[0.04]" style={{
-                backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+                backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)',
                 backgroundSize: '24px 24px',
               }} />
 
@@ -84,8 +84,8 @@ const HeroBenefitsAccordion = () => {
                 className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
                 style={{ opacity: isActive ? 0 : 1 }}
               >
-                <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-white/90" />
+                <div className="w-10 h-10 rounded-xl bg-primary/15 backdrop-blur-sm flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-primary" />
                 </div>
               </div>
 
@@ -95,17 +95,17 @@ const HeroBenefitsAccordion = () => {
                 style={{ opacity: isActive ? 1 : 0 }}
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/15 backdrop-blur-sm flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="text-white/50 font-mono-metric text-xs tracking-wider uppercase">
+                  <span className="text-primary/50 font-mono text-xs tracking-wider uppercase">
                     0{item.id}
                   </span>
                 </div>
-                <h3 className="font-display text-xl md:text-2xl font-bold text-white leading-tight mb-2">
+                <h3 className="font-display text-xl md:text-2xl font-bold text-primary leading-tight mb-2">
                   {item.title}
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed max-w-[280px]">
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-[280px]">
                   {item.desc}
                 </p>
               </div>
