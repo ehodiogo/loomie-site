@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle, Instagram, Mail, Globe } from "lucide-react";
+import { ArrowRight, MessageCircle, Instagram, Mail, Globe, MessageSquare } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
 import { Marquee } from "@/components/ui/3d-testimonials";
 
@@ -90,18 +90,32 @@ const CloudHero = () => {
               Gerencie vendas, automatize fluxos e centralize sua operação em uma única plataforma desenhada para o seu fluxo de trabalho. Do primeiro "Oi" ao fechamento, a Loomie Cloud coloca a gestão da sua equipe no piloto automático.
             </motion.p>
 
-            <motion.a
-              href="https://crm.loomiecrm.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
-              className="btn-primary text-base"
-            >
-              Teste grátis agora
-              <ArrowRight className="w-4 h-4" />
-            </motion.a>
+            <div className="flex flex-wrap gap-4 items-center">
+              <motion.a
+                href="https://crm.loomiecrm.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
+                className="btn-primary text-base"
+              >
+                Teste grátis agora
+                <ArrowRight className="w-4 h-4" />
+              </motion.a>
+              <motion.a
+                href="https://w.app/eawt9o"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1, duration: 0.6, ease: ease.smooth }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-base font-semibold bg-green-500 text-white hover:bg-green-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Falar com especialista
+              </motion.a>
+            </div>
             <p className="text-xs text-muted-foreground mt-3">Implementação estratégica para novos parceiros</p>
           </div>
 

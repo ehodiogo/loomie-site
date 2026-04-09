@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { MessageSquare, CheckCircle2 } from "lucide-react";
 import { blurUp, viewport } from "@/lib/animations";
 
 const CloudCTA = () => {
@@ -21,15 +21,15 @@ const CloudCTA = () => {
             Comece agora com o Loomie Cloud e veja resultados em dias, não meses.
           </p>
           <motion.a
-            href="https://crm.loomiecrm.com/"
+            href="https://w.app/eawt9o"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             className="btn-primary"
           >
+            <MessageSquare className="w-4 h-4" />
             Quero escalar meu atendimento agora
-            <ArrowRight className="w-4 h-4" />
           </motion.a>
 
           <div className="flex flex-wrap justify-center gap-6 mt-8">
