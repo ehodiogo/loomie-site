@@ -28,14 +28,30 @@ const WaitlistModal = ({ open, onOpenChange }: WaitlistModalProps) => {
       return;
     }
     setLoading(true);
-    // Simulate submission
-    await new Promise((r) => setTimeout(r, 1500));
+    try {
+      await fetch("https://n8n.loomiecrm.com/webhook/8b764232-f0bb-4949-87fd-59c27fa2f594", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          razaoSocial: form.razaoSocial,
+          cnpj: form.cnpj,
+          telefone: form.telefone,
+        }),
+      });
+      toast({
+        title: "Você está na lista!",
+        description: "Entraremos em contato em breve.",
+      });
+      setForm({ email: "", razaoSocial: "", cnpj: "", telefone: "" });
+    } catch {
+      toast({
+        title: "Erro ao enviar",
+        description: "Tente novamente em alguns instantes.",
+        variant: "destructive",
+      });
+    }
     setLoading(false);
-    toast({
-      title: "Você está na lista!",
-      description: "Entraremos em contato em breve.",
-    });
-    setForm({ email: "", razaoSocial: "", cnpj: "", telefone: "" });
     onOpenChange(false);
   };
 
