@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import useLenis from "@/hooks/use-lenis";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { Bot, Clock, MessageCircle, Zap, ArrowRight, CheckCircle2, Settings, GitMerge, BarChart3, Users } from "lucide-react";
+import { Bot, Clock, MessageCircle, MessageSquare, Zap, ArrowRight, CheckCircle2, Settings, GitMerge, BarChart3, Users } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, slideFromLeft, slideFromRight, staggerContainer, fadeUpItem, scaleItem, viewport, ease } from "@/lib/animations";
 import useParallax from "@/hooks/use-parallax";
 import { useRef } from "react";
@@ -116,7 +116,7 @@ const Automacoes = () => {
               </motion.p>
 
               <motion.a
-                href="https://crm.loomiecrm.com/"
+                href="https://w.app/qfmhkt"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
@@ -124,8 +124,8 @@ const Automacoes = () => {
                 transition={{ delay: 0.9, duration: 0.6, ease: ease.smooth }}
                 className="btn-primary"
               >
+                <MessageSquare className="w-4 h-4" />
                 Quero automatizar meu negócio
-                <ArrowRight className="w-4 h-4" />
               </motion.a>
             </div>
 
@@ -277,15 +277,15 @@ const Automacoes = () => {
                 Fale com nosso time e descubra como a IA pode revolucionar sua operação comercial.
               </p>
               <motion.a
-                href="https://crm.loomiecrm.com/"
+                href="https://w.app/qfmhkt"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="btn-primary"
               >
+                <MessageSquare className="w-4 h-4" />
                 Quero automatizar agora
-                <ArrowRight className="w-4 h-4" />
               </motion.a>
 
               <div className="flex flex-wrap justify-center gap-6 mt-8">
