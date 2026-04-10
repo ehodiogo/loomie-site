@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Instagram, Mail, Globe, MessageSquare } from "lucide-react";
 import { wordStagger, wordReveal, blurUp, ease } from "@/lib/animations";
 import { Marquee } from "@/components/ui/3d-testimonials";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const channels = [
   { name: "WhatsApp", icon: MessageCircle, color: "text-green-400" },
@@ -25,21 +26,21 @@ const leads = [
   { name: "Bruno Nunes", channel: 3, msg: "Preciso de suporte técnico" },
 ];
 
-function LeadCard({ name, channel, msg }: { name: string; channel: number; msg: string }) {
+function LeadCard({ name, channel, msg, compact }: { name: string; channel: number; msg: string; compact?: boolean }) {
   const ch = channels[channel];
   const Icon = ch.icon;
   return (
-    <div className="glass-panel p-4 w-[220px] flex flex-col gap-2 shrink-0">
+    <div className={`glass-panel flex flex-col gap-1.5 shrink-0 ${compact ? "p-3 w-[170px]" : "p-4 w-[220px]"}`}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-primary">Novo lead</span>
+        <span className={`font-semibold text-primary ${compact ? "text-[10px]" : "text-xs"}`}>Novo lead</span>
         <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
       </div>
-      <p className="text-sm font-medium text-foreground truncate">{name}</p>
+      <p className={`font-medium text-foreground truncate ${compact ? "text-xs" : "text-sm"}`}>{name}</p>
       <div className="flex items-center gap-1.5">
-        <Icon className={`w-3.5 h-3.5 ${ch.color}`} />
-        <span className="text-xs text-muted-foreground">{ch.name}</span>
+        <Icon className={`w-3 h-3 ${ch.color}`} />
+        <span className="text-[10px] text-muted-foreground">{ch.name}</span>
       </div>
-      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 italic">"{msg}"</p>
+      <p className={`text-muted-foreground leading-relaxed line-clamp-2 italic ${compact ? "text-[10px]" : "text-xs"}`}>"{msg}"</p>
     </div>
   );
 }
@@ -49,6 +50,8 @@ const col2 = leads.slice(4, 8);
 const col3 = leads.slice(8, 12);
 
 const CloudHero = () => {
+  const isMobile = useIsMobile();
+
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 grid-line opacity-12" />
@@ -119,39 +122,60 @@ const CloudHero = () => {
             <p className="text-xs text-muted-foreground mt-3">Implementação estratégica para novos parceiros</p>
           </div>
 
-          {/* Right Column — Lead Marquee Kanban */}
-          <motion.div
-            className="relative h-[500px] lg:h-[550px] overflow-hidden rounded-2xl"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
-            style={{ perspective: "400px" }}
-          >
-            <div
-              className="flex gap-4 h-full items-center justify-center"
-              style={{ transform: "rotateY(-8deg) rotateX(2deg)" }}
+          {/* Right Column — Lead Marquee */}
+          {isMobile ? (
+            /* ── Mobile: horizontal marquee ── */
+            <motion.div
+              className="relative overflow-hidden rounded-2xl -mx-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
             >
-              <Marquee vertical pauseOnHover className="[--duration:22s] h-full" repeat={3}>
-                {col1.map((l, i) => (
-                  <LeadCard key={i} {...l} />
+              <Marquee pauseOnHover className="[--duration:25s]" repeat={3}>
+                {leads.map((l, i) => (
+                  <LeadCard key={i} {...l} compact />
                 ))}
               </Marquee>
-              <Marquee vertical pauseOnHover reverse className="[--duration:26s] h-full" repeat={3}>
-                {col2.map((l, i) => (
-                  <LeadCard key={i} {...l} />
-                ))}
-              </Marquee>
-              <Marquee vertical pauseOnHover className="[--duration:30s] h-full" repeat={3}>
-                {col3.map((l, i) => (
-                  <LeadCard key={i} {...l} />
-                ))}
-              </Marquee>
-            </div>
 
-            {/* Gradient masks */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent z-10" />
-          </motion.div>
+              {/* Lateral gradient masks */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent z-10" />
+            </motion.div>
+          ) : (
+            /* ── Desktop: vertical 3-column marquee ── */
+            <motion.div
+              className="relative h-[500px] lg:h-[550px] overflow-hidden rounded-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 1, ease: ease.smooth }}
+              style={{ perspective: "400px" }}
+            >
+              <div
+                className="flex gap-4 h-full items-center justify-center"
+                style={{ transform: "rotateY(-8deg) rotateX(2deg)" }}
+              >
+                <Marquee vertical pauseOnHover className="[--duration:22s] h-full" repeat={3}>
+                  {col1.map((l, i) => (
+                    <LeadCard key={i} {...l} />
+                  ))}
+                </Marquee>
+                <Marquee vertical pauseOnHover reverse className="[--duration:26s] h-full" repeat={3}>
+                  {col2.map((l, i) => (
+                    <LeadCard key={i} {...l} />
+                  ))}
+                </Marquee>
+                <Marquee vertical pauseOnHover className="[--duration:30s] h-full" repeat={3}>
+                  {col3.map((l, i) => (
+                    <LeadCard key={i} {...l} />
+                  ))}
+                </Marquee>
+              </div>
+
+              {/* Gradient masks */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent z-10" />
+            </motion.div>
+          )}
         </div>
       </div>
     </section>
