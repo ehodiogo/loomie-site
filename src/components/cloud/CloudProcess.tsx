@@ -67,11 +67,11 @@ const CloudProcess = () => {
               <span className="font-mono text-5xl font-bold text-primary/10 absolute top-4 right-4 group-hover:text-primary/20 transition-colors">
                 {step}
               </span>
-              <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors duration-300">
-                <Icon className="w-6 h-6 text-primary" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/8 flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-primary/15 transition-colors duration-300">
+                <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h3 className="font-display text-lg font-bold text-foreground mb-2">{title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              <h3 className="font-display text-base sm:text-lg font-bold text-foreground mb-1 sm:mb-2">{title}</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{desc}</p>
 
               {/* Connector line for desktop */}
               {i < steps.length - 1 && (
