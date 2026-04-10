@@ -178,12 +178,12 @@ const Automacoes = () => {
             {benefits.map(({ icon: Icon, stat, title, desc }) => (
               <motion.div key={title} variants={scaleItem}>
                 <div className="card-elevated group h-full">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/[0.08] flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors duration-300">
-                    <Icon className="w-7 h-7 text-primary" />
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-primary/[0.08] flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-primary/15 transition-colors duration-300">
+                    <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-primary" />
                   </div>
-                  <p className="font-mono text-2xl font-bold text-gradient-primary mb-2">{stat}</p>
-                  <h3 className="font-display text-lg font-bold text-foreground mb-3">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="font-mono text-xl sm:text-2xl font-bold text-gradient-primary mb-1 sm:mb-2">{stat}</p>
+                  <h3 className="font-display text-base sm:text-lg font-bold text-foreground mb-1.5 sm:mb-3">{title}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -225,11 +225,11 @@ const Automacoes = () => {
                     <span className="font-mono text-xs text-primary/50">0{i + 1}</span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
-                  <div className="w-10 h-10 rounded-lg bg-primary/[0.08] flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors duration-300">
-                    <Icon className="w-5 h-5 text-primary" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/[0.08] flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 transition-colors duration-300">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-base font-bold text-foreground mb-2">{label}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <h3 className="font-display text-sm sm:text-base font-bold text-foreground mb-1 sm:mb-2">{label}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{desc}</p>
                 </div>
               </motion.div>
             ))}
