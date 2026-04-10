@@ -26,7 +26,7 @@ const Header = () => {
         className="fixed top-0 left-0 right-0 z-50"
       >
         <div className="mx-4 mt-4">
-          <div className="glass-panel-strong rounded-2xl">
+          <div className="rounded-2xl bg-background/95 backdrop-blur-md border border-border shadow-sm">
             <div className="container mx-auto flex items-center justify-between px-6 py-3.5">
               <Link to="/" className="font-display text-lg font-bold tracking-tight text-foreground">
                 Loomie<span className="text-gradient-primary">CRM</span>
