@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { useState, useRef } from "react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 
 const plans = [
@@ -32,6 +32,16 @@ const plans = [
 
 const CloudPricing = () => {
   const [isAnnual, setIsAnnual] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const cardWidth = scrollRef.current.firstElementChild?.clientWidth ?? 300;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -cardWidth - 24 : cardWidth + 24,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section className="relative py-28 overflow-hidden">
@@ -87,12 +97,30 @@ const CloudPricing = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          variants={staggerContainer(0.1)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewport}
-          className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-center pt-6"
+        {/* Scroll arrows — mobile only */}
+        <div className="flex md:hidden items-center justify-center gap-2 mb-4">
+          <button
+            onClick={() => scroll("left")}
+            className="p-2 rounded-full border border-border hover:bg-secondary transition-colors"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-4 h-4 text-muted-foreground" />
+          </button>
+          <span className="text-xs text-muted-foreground">Deslize para ver os planos</span>
+          <button
+            onClick={() => scroll("right")}
+            className="p-2 rounded-full border border-border hover:bg-secondary transition-colors"
+            aria-label="Próximo"
+          >
+            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          </button>
+        </div>
+
+        {/* Cards container */}
+        <div
+          ref={scrollRef}
+          className="flex md:grid md:grid-cols-3 gap-6 max-w-5xl mx-auto items-center pt-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 md:pb-0"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {plans.map(({ name, desc, monthly, annual, features: feats, popular }) => {
             const price = isAnnual ? annual : monthly;
@@ -101,7 +129,7 @@ const CloudPricing = () => {
                 key={name}
                 variants={fadeUpItem}
                 whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                className={`card-elevated relative flex flex-col overflow-visible ${popular ? "glow-border-primary ring-1 ring-primary/30 md:scale-105 md:py-8" : ""}`}
+                className={`card-elevated relative flex flex-col overflow-visible snap-center shrink-0 w-[85vw] md:w-auto ${popular ? "glow-border-primary ring-1 ring-primary/30 md:scale-105 md:py-8" : ""}`}
               >
                 {popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
@@ -158,7 +186,7 @@ const CloudPricing = () => {
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
