@@ -1,0 +1,14 @@
+services:
+  site-loomie:
+    build: .
+    image: site-loomie
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - loomie-network
+
+networks:
+  loomie-network:
+    external: true
