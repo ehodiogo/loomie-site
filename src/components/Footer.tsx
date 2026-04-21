@@ -7,6 +7,7 @@ const footerLinks = [
   { label: "Cloud", to: "/cloud" },
   { label: "Automações", to: "/automacoes" },
   { label: "Partners", to: "/partners" },
+  { label: "Privacidade", to: "/privacidade" },
 ];
 
 const socialLinks = [
@@ -99,6 +100,12 @@ const Footer = () => {
           <p className="font-mono text-xs text-muted-foreground">
             © {new Date().getFullYear()} Loomie CRM. Todos os direitos reservados.
           </p>
+          <Link
+            to="/privacidade"
+            className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors"
+          >
+            Política de Privacidade
+          </Link>
         </div>
       </div>
     </footer>

@@ -8,6 +8,7 @@ import Cloud from "./pages/Cloud";
 import Automacoes from "./pages/Automacoes";
 import Partners from "./pages/Partners";
 import Documentacao from "./pages/Documentacao";
+import Privacidade from "./pages/Privacidade";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/automacoes" element={<Automacoes />} />
           <Route path="/partners" element={<Partners />} />
           <Route path="/documentacao" element={<Documentacao />} />
+          <Route path="/privacidade" element={<Privacidade />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
