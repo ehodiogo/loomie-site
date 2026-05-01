@@ -18,10 +18,11 @@ const CloudCTA = () => {
             Pronto para transformar sua operação?
           </h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
-            Comece agora com o Loomie Cloud e veja resultados em dias, não meses.
+            Comece agora com o Loomie Cloud e veja resultados em dias, não
+            meses.
           </p>
           <motion.a
-            href="https://w.app/eawt9o"
+            href="https://wa.me/555596720480?text=Ol%C3%A1%2C%20preciso%20de%20um%20CRM%20para%20escalar%20as%20minhas%20vendas!"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
@@ -33,12 +34,17 @@ const CloudCTA = () => {
           </motion.a>
 
           <div className="flex flex-wrap justify-center gap-6 mt-8">
-            {["Teste gratuito", "Setup em 5 minutos", "Suporte incluso"].map((item) => (
-              <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                {item}
-              </div>
-            ))}
+            {["Teste gratuito", "Setup em 5 minutos", "Suporte incluso"].map(
+              (item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-2 text-sm text-muted-foreground"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-primary" />
+                  {item}
+                </div>
+              ),
+            )}
           </div>
         </motion.div>
       </div>

@@ -76,11 +76,17 @@ const CloudHero = () => {
               animate="visible"
               className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
             >
-              {"O CRM que escala com a sua inteligência, foque apenas nos seus resultados.".split(" ").map((word, i) => (
-                <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                  {word}
-                </motion.span>
-              ))}
+              {"O CRM que escala com a sua inteligência, foque apenas nos seus resultados."
+                .split(" ")
+                .map((word, i) => (
+                  <motion.span
+                    key={i}
+                    variants={wordReveal}
+                    className="inline-block mr-3"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
             </motion.h1>
 
             <motion.p
@@ -90,7 +96,10 @@ const CloudHero = () => {
               transition={{ delay: 0.6 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
             >
-              Gerencie vendas, automatize fluxos e centralize sua operação em uma única plataforma desenhada para o seu fluxo de trabalho. Do primeiro "Oi" ao fechamento, a Loomie Cloud coloca a gestão da sua equipe no piloto automático.
+              Gerencie vendas, automatize fluxos e centralize sua operação em
+              uma única plataforma desenhada para o seu fluxo de trabalho. Do
+              primeiro "Oi" ao fechamento, a Loomie Cloud coloca a gestão da sua
+              equipe no piloto automático.
             </motion.p>
 
             <div className="flex flex-row gap-2 sm:gap-4 items-center">
@@ -107,7 +116,7 @@ const CloudHero = () => {
                 <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </motion.a>
               <motion.a
-                href="https://w.app/eawt9o"
+                href="https://wa.me/555596720480?text=Ol%C3%A1%2C%20preciso%20de%20um%20CRM%20para%20escalar%20as%20minhas%20vendas!"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
@@ -119,7 +128,9 @@ const CloudHero = () => {
                 Falar com especialista
               </motion.a>
             </div>
-            <p className="text-xs text-muted-foreground mt-3">Implementação estratégica para novos parceiros</p>
+            <p className="text-xs text-muted-foreground mt-3">
+              Implementação estratégica para novos parceiros
+            </p>
           </div>
 
           {/* Right Column — Lead Marquee */}
@@ -154,17 +165,33 @@ const CloudHero = () => {
                 className="flex gap-4 h-full items-center justify-center"
                 style={{ transform: "rotateY(-8deg) rotateX(2deg)" }}
               >
-                <Marquee vertical pauseOnHover className="[--duration:22s] h-full" repeat={3}>
+                <Marquee
+                  vertical
+                  pauseOnHover
+                  className="[--duration:22s] h-full"
+                  repeat={3}
+                >
                   {col1.map((l, i) => (
                     <LeadCard key={i} {...l} />
                   ))}
                 </Marquee>
-                <Marquee vertical pauseOnHover reverse className="[--duration:26s] h-full" repeat={3}>
+                <Marquee
+                  vertical
+                  pauseOnHover
+                  reverse
+                  className="[--duration:26s] h-full"
+                  repeat={3}
+                >
                   {col2.map((l, i) => (
                     <LeadCard key={i} {...l} />
                   ))}
                 </Marquee>
-                <Marquee vertical pauseOnHover className="[--duration:30s] h-full" repeat={3}>
+                <Marquee
+                  vertical
+                  pauseOnHover
+                  className="[--duration:30s] h-full"
+                  repeat={3}
+                >
                   {col3.map((l, i) => (
                     <LeadCard key={i} {...l} />
                   ))}

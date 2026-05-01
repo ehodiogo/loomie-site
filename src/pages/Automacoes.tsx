@@ -98,11 +98,17 @@ const Automacoes = () => {
                 animate="visible"
                 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[0.95] text-foreground mb-6"
               >
-                {"Automações com IA que trabalham por você.".split(" ").map((word, i) => (
-                  <motion.span key={i} variants={wordReveal} className="inline-block mr-3">
-                    {word}
-                  </motion.span>
-                ))}
+                {"Automações com IA que trabalham por você."
+                  .split(" ")
+                  .map((word, i) => (
+                    <motion.span
+                      key={i}
+                      variants={wordReveal}
+                      className="inline-block mr-3"
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
               </motion.h1>
 
               <motion.p
@@ -112,11 +118,13 @@ const Automacoes = () => {
                 transition={{ delay: 0.6 }}
                 className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed mb-8"
               >
-                Deixe a Inteligência Artificial cuidar das tarefas repetitivas enquanto você foca no crescimento do seu negócio. Automações 24/7, sem esforço manual.
+                Deixe a Inteligência Artificial cuidar das tarefas repetitivas
+                enquanto você foca no crescimento do seu negócio. Automações
+                24/7, sem esforço manual.
               </motion.p>
 
               <motion.a
-                href="https://w.app/qfmhkt"
+                href="https://wa.me/555596720480?text=Ol%C3%A1%2C%20preciso%20de%20um%20CRM%20para%20escalar%20as%20minhas%20vendas!"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
@@ -161,10 +169,12 @@ const Automacoes = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-4">
-              O que você ganha com <span className="text-gradient-primary">nossas automações.</span>
+              O que você ganha com{" "}
+              <span className="text-gradient-primary">nossas automações.</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Resultados reais que impactam diretamente a produtividade e a receita do seu negócio.
+              Resultados reais que impactam diretamente a produtividade e a
+              receita do seu negócio.
             </p>
           </motion.div>
 
@@ -181,9 +191,15 @@ const Automacoes = () => {
                   <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-primary/[0.08] flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-primary/15 transition-colors duration-300">
                     <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-primary" />
                   </div>
-                  <p className="font-mono text-xl sm:text-2xl font-bold text-gradient-primary mb-1 sm:mb-2">{stat}</p>
-                  <h3 className="font-display text-base sm:text-lg font-bold text-foreground mb-1.5 sm:mb-3">{title}</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="font-mono text-xl sm:text-2xl font-bold text-gradient-primary mb-1 sm:mb-2">
+                    {stat}
+                  </p>
+                  <h3 className="font-display text-base sm:text-lg font-bold text-foreground mb-1.5 sm:mb-3">
+                    {title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {desc}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -204,10 +220,12 @@ const Automacoes = () => {
             className="text-center mb-16"
           >
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-4">
-              Automação <span className="text-gradient-primary">sob medida.</span>
+              Automação{" "}
+              <span className="text-gradient-primary">sob medida.</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Criamos automações personalizadas para sua empresa, com acompanhamento contínuo e integração com processos já existentes.
+              Criamos automações personalizadas para sua empresa, com
+              acompanhamento contínuo e integração com processos já existentes.
             </p>
           </motion.div>
 
@@ -222,14 +240,20 @@ const Automacoes = () => {
               <motion.div key={label} variants={fadeUpItem}>
                 <div className="card-elevated relative group h-full">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-xs text-primary/50">0{i + 1}</span>
+                    <span className="font-mono text-xs text-primary/50">
+                      0{i + 1}
+                    </span>
                     <div className="h-px flex-1 bg-border" />
                   </div>
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/[0.08] flex items-center justify-center mb-2 sm:mb-4 group-hover:bg-primary/15 transition-colors duration-300">
                     <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-sm sm:text-base font-bold text-foreground mb-1 sm:mb-2">{label}</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <h3 className="font-display text-sm sm:text-base font-bold text-foreground mb-1 sm:mb-2">
+                    {label}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {desc}
+                  </p>
                 </div>
               </motion.div>
             ))}
@@ -249,7 +273,9 @@ const Automacoes = () => {
                 Automação feita para o seu negócio
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed max-w-lg mx-auto">
-                Não oferecemos soluções genéricas. Cada automação é desenhada e configurada especificamente para se conectar perfeitamente com a realidade da sua empresa.
+                Não oferecemos soluções genéricas. Cada automação é desenhada e
+                configurada especificamente para se conectar perfeitamente com a
+                realidade da sua empresa.
               </p>
             </TiltCard>
           </motion.div>
@@ -274,10 +300,11 @@ const Automacoes = () => {
                 Pare de perder tempo com tarefas manuais.
               </h2>
               <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
-                Fale com nosso time e descubra como a IA pode revolucionar sua operação comercial.
+                Fale com nosso time e descubra como a IA pode revolucionar sua
+                operação comercial.
               </p>
               <motion.a
-                href="https://w.app/qfmhkt"
+                href="https://wa.me/555596720480?text=Ol%C3%A1%2C%20preciso%20de%20um%20CRM%20para%20escalar%20as%20minhas%20vendas!"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
@@ -289,8 +316,15 @@ const Automacoes = () => {
               </motion.a>
 
               <div className="flex flex-wrap justify-center gap-6 mt-8">
-                {["Sem código necessário", "Projeto personalizado", "Suporte dedicado"].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                {[
+                  "Sem código necessário",
+                  "Projeto personalizado",
+                  "Suporte dedicado",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                  >
                     <CheckCircle2 className="w-4 h-4 text-primary" />
                     {item}
                   </div>
