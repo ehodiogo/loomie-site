@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Terminal, Webhook, BookOpen } from "lucide-react";
+import { ArrowRight, Terminal, Webhook, BookOpen, Chrome } from "lucide-react";
 import { blurUp, staggerContainer, fadeUpItem, viewport } from "@/lib/animations";
 import WaitlistModal from "./WaitlistModal";
 
@@ -8,6 +8,11 @@ const badges = [
   { icon: BookOpen, text: "Documentação pronta" },
   { icon: Terminal, text: "Endpoints REST abertos" },
   { icon: Webhook, text: "Suporte nativo a webhooks" },
+  {
+    icon: Chrome,
+    text: "Extensão para captura de leads",
+    href: "https://chromewebstore.google.com/detail/loomiecrm-extension/nbcjhhfipbgeapihdoneboicfccdjomb?hl=pt-BR",
+  },
 ];
 
 const FinalCTASection = () => {
