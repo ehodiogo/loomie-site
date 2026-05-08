@@ -34,13 +34,19 @@ const CloudExtension = () => {
             viewport={viewport}
             className="text-center mb-16"
           >
-            <span className="section-badge mb-4 inline-block">Extensão Chrome</span>
+            <span className="section-badge mb-4 inline-block">
+              Extensão Chrome
+            </span>
             <h2 className="font-display text-3xl md:text-5xl font-extrabold text-foreground mb-6 mt-4">
               Capture leads de{" "}
-              <span className="text-gradient-primary">qualquer lugar da web.</span>
+              <span className="text-gradient-primary">
+                qualquer lugar da web.
+              </span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-              Com a extensão do Chrome da Loomie, você transforma qualquer navegação em uma oportunidade de negócio. Busque, cadastre e organize contatos sem sair do site que está acessando.
+              Com a extensão do Chrome da Loomie, você transforma qualquer
+              navegação em uma oportunidade de negócio. Busque, cadastre e
+              organize contatos sem sair do site que está acessando.
             </p>
           </motion.div>
 
@@ -65,7 +71,9 @@ const CloudExtension = () => {
                   <div className="flex-1 mx-4">
                     <div className="bg-muted/30 rounded-lg px-4 py-1.5 flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-primary/40" />
-                      <span className="font-mono text-xs text-muted-foreground">linkedin.com/leads</span>
+                      <span className="font-mono text-xs text-muted-foreground">
+                        linkedin.com/leads
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -92,12 +100,16 @@ const CloudExtension = () => {
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <Chrome className="w-4 h-4 text-primary" />
-                      <span className="font-display text-xs font-bold text-foreground">Loomie Extension</span>
+                      <span className="font-display text-xs font-bold text-foreground">
+                        Loomie Extension
+                      </span>
                     </div>
                     <div className="space-y-2">
                       <div className="bg-muted/20 rounded-lg px-3 py-2 flex items-center gap-2">
                         <Search className="w-3 h-3 text-muted-foreground" />
-                        <span className="font-mono text-[10px] text-muted-foreground">Buscar contato...</span>
+                        <span className="font-mono text-[10px] text-muted-foreground">
+                          Buscar contato...
+                        </span>
                       </div>
                       <div className="bg-primary/10 rounded-lg px-3 py-2">
                         <div className="flex items-center gap-2">
@@ -105,8 +117,12 @@ const CloudExtension = () => {
                             <UserPlus className="w-3 h-3 text-primary" />
                           </div>
                           <div>
-                            <p className="text-[10px] font-semibold text-foreground">João Silva</p>
-                            <p className="text-[8px] text-muted-foreground">Salvar no CRM →</p>
+                            <p className="text-[10px] font-semibold text-foreground">
+                              João Silva
+                            </p>
+                            <p className="text-[8px] text-muted-foreground">
+                              Salvar no CRM →
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -150,14 +166,18 @@ const CloudExtension = () => {
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-foreground mb-1">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                    <h3 className="font-display text-lg font-bold text-foreground mb-1">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {desc}
+                    </p>
                   </div>
                 </motion.div>
               ))}
 
               <motion.a
-                href="https://crm.loomiecrm.com/"
+                href="https://chromewebstore.google.com/detail/loomiecrm-extension/nbcjhhfipbgeapihdoneboicfccdjomb?hl=pt-BR"
                 target="_blank"
                 rel="noopener noreferrer"
                 variants={fadeUpItem}
